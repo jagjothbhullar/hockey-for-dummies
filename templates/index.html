@@ -1321,24 +1321,6 @@
 
             <!-- Right side with main content -->
             <div class="search-side">
-                <div class="sport-selector">
-                    <button class="sport-btn active" data-sport="all">
-                        <span class="sport-icon">🌐</span> All Sports
-                    </button>
-                    <button class="sport-btn" data-sport="soccer">
-                        <span class="sport-icon">⚽</span> Soccer
-                    </button>
-                    <button class="sport-btn" data-sport="nba">
-                        <span class="sport-icon">🏀</span> NBA
-                    </button>
-                    <button class="sport-btn" data-sport="nfl">
-                        <span class="sport-icon">🏈</span> NFL
-                    </button>
-                    <button class="sport-btn" data-sport="mlb">
-                        <span class="sport-icon">⚾</span> MLB
-                    </button>
-                </div>
-
                 <div class="search-container">
                     <div id="search-section">
                         <div class="search-box">
@@ -1375,10 +1357,9 @@
         const quickPicksContainer = document.getElementById('quick-picks');
         const searchSection = document.getElementById('search-section');
         const browseSection = document.getElementById('browse-section');
-        const sportBtns = document.querySelectorAll('.sport-btn');
 
         let currentTab = 'dictionary';
-        let selectedSport = 'all';
+        let selectedSport = 'all'; // Always show all sports
 
         const dictionaryQuickPicks = ['Power Play', 'Icing', 'Offside', 'Hat Trick', 'Breakaway', 'Slap Shot', 'Penalty Box', 'Blue Line'];
         const playerQuickPicks = ['Macklin Celebrini', 'Connor McDavid', 'Sidney Crosby', 'Cale Makar', 'Alex Ovechkin', 'Connor Bedard'];
@@ -1401,8 +1382,8 @@
             'general': '🏒'
         };
 
-        // Initialize
-        updateQuickPicks();
+        // Initialize - load dictionary terms on startup
+        loadDictionaryTerms();
 
         const browseBtns = document.querySelectorAll('.browse-btn');
 
@@ -1420,14 +1401,6 @@
             });
         });
 
-        sportBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                sportBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                selectedSport = btn.dataset.sport;
-            });
-        });
-
         searchBtn.addEventListener('click', search);
         searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') search();
@@ -1440,16 +1413,17 @@
             // Clear input when switching tabs
             searchInput.value = '';
 
-            // Show sport selector and search container for dictionary and players
-            const sportSelector = document.querySelector('.sport-selector');
             const searchContainer = document.querySelector('.search-container');
             const isSearchTab = (currentTab === 'dictionary' || currentTab === 'players');
 
-            sportSelector.style.display = isSearchTab ? 'flex' : 'none';
             searchContainer.style.display = isSearchTab ? 'block' : 'none';
             browseSection.style.display = isSearchTab ? 'none' : 'block';
 
-            if (currentTab === 'dictionary' || currentTab === 'players') {
+            if (currentTab === 'dictionary') {
+                searchSection.style.display = 'block';
+                updatePlaceholder();
+                loadDictionaryTerms(); // Load all terms below search
+            } else if (currentTab === 'players') {
                 searchSection.style.display = 'block';
                 updateQuickPicks();
                 updatePlaceholder();
@@ -1480,6 +1454,86 @@
         function quickSearch(query) {
             searchInput.value = query;
             search();
+        }
+
+        // ==================== DICTIONARY TERMS ====================
+        async function loadDictionaryTerms() {
+            quickPicksContainer.innerHTML = '<div style="text-align:center;padding:20px;color:#7eb8da;">Loading terms...</div>';
+
+            try {
+                const response = await fetch('/api/dictionary');
+                const data = await response.json();
+
+                const categoryOrder = ['game_structure', 'gameplay', 'rules', 'penalties', 'special_teams', 'positions', 'shots', 'skills', 'physical', 'rink', 'goalie', 'achievements', 'slang'];
+
+                let html = '<div class="dictionary-browse">';
+
+                // Ordered categories first
+                categoryOrder.forEach(category => {
+                    if (data.categories[category]) {
+                        html += `
+                            <div class="category-section" data-category="${category}">
+                                <div class="category-header">
+                                    <span class="category-icon">${categoryIcons[category] || '🏒'}</span>
+                                    <span class="category-title">${category.replace(/_/g, ' ')}</span>
+                                    <span style="color:#5a7a9a;font-size:0.85rem;">(${data.categories[category].length})</span>
+                                </div>
+                                <div class="terms-grid">
+                                    ${data.categories[category].map(t =>
+                                        `<span class="term-chip" onclick="searchTerm('${t.term}')">${t.term}</span>`
+                                    ).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+
+                // Any remaining categories
+                Object.keys(data.categories).forEach(category => {
+                    if (!categoryOrder.includes(category)) {
+                        html += `
+                            <div class="category-section" data-category="${category}">
+                                <div class="category-header">
+                                    <span class="category-icon">${categoryIcons[category] || '🏒'}</span>
+                                    <span class="category-title">${category.replace(/_/g, ' ')}</span>
+                                </div>
+                                <div class="terms-grid">
+                                    ${data.categories[category].map(t =>
+                                        `<span class="term-chip" onclick="searchTerm('${t.term}')">${t.term}</span>`
+                                    ).join('')}
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+
+                html += '</div>';
+                quickPicksContainer.innerHTML = html;
+            } catch (error) {
+                console.error('Failed to load dictionary terms', error);
+                quickPicksContainer.innerHTML = '<div style="color:#ff6b6b;">Failed to load terms</div>';
+            }
+        }
+
+        function searchTerm(term) {
+            searchInput.value = term;
+            search();
+        }
+
+        function filterDictionaryTerms(query) {
+            query = query.toLowerCase();
+            const termChips = document.querySelectorAll('.term-chip');
+            const categorySections = document.querySelectorAll('.category-section');
+
+            termChips.forEach(chip => {
+                const matches = chip.textContent.toLowerCase().includes(query);
+                chip.style.display = matches ? '' : 'none';
+            });
+
+            categorySections.forEach(section => {
+                const visibleChips = section.querySelectorAll('.term-chip:not([style*="display: none"])');
+                section.style.display = visibleChips.length > 0 ? '' : 'none';
+            });
         }
 
         // ==================== SHARKS ROSTER ====================
