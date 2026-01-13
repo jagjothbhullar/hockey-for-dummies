@@ -706,7 +706,8 @@
         async function getRandom() {
             showLoading();
             try {
-                const response = await fetch('/api/random');
+                // Pass the current tab type to get appropriate random result
+                const response = await fetch(`/api/random?type=${currentTab}`);
                 const data = await response.json();
 
                 if (data.type === 'concept') {

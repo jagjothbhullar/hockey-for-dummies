@@ -16,6 +16,55 @@ app = Flask(__name__)
 NHL_API_BASE = "https://api-web.nhle.com/v1"
 
 # =============================================================================
+# NHL ROSTER CACHE - Load all players once at startup for fast search
+# =============================================================================
+
+NHL_ROSTER_CACHE = []
+NHL_ROSTER_LOADED = False
+
+def load_all_nhl_rosters():
+    """Load all NHL rosters into cache at startup"""
+    global NHL_ROSTER_CACHE, NHL_ROSTER_LOADED
+
+    if NHL_ROSTER_LOADED:
+        return
+
+    print("Loading NHL rosters...")
+
+    # All 32 NHL team abbreviations
+    teams = [
+        'ANA', 'BOS', 'BUF', 'CGY', 'CAR', 'CHI', 'COL', 'CBJ',
+        'DAL', 'DET', 'EDM', 'FLA', 'LAK', 'MIN', 'MTL', 'NSH',
+        'NJD', 'NYI', 'NYR', 'OTT', 'PHI', 'PIT', 'SJS', 'SEA',
+        'STL', 'TBL', 'TOR', 'UTA', 'VAN', 'VGK', 'WSH', 'WPG'
+    ]
+
+    all_players = []
+
+    for team in teams:
+        try:
+            response = requests.get(f"{NHL_API_BASE}/roster/{team}/current", timeout=10)
+            if response.status_code == 200:
+                data = response.json()
+                for pos in ['forwards', 'defensemen', 'goalies']:
+                    for player in data.get(pos, []):
+                        all_players.append({
+                            'id': player.get('id'),
+                            'name': f"{player.get('firstName', {}).get('default', '')} {player.get('lastName', {}).get('default', '')}",
+                            'first_name': player.get('firstName', {}).get('default', ''),
+                            'last_name': player.get('lastName', {}).get('default', ''),
+                            'position': player.get('positionCode', ''),
+                            'number': player.get('sweaterNumber', ''),
+                            'team': team
+                        })
+        except Exception as e:
+            print(f"Error loading {team}: {e}")
+
+    NHL_ROSTER_CACHE = all_players
+    NHL_ROSTER_LOADED = True
+    print(f"Loaded {len(all_players)} NHL players")
+
+# =============================================================================
 # HOCKEY CONCEPTS KNOWLEDGE BASE
 # =============================================================================
 
@@ -1319,36 +1368,33 @@ def fetch_player_details(player_id):
     return None
 
 def search_nhl_player(query):
-    """Search for an NHL player across all teams"""
+    """Search for an NHL player using the cached roster data"""
+    global NHL_ROSTER_CACHE, NHL_ROSTER_LOADED
+
+    # Load cache if not already loaded
+    if not NHL_ROSTER_LOADED:
+        load_all_nhl_rosters()
+
     query = query.lower().strip()
-
-    # Get all teams
-    teams = fetch_nhl_teams()
-    if not teams:
-        # Fallback to common team abbreviations
-        teams = [
-            {'abbrev': 'SJS'}, {'abbrev': 'LAK'}, {'abbrev': 'ANA'}, {'abbrev': 'VGK'},
-            {'abbrev': 'EDM'}, {'abbrev': 'CGY'}, {'abbrev': 'VAN'}, {'abbrev': 'SEA'},
-            {'abbrev': 'COL'}, {'abbrev': 'ARI'}, {'abbrev': 'MIN'}, {'abbrev': 'STL'},
-            {'abbrev': 'CHI'}, {'abbrev': 'NSH'}, {'abbrev': 'DAL'}, {'abbrev': 'WPG'},
-            {'abbrev': 'DET'}, {'abbrev': 'CBJ'}, {'abbrev': 'TOR'}, {'abbrev': 'OTT'},
-            {'abbrev': 'MTL'}, {'abbrev': 'BOS'}, {'abbrev': 'BUF'}, {'abbrev': 'FLA'},
-            {'abbrev': 'TBL'}, {'abbrev': 'CAR'}, {'abbrev': 'WSH'}, {'abbrev': 'PHI'},
-            {'abbrev': 'PIT'}, {'abbrev': 'NYR'}, {'abbrev': 'NYI'}, {'abbrev': 'NJD'}
-        ]
-
     matches = []
 
-    for team in teams:
-        abbrev = team.get('abbrev', '')
-        if not abbrev:
-            continue
+    # Search the cache - much faster than 32 API calls!
+    for player in NHL_ROSTER_CACHE:
+        player_name = player.get('name', '').lower()
+        first_name = player.get('first_name', '').lower()
+        last_name = player.get('last_name', '').lower()
 
-        roster = fetch_team_roster(abbrev)
-        for player in roster:
-            player_name = player.get('name', '').lower()
-            if query in player_name or similarity_score(query, player_name) > 0.7:
-                matches.append(player)
+        # Check various matching strategies
+        if query in player_name:
+            matches.append(player)
+        elif query == last_name:  # Exact last name match
+            matches.append(player)
+        elif query == first_name:  # Exact first name match
+            matches.append(player)
+        elif similarity_score(query, player_name) > 0.7:
+            matches.append(player)
+        elif similarity_score(query, last_name) > 0.8:
+            matches.append(player)
 
     return matches
 
@@ -1745,10 +1791,19 @@ def compare_player(player):
 
 @app.route('/api/random')
 def random_fact():
-    """Return a random concept or comparison"""
-    choice = random.choice(['concept', 'concept', 'player'])  # Weight towards concepts
+    """Return a random concept or comparison based on requested type"""
+    # Get the requested type from query parameter (defaults to random choice)
+    requested_type = request.args.get('type', None)
 
     all_concepts = {**HOCKEY_CONCEPTS, **ADDITIONAL_CONCEPTS}
+
+    # If type specified, use it; otherwise pick randomly
+    if requested_type == 'concepts':
+        choice = 'concept'
+    elif requested_type == 'players':
+        choice = 'player'
+    else:
+        choice = random.choice(['concept', 'concept', 'player'])  # Weight towards concepts
 
     if choice == 'concept':
         concept = random.choice(list(all_concepts.keys()))
