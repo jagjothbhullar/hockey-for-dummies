@@ -7,8 +7,13 @@ Soccer (Premier League), NBA, NFL, and MLB.
 
 from flask import Flask, render_template, jsonify, request
 import random
+import requests
+from difflib import SequenceMatcher
 
 app = Flask(__name__)
+
+# NHL API Base URL
+NHL_API_BASE = "https://api-web.nhle.com/v1"
 
 # =============================================================================
 # HOCKEY CONCEPTS KNOWLEDGE BASE
@@ -549,34 +554,1055 @@ PLAYER_COMPARISONS = {
 }
 
 # =============================================================================
+# CONCEPT SYNONYMS & KEYWORDS - For flexible matching
+# =============================================================================
+
+CONCEPT_SYNONYMS = {
+    # Power play variations
+    "power play": ["power play", "pp", "man advantage", "5 on 4", "5v4", "5-on-4", "extra man", "powerplay"],
+
+    # Penalty kill variations
+    "penalty kill": ["penalty kill", "pk", "shorthanded", "short handed", "killing a penalty", "4 on 5", "4v5", "man down", "penaltykill"],
+
+    # Icing variations
+    "icing": ["icing", "iced the puck", "ice the puck", "clearing the puck", "dump out"],
+
+    # Offside variations
+    "offside": ["offside", "offsides", "off-side", "off side", "blue line violation", "offside rule"],
+
+    # Goalie pull variations
+    "goalie pull": ["goalie pull", "pull the goalie", "pulled goalie", "extra attacker", "empty net", "6 on 5", "6v5", "empty netter"],
+
+    # Line change variations
+    "line change": ["line change", "change lines", "substitution", "shift change", "changing on the fly", "line changes"],
+
+    # Hat trick variations
+    "hat trick": ["hat trick", "hatrick", "hat-trick", "3 goals", "three goals", "hattrick"],
+
+    # Checking variations
+    "checking": ["checking", "body check", "hit", "hitting", "check", "body checking", "open ice hit", "hip check", "boarding", "charge"],
+
+    # Face-off variations
+    "face-off": ["face-off", "faceoff", "face off", "puck drop", "draw", "faceoffs"],
+
+    # Overtime variations
+    "overtime": ["overtime", "ot", "extra time", "sudden death", "shootout", "3 on 3", "3v3"],
+
+    # Crease variations
+    "the crease": ["crease", "the crease", "goal crease", "blue paint", "goalie crease", "in the crease"],
+
+    # Fighting variations
+    "fighting": ["fighting", "fight", "dropping gloves", "scrap", "tilt", "enforcers", "goon", "brawl", "throwing hands"]
+}
+
+# Additional hockey terms that map to explanations
+ADDITIONAL_CONCEPTS = {
+    "breakaway": {
+        "definition": "When a player gets behind all defenders with just the goalie to beat. A high-percentage scoring chance.",
+        "soccer": {
+            "analogy": "Through Ball 1-on-1",
+            "explanation": "Like when a striker gets played through on goal with just the keeper to beat. Pure speed vs positioning.",
+            "key_difference": "Hockey breakaways happen faster - you have 2-3 seconds to shoot."
+        },
+        "nba": {
+            "analogy": "Fast Break Dunk",
+            "explanation": "Like a fast break with a clear path to the rim. It's you vs the last defender (goalie), and you're expected to score.",
+            "key_difference": "NBA dunks are high percentage. Hockey breakaways are actually saved ~65% of the time."
+        },
+        "nfl": {
+            "analogy": "Wide Open Receiver Deep",
+            "explanation": "When a receiver beats his man and has nothing but green grass ahead. Pure execution required.",
+            "key_difference": "NFL receivers catch and run. Hockey players have to beat a goalie."
+        },
+        "mlb": {
+            "analogy": "Grand Slam Opportunity",
+            "explanation": "A huge scoring opportunity that doesn't come often. When you get one, you need to capitalize.",
+            "key_difference": "Grand slams are still only ~15% success. Breakaways are saved less often."
+        }
+    },
+    "deke": {
+        "definition": "A fake or feint move used to deceive the goalie or defender. Short for 'decoy.'",
+        "soccer": {
+            "analogy": "Skill Move / Stepover",
+            "explanation": "Like Ronaldo's stepovers or Neymar's skills - moves to get past defenders and goalies.",
+            "key_difference": "Hockey dekes happen at much higher speed on slippery ice."
+        },
+        "nba": {
+            "analogy": "Crossover / Euro Step",
+            "explanation": "Like AI's crossover or the euro step - moves designed to fake out the defender and create space.",
+            "key_difference": "Hockey dekes often end with a shot attempt, not just beating your man."
+        },
+        "nfl": {
+            "analogy": "Juke Move",
+            "explanation": "Like a running back's juke to make a defender miss. Skill move to create space.",
+            "key_difference": "Football jukes are to avoid tackles. Hockey dekes are to beat the goalie."
+        },
+        "mlb": {
+            "analogy": "Fake Throw by Infielder",
+            "explanation": "That fake throw that freezes the runner. A deceptive move to gain advantage.",
+            "key_difference": "Baseball fakes are rare. Dekes are constant in hockey."
+        }
+    },
+    "slap shot": {
+        "definition": "A powerful shot where the player winds up and slaps the puck. Can reach 100+ mph.",
+        "soccer": {
+            "analogy": "Volley / Thunderbolt",
+            "explanation": "Like a Roberto Carlos free kick or a full volley - maximum power, aiming for pure velocity.",
+            "key_difference": "Slap shots are 100+ mph. Soccer shots max around 80 mph."
+        },
+        "nba": {
+            "analogy": "Tomahawk Dunk",
+            "explanation": "The power move - wind up and throw it down. Slap shots are the statement play of hockey.",
+            "key_difference": "Dunks are close range. Slap shots work from distance."
+        },
+        "nfl": {
+            "analogy": "Hail Mary Throw",
+            "explanation": "A big wind-up, maximum power throw. When you see a player loading up for a slap shot, everyone tenses up.",
+            "key_difference": "Hail Marys are deep throws. Slap shots can be from the blue line."
+        },
+        "mlb": {
+            "analogy": "Full Power Swing",
+            "explanation": "Like going for the fences with a full hack. Maximum power, less control.",
+            "key_difference": "Baseball swings are horizontal. Slap shots are a downward swing that hits ice then puck."
+        }
+    },
+    "wrist shot": {
+        "definition": "A quicker, more accurate shot using wrist movement to snap the puck. Most common shot type.",
+        "soccer": {
+            "analogy": "Placed Shot / Finesse",
+            "explanation": "Like a curling shot into the corner - technique over power. Most goals are scored this way.",
+            "key_difference": "Wrist shots are still 70-90 mph, just more accurate than slap shots."
+        },
+        "nba": {
+            "analogy": "Pull-Up Jumper",
+            "explanation": "The go-to scoring move. Quick release, accurate, can be done on the move.",
+            "key_difference": "Jump shots have arc. Wrist shots are more like line drives."
+        },
+        "nfl": {
+            "analogy": "Quick Slant Pass",
+            "explanation": "Quick release, accurate, effective. Not flashy but gets the job done.",
+            "key_difference": "NFL passes are thrown. Wrist shots are snapped with stick flex."
+        },
+        "mlb": {
+            "analogy": "Line Drive Hit",
+            "explanation": "Contact-focused, going for the gaps. Effective and repeatable.",
+            "key_difference": "Baseball is reaction-based. Wrist shots are player-initiated."
+        }
+    },
+    "one-timer": {
+        "definition": "Shooting the puck directly from a pass without stopping it first. Requires perfect timing.",
+        "soccer": {
+            "analogy": "First-Time Finish",
+            "explanation": "Hitting it first time off a cross or pass. No touch to control - straight into a finish.",
+            "key_difference": "Hockey one-timers are even harder because the puck is flat and fast."
+        },
+        "nba": {
+            "analogy": "Catch and Shoot",
+            "explanation": "Like Klay Thompson catch-and-shoot 3s. No dribble, just receive and fire.",
+            "key_difference": "NBA shooters have more time. One-timers are instantaneous."
+        },
+        "nfl": {
+            "analogy": "Screen Pass TD",
+            "explanation": "Catch in stride and immediately score. All about timing with the passer.",
+            "key_difference": "Screen passes are planned. One-timers require reading the play."
+        },
+        "mlb": {
+            "analogy": "Swinging at First Pitch Fastball",
+            "explanation": "Being ready to attack immediately. No waiting, just react and swing.",
+            "key_difference": "First pitch swings are a choice. One-timers are the play design."
+        }
+    },
+    "assist": {
+        "definition": "A pass that leads directly to a goal. Up to two assists can be awarded per goal.",
+        "soccer": {
+            "analogy": "Assist",
+            "explanation": "Exactly the same concept! The pass before the goal. Hockey awards two assists per goal (primary and secondary).",
+            "key_difference": "Hockey gives two assists. Soccer gives one."
+        },
+        "nba": {
+            "analogy": "Assist",
+            "explanation": "Same thing - the pass that leads to a score. Elite playmakers rack up assists.",
+            "key_difference": "Hockey awards two assists per goal. NBA just one."
+        },
+        "nfl": {
+            "analogy": "QB Gets Credit for TD Pass",
+            "explanation": "The pass that creates the score. Both the passer and receiver get recognition.",
+            "key_difference": "NFL is one-to-one. Hockey has primary and secondary assists."
+        },
+        "mlb": {
+            "analogy": "RBI Situation Setup",
+            "explanation": "Getting on base so someone else can drive you in. Setting up the scorer.",
+            "key_difference": "Baseball doesn't formally track 'assists' for runs."
+        }
+    },
+    "plus minus": {
+        "definition": "A stat tracking if you're on ice when your team scores (+1) or gets scored on (-1). Measures overall impact.",
+        "soccer": {
+            "analogy": "Goal Difference When Playing",
+            "explanation": "Like tracking goal difference only for minutes a player is on the pitch. Good players are usually plus players.",
+            "key_difference": "Soccer doesn't formally track this per-player."
+        },
+        "nba": {
+            "analogy": "Plus/Minus",
+            "explanation": "Exactly the same stat! Tracks point differential when you're on the court. Hockey invented it.",
+            "key_difference": "None - NBA adopted this directly from hockey."
+        },
+        "nfl": {
+            "analogy": "Points For/Against When Playing",
+            "explanation": "Like tracking if your team outscores opponents when you're in the game.",
+            "key_difference": "NFL doesn't track individual plus/minus."
+        },
+        "mlb": {
+            "analogy": "Win Probability Added",
+            "explanation": "A stat measuring if you helped your team win while you were playing.",
+            "key_difference": "WPA is more complex. Plus/minus is simple count."
+        }
+    },
+    "penalty box": {
+        "definition": "Where players sit to serve their penalty time. Also called 'the sin bin.'",
+        "soccer": {
+            "analogy": "Sin Bin (Rugby)",
+            "explanation": "Soccer doesn't have this, but rugby does. A timeout area for rule breakers.",
+            "key_difference": "Soccer uses cards. Hockey uses timed exclusions."
+        },
+        "nba": {
+            "analogy": "Fouled Out (Temporary)",
+            "explanation": "Imagine if fouling out was just for 2-5 minutes instead of permanent.",
+            "key_difference": "NBA fouls out permanently. Hockey penalty box is temporary."
+        },
+        "nfl": {
+            "analogy": "Ejection (But Temporary)",
+            "explanation": "Like getting ejected but you can come back after a few minutes.",
+            "key_difference": "NFL ejections are permanent. Penalty box is timed."
+        },
+        "mlb": {
+            "analogy": "Ejection (But Temporary)",
+            "explanation": "Like if an ejection was just a timeout instead of removal from game.",
+            "key_difference": "MLB ejections are game-long. Penalty box is minutes."
+        }
+    },
+    "slapshot": {
+        "definition": "A powerful shot where the player winds up and slaps the puck. Can reach 100+ mph.",
+        "soccer": {
+            "analogy": "Volley / Thunderbolt",
+            "explanation": "Like a Roberto Carlos free kick or a full volley - maximum power, aiming for pure velocity.",
+            "key_difference": "Slap shots are 100+ mph. Soccer shots max around 80 mph."
+        },
+        "nba": {
+            "analogy": "Tomahawk Dunk",
+            "explanation": "The power move - wind up and throw it down. Slap shots are the statement play of hockey.",
+            "key_difference": "Dunks are close range. Slap shots work from distance."
+        },
+        "nfl": {
+            "analogy": "Hail Mary Throw",
+            "explanation": "A big wind-up, maximum power throw. When you see a player loading up for a slap shot, everyone tenses up.",
+            "key_difference": "Hail Marys are deep throws. Slap shots can be from the blue line."
+        },
+        "mlb": {
+            "analogy": "Full Power Swing",
+            "explanation": "Like going for the fences with a full hack. Maximum power, less control.",
+            "key_difference": "Baseball swings are horizontal. Slap shots are a downward swing that hits ice then puck."
+        }
+    },
+    "goaltender": {
+        "definition": "The player who guards the net. Also called goalie, netminder, or keeper. Only player allowed to use hands to stop puck.",
+        "soccer": {
+            "analogy": "Goalkeeper",
+            "explanation": "Exactly the same role! Guards the net, can use hands/body to stop shots. The last line of defense.",
+            "key_difference": "Hockey goalies wear massive pads and see 30-40 shots per game."
+        },
+        "nba": {
+            "analogy": "Rim Protector",
+            "explanation": "Like a Rudy Gobert who protects the basket. The last line of defense before scoring.",
+            "key_difference": "Rim protectors block shots. Goalies stop 90%+ of them."
+        },
+        "nfl": {
+            "analogy": "Safety (Last Line)",
+            "explanation": "The last player back preventing touchdowns. When all else fails, they have to make the stop.",
+            "key_difference": "Safeties tackle runners. Goalies stop pucks."
+        },
+        "mlb": {
+            "analogy": "Catcher",
+            "explanation": "Specialized defensive position requiring unique equipment. Quarterbacks the defense.",
+            "key_difference": "Catchers receive pitches. Goalies stop shots."
+        }
+    },
+    "zamboni": {
+        "definition": "The ice resurfacing machine that cleans and smooths the ice between periods.",
+        "soccer": {
+            "analogy": "Groundskeeper",
+            "explanation": "Like the grounds crew that maintains the pitch, but a specialized machine for ice.",
+            "key_difference": "Grass grows naturally. Ice needs constant resurfacing."
+        },
+        "nba": {
+            "analogy": "Court Sweepers",
+            "explanation": "Like the people who mop sweat off the court, but a big machine for ice.",
+            "key_difference": "Mopping is quick. Zamboni drives full laps for 15+ minutes."
+        },
+        "nfl": {
+            "analogy": "Field Crew",
+            "explanation": "Like the halftime field maintenance crew. Keeps the playing surface optimal.",
+            "key_difference": "Field work is rare. Zamboni runs every intermission."
+        },
+        "mlb": {
+            "analogy": "Infield Dragger",
+            "explanation": "Like dragging the infield dirt between innings. Regular maintenance.",
+            "key_difference": "Dirt dragging is quick. Zamboni is a 15-minute process."
+        }
+    },
+    "shutout": {
+        "definition": "When a goalie doesn't allow any goals for the entire game. A major achievement.",
+        "soccer": {
+            "analogy": "Clean Sheet",
+            "explanation": "Exactly the same! No goals allowed. Goalies and defenders work toward this.",
+            "key_difference": "None - same concept!"
+        },
+        "nba": {
+            "analogy": "Holding to Under 80",
+            "explanation": "No direct equivalent, but holding a team way below average is similar dominance.",
+            "key_difference": "Basketball always has scoring. Shutouts happen in hockey."
+        },
+        "nfl": {
+            "analogy": "Shutout",
+            "explanation": "Same term! Holding the opponent scoreless is a shutout in both sports.",
+            "key_difference": "None - same concept!"
+        },
+        "mlb": {
+            "analogy": "Complete Game Shutout",
+            "explanation": "Pitcher throwing a full game with no runs allowed. Same idea.",
+            "key_difference": "Pitchers get sole credit. Hockey shutouts credit the whole team too."
+        }
+    },
+    "blue line": {
+        "definition": "The lines that divide the rink into three zones. Crossing it determines offside and zone entries.",
+        "soccer": {
+            "analogy": "Halfway Line",
+            "explanation": "Like the halfway line but there are two (one each direction). Determines offside positioning.",
+            "key_difference": "Soccer's offside is about defenders. Hockey's is about the blue line."
+        },
+        "nba": {
+            "analogy": "Half Court Line",
+            "explanation": "The line that divides the court. You can't go backwards over it in hockey's attacking zone.",
+            "key_difference": "NBA line is midcourt. Hockey has two blue lines creating three zones."
+        },
+        "nfl": {
+            "analogy": "Line of Scrimmage",
+            "explanation": "A line that governs the game structure. But hockey's is fixed, not changing each play.",
+            "key_difference": "NFL line moves. Hockey lines are permanent."
+        },
+        "mlb": {
+            "analogy": "Bases/Basepaths",
+            "explanation": "Markers that define territory and where you can be. Fixed positions on the field.",
+            "key_difference": "Bases are points. Blue lines are full lines across the ice."
+        }
+    },
+    "hockey stick": {
+        "definition": "The main equipment - a long stick with a curved blade used to shoot and handle the puck.",
+        "soccer": {
+            "analogy": "No Equivalent (Feet/Head)",
+            "explanation": "Soccer uses feet and head. Hockey uses a specialized stick. The curve on the blade affects shots like boot tech affects kicks.",
+            "key_difference": "Soccer is natural body. Hockey requires the stick tool."
+        },
+        "nba": {
+            "analogy": "No Equivalent (Hands)",
+            "explanation": "Basketball is hands-only. The hockey stick is like if you could only use a bat to score.",
+            "key_difference": "NBA is body contact with ball. Hockey is stick-to-puck."
+        },
+        "nfl": {
+            "analogy": "No Equivalent",
+            "explanation": "Football uses hands and feet. Hockey is entirely stick-dependent for offense.",
+            "key_difference": "NFL is body contact. Hockey requires the stick."
+        },
+        "mlb": {
+            "analogy": "Bat",
+            "explanation": "The primary tool for offense. Different players prefer different stick curves like batters prefer bat weights.",
+            "key_difference": "Bats just hit. Sticks pass, shoot, and handle."
+        }
+    },
+    "puck": {
+        "definition": "A hard rubber disc that players shoot, pass, and score with. About 3 inches in diameter.",
+        "soccer": {
+            "analogy": "Football/Ball",
+            "explanation": "The thing you're trying to put in the net! But it's flat and slides on ice instead of rolling.",
+            "key_difference": "Pucks slide flat. Soccer balls roll and bounce."
+        },
+        "nba": {
+            "analogy": "Basketball",
+            "explanation": "The scoring object. But pucks don't bounce - they slide and can be hidden by players.",
+            "key_difference": "Basketballs are big and visible. Pucks are small and fast."
+        },
+        "nfl": {
+            "analogy": "Football",
+            "explanation": "The thing you move down the ice/field. Flat and faster than any football throw.",
+            "key_difference": "Footballs are thrown. Pucks are shot at 100+ mph."
+        },
+        "mlb": {
+            "analogy": "Baseball",
+            "explanation": "Small, hard, and fast. Pucks go even faster than pitched baseballs.",
+            "key_difference": "Baseballs are round. Pucks are flat discs."
+        }
+    },
+    "stanley cup": {
+        "definition": "The NHL championship trophy - the oldest professional sports trophy in North America (1893).",
+        "soccer": {
+            "analogy": "Champions League / FA Cup",
+            "explanation": "The ultimate prize. The Stanley Cup has unique traditions - each player gets it for a day, names engraved on it.",
+            "key_difference": "Stanley Cup is passed around. Soccer trophies stay with the club."
+        },
+        "nba": {
+            "analogy": "Larry O'Brien Trophy",
+            "explanation": "The championship trophy, but with way more history and tradition. Players get their names on it forever.",
+            "key_difference": "Names are engraved on Stanley Cup. NBA trophy doesn't have names."
+        },
+        "nfl": {
+            "analogy": "Lombardi Trophy",
+            "explanation": "The championship prize. But teams get a new Lombardi each year - the Stanley Cup is THE same cup since 1893.",
+            "key_difference": "Stanley Cup is one trophy forever. New Lombardi made each year."
+        },
+        "mlb": {
+            "analogy": "Commissioner's Trophy",
+            "explanation": "The championship prize. Stanley Cup tradition is unique - each player gets it for a day to celebrate.",
+            "key_difference": "Stanley Cup has player names. Commissioner's Trophy doesn't."
+        }
+    },
+    "center ice": {
+        "definition": "The middle of the rink where face-offs start each period and after goals.",
+        "soccer": {
+            "analogy": "Center Circle",
+            "explanation": "The middle of the pitch where kickoffs happen. Same concept for starting play.",
+            "key_difference": "Soccer kickoffs are kicks. Hockey is face-off battles."
+        },
+        "nba": {
+            "analogy": "Center Court",
+            "explanation": "The middle where tip-offs happen. Iconic location for game starts.",
+            "key_difference": "Tip-off happens once. Face-offs at center ice happen after every goal."
+        },
+        "nfl": {
+            "analogy": "50-Yard Line",
+            "explanation": "The middle of the field. Neutral territory before the action starts.",
+            "key_difference": "50-yard line is territory. Center ice is for starting play."
+        },
+        "mlb": {
+            "analogy": "Pitcher's Mound",
+            "explanation": "The center of action where play begins. The focal point.",
+            "key_difference": "Mound is for one player. Center ice is for face-off battles."
+        }
+    },
+    "point": {
+        "definition": "In hockey stats, 1 goal = 1 point, 1 assist = 1 point. Also refers to the defenseman position at the blue line on power plays.",
+        "soccer": {
+            "analogy": "Goal Contributions",
+            "explanation": "Goals + assists combined. The total offensive impact stat.",
+            "key_difference": "Hockey counts two assists per goal. Soccer just one."
+        },
+        "nba": {
+            "analogy": "Points (Scoring)",
+            "explanation": "Different meaning - NBA points are from baskets. Hockey points are goals + assists.",
+            "key_difference": "NBA points = scoring. Hockey points = goals + assists."
+        },
+        "nfl": {
+            "analogy": "Touchdowns + Assists",
+            "explanation": "If you counted TDs and the passes that led to them equally.",
+            "key_difference": "NFL doesn't track points this way."
+        },
+        "mlb": {
+            "analogy": "Runs + RBIs",
+            "explanation": "Production stats combined. Measures total offensive contribution.",
+            "key_difference": "Baseball has separate stats. Hockey combines into points."
+        }
+    }
+}
+
+# =============================================================================
+# PLAYER ARCHETYPES - For generating comparisons for any NHL player
+# =============================================================================
+
+PLAYER_ARCHETYPES = {
+    "elite_center": {
+        "description": "Elite two-way center, franchise cornerstone",
+        "soccer": {"player": "Kevin De Bruyne", "team": "Manchester City", "style": "Elite playmaker who controls the game from the middle"},
+        "nba": {"player": "Nikola Jokic", "team": "Denver Nuggets", "style": "Complete player who makes everyone around them better"},
+        "nfl": {"player": "Lamar Jackson", "team": "Baltimore Ravens", "style": "Dynamic playmaker who can do it all"},
+        "mlb": {"player": "Mookie Betts", "team": "LA Dodgers", "style": "Five-tool player, elite at everything"}
+    },
+    "goal_scorer": {
+        "description": "Pure goal scorer with lethal shot",
+        "soccer": {"player": "Erling Haaland", "team": "Manchester City", "style": "Elite finisher, born goal scorer"},
+        "nba": {"player": "Kevin Durant", "team": "Phoenix Suns", "style": "Pure scorer, impossible to stop when hot"},
+        "nfl": {"player": "Tyreek Hill", "team": "Miami Dolphins", "style": "Big play threat, scores from anywhere"},
+        "mlb": {"player": "Aaron Judge", "team": "NY Yankees", "style": "Power hitter, home run threat every at-bat"}
+    },
+    "playmaker": {
+        "description": "Elite passer and setup man",
+        "soccer": {"player": "Martin Odegaard", "team": "Arsenal", "style": "Creative genius who sees passes others don't"},
+        "nba": {"player": "Chris Paul", "team": "San Antonio Spurs", "style": "Point god, elite court vision and passing"},
+        "nfl": {"player": "Travis Kelce", "team": "Kansas City Chiefs", "style": "Security blanket who always finds the open space"},
+        "mlb": {"player": "Jose Altuve", "team": "Houston Astros", "style": "Table setter, always getting on base"}
+    },
+    "power_forward": {
+        "description": "Physical, hard-nosed player who scores and hits",
+        "soccer": {"player": "Darwin Nunez", "team": "Liverpool", "style": "Physical striker who bullies defenders"},
+        "nba": {"player": "Giannis Antetokounmpo", "team": "Milwaukee Bucks", "style": "Physical freak who dominates through power"},
+        "nfl": {"player": "Derrick Henry", "team": "Tennessee Titans", "style": "Bruising runner who punishes defenders"},
+        "mlb": {"player": "Yordan Alvarez", "team": "Houston Astros", "style": "Power bat who crushes the ball"}
+    },
+    "defensive_forward": {
+        "description": "Responsible two-way forward, shutdown role",
+        "soccer": {"player": "N'Golo Kante", "team": "Al-Ittihad", "style": "Tireless worker who wins the ball everywhere"},
+        "nba": {"player": "Marcus Smart", "team": "Memphis Grizzlies", "style": "Defensive specialist who does the dirty work"},
+        "nfl": {"player": "Nick Bosa", "team": "San Francisco 49ers", "style": "Disruptive defender who impacts every play"},
+        "mlb": {"player": "Andrelton Simmons", "team": "Free Agent", "style": "Elite defender, Gold Glove caliber"}
+    },
+    "offensive_defenseman": {
+        "description": "Defenseman who quarterbacks the offense",
+        "soccer": {"player": "Trent Alexander-Arnold", "team": "Liverpool", "style": "Attacking fullback who creates from deep"},
+        "nba": {"player": "Draymond Green", "team": "Golden State Warriors", "style": "Defensive anchor who runs the offense"},
+        "nfl": {"player": "Micah Parsons", "team": "Dallas Cowboys", "style": "Dynamic defender who makes plays everywhere"},
+        "mlb": {"player": "Francisco Lindor", "team": "NY Mets", "style": "Elite defender with offensive pop"}
+    },
+    "shutdown_defenseman": {
+        "description": "Stay-at-home defenseman, defensive specialist",
+        "soccer": {"player": "Virgil van Dijk", "team": "Liverpool", "style": "Dominant defender who shuts down attackers"},
+        "nba": {"player": "Rudy Gobert", "team": "Minnesota Timberwolves", "style": "Defensive anchor, protects the paint"},
+        "nfl": {"player": "Aaron Donald", "team": "LA Rams (Retired)", "style": "Dominant force who disrupts everything"},
+        "mlb": {"player": "Matt Chapman", "team": "San Francisco Giants", "style": "Elite defender, vacuum at the position"}
+    },
+    "starting_goalie": {
+        "description": "Starting goaltender, the last line of defense",
+        "soccer": {"player": "Alisson Becker", "team": "Liverpool", "style": "Elite shot-stopper, commands the box"},
+        "nba": {"player": "Rudy Gobert", "team": "Minnesota Timberwolves", "style": "Rim protector, alters every shot"},
+        "nfl": {"player": "Minkah Fitzpatrick", "team": "Pittsburgh Steelers", "style": "Last line of defense, ball hawk"},
+        "mlb": {"player": "J.T. Realmuto", "team": "Philadelphia Phillies", "style": "Elite catcher, controls the game"}
+    },
+    "young_star": {
+        "description": "Young phenom, rising star",
+        "soccer": {"player": "Lamine Yamal", "team": "Barcelona", "style": "Teenage sensation with unlimited potential"},
+        "nba": {"player": "Victor Wembanyama", "team": "San Antonio Spurs", "style": "Generational talent, franchise-changing"},
+        "nfl": {"player": "C.J. Stroud", "team": "Houston Texans", "style": "Young star performing beyond his years"},
+        "mlb": {"player": "Elly De La Cruz", "team": "Cincinnati Reds", "style": "Electric young talent, game-changer"}
+    },
+    "veteran_leader": {
+        "description": "Experienced veteran, locker room leader",
+        "soccer": {"player": "Luka Modric", "team": "Real Madrid", "style": "Ageless leader who controls the game"},
+        "nba": {"player": "LeBron James", "team": "Los Angeles Lakers", "style": "Veteran leader still performing at elite level"},
+        "nfl": {"player": "Aaron Rodgers", "team": "New York Jets", "style": "Experienced leader, seen it all"},
+        "mlb": {"player": "Clayton Kershaw", "team": "Los Angeles Dodgers", "style": "Veteran ace, team leader"}
+    },
+    "grinder": {
+        "description": "Energy player, hard worker, 4th line role",
+        "soccer": {"player": "James Milner", "team": "Brighton", "style": "Utility player, does everything asked"},
+        "nba": {"player": "Patrick Beverley", "team": "Various", "style": "Energy guy, does the dirty work"},
+        "nfl": {"player": "Cordarrelle Patterson", "team": "Pittsburgh Steelers", "style": "Versatile role player, special teams ace"},
+        "mlb": {"player": "Kiké Hernandez", "team": "LA Dodgers", "style": "Super utility, postseason hero"}
+    },
+    "enforcer": {
+        "description": "Physical presence, protects teammates",
+        "soccer": {"player": "Roy Keane (Classic)", "team": "Retired", "style": "Intimidator who protected teammates"},
+        "nba": {"player": "Draymond Green", "team": "Golden State Warriors", "style": "Physical, emotional leader, protector"},
+        "nfl": {"player": "Ray Lewis (Classic)", "team": "Retired", "style": "Intimidating presence, enforcer mentality"},
+        "mlb": {"player": "Chase Utley (Classic)", "team": "Retired", "style": "Hard-nosed, didn't back down"}
+    }
+}
+
+# =============================================================================
 # HELPER FUNCTIONS
 # =============================================================================
 
 def get_all_concepts():
-    """Return list of all concept names"""
-    return list(HOCKEY_CONCEPTS.keys())
+    """Return list of all concept names including additional concepts"""
+    return list(HOCKEY_CONCEPTS.keys()) + list(ADDITIONAL_CONCEPTS.keys())
 
 def get_all_players():
-    """Return list of all player names"""
+    """Return list of all player names in our database"""
     return list(PLAYER_COMPARISONS.keys())
 
+def similarity_score(a, b):
+    """Calculate string similarity using SequenceMatcher"""
+    return SequenceMatcher(None, a.lower(), b.lower()).ratio()
+
+def find_concept_match(query):
+    """
+    Find the best matching concept for a query using synonyms and fuzzy matching.
+    Returns (concept_name, data_dict) or (None, None) if no match.
+    """
+    query = query.lower().strip()
+
+    # 1. Check exact match in main concepts
+    if query in HOCKEY_CONCEPTS:
+        return query, HOCKEY_CONCEPTS[query]
+
+    # 2. Check exact match in additional concepts
+    if query in ADDITIONAL_CONCEPTS:
+        return query, ADDITIONAL_CONCEPTS[query]
+
+    # 3. Check synonym mappings
+    for concept, synonyms in CONCEPT_SYNONYMS.items():
+        if query in [s.lower() for s in synonyms]:
+            if concept in HOCKEY_CONCEPTS:
+                return concept, HOCKEY_CONCEPTS[concept]
+            elif concept in ADDITIONAL_CONCEPTS:
+                return concept, ADDITIONAL_CONCEPTS[concept]
+
+    # 4. Fuzzy match against all concepts and their definitions
+    best_match = None
+    best_score = 0.0
+
+    all_concepts = {**HOCKEY_CONCEPTS, **ADDITIONAL_CONCEPTS}
+
+    for concept, data in all_concepts.items():
+        # Check concept name similarity
+        score = similarity_score(query, concept)
+        if score > best_score:
+            best_score = score
+            best_match = (concept, data)
+
+        # Check if query is in definition
+        if query in data.get('definition', '').lower():
+            if score < 0.5:  # Boost score if found in definition
+                score = 0.6
+                if score > best_score:
+                    best_score = score
+                    best_match = (concept, data)
+
+    # 5. Check synonyms with fuzzy matching
+    for concept, synonyms in CONCEPT_SYNONYMS.items():
+        for synonym in synonyms:
+            score = similarity_score(query, synonym)
+            if score > best_score:
+                best_score = score
+                if concept in HOCKEY_CONCEPTS:
+                    best_match = (concept, HOCKEY_CONCEPTS[concept])
+                elif concept in ADDITIONAL_CONCEPTS:
+                    best_match = (concept, ADDITIONAL_CONCEPTS[concept])
+
+    # Return match if score is reasonable
+    if best_score >= 0.5 and best_match:
+        return best_match
+
+    return None, None
+
 def search_concept(query):
-    """Search for a concept by keyword"""
+    """Search for concepts by keyword - returns list of matching concept names"""
     query = query.lower()
     matches = []
-    for concept, data in HOCKEY_CONCEPTS.items():
-        if query in concept or query in data['definition'].lower():
+
+    all_concepts = {**HOCKEY_CONCEPTS, **ADDITIONAL_CONCEPTS}
+
+    for concept, data in all_concepts.items():
+        if query in concept or query in data.get('definition', '').lower():
             matches.append(concept)
+
+    # Also check synonyms
+    for concept, synonyms in CONCEPT_SYNONYMS.items():
+        if any(query in s.lower() for s in synonyms):
+            if concept not in matches:
+                matches.append(concept)
+
     return matches
 
 def search_player(query):
-    """Search for a player by name"""
+    """Search for a player in our curated database"""
     query = query.lower()
     matches = []
     for player, data in PLAYER_COMPARISONS.items():
         if query in player:
             matches.append(player)
     return matches
+
+# =============================================================================
+# NHL API FUNCTIONS - For dynamic player lookup
+# =============================================================================
+
+def fetch_nhl_teams():
+    """Fetch all NHL teams from the API"""
+    try:
+        response = requests.get(f"{NHL_API_BASE}/standings/now", timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            teams = []
+            for standing in data.get('standings', []):
+                teams.append({
+                    'abbrev': standing.get('teamAbbrev', {}).get('default', ''),
+                    'name': standing.get('teamName', {}).get('default', ''),
+                    'commonName': standing.get('teamCommonName', {}).get('default', '')
+                })
+            return teams
+    except:
+        pass
+    return []
+
+def fetch_team_roster(team_abbrev):
+    """Fetch roster for a specific team"""
+    try:
+        response = requests.get(f"{NHL_API_BASE}/roster/{team_abbrev}/current", timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+            players = []
+
+            for pos in ['forwards', 'defensemen', 'goalies']:
+                for player in data.get(pos, []):
+                    players.append({
+                        'id': player.get('id'),
+                        'name': f"{player.get('firstName', {}).get('default', '')} {player.get('lastName', {}).get('default', '')}",
+                        'position': player.get('positionCode', ''),
+                        'number': player.get('sweaterNumber', ''),
+                        'team': team_abbrev
+                    })
+            return players
+    except:
+        pass
+    return []
+
+def fetch_player_details(player_id):
+    """Fetch detailed player info from NHL API"""
+    try:
+        response = requests.get(f"{NHL_API_BASE}/player/{player_id}/landing", timeout=5)
+        if response.status_code == 200:
+            data = response.json()
+
+            # Extract key info
+            first_name = data.get('firstName', {}).get('default', '')
+            last_name = data.get('lastName', {}).get('default', '')
+            position = data.get('position', 'F')
+            team = data.get('currentTeamAbbrev', '')
+            team_name = data.get('fullTeamName', {}).get('default', '')
+
+            # Get age from birth date
+            birth_date = data.get('birthDate', '')
+            age = 0
+            if birth_date:
+                from datetime import datetime
+                try:
+                    birth = datetime.strptime(birth_date, '%Y-%m-%d')
+                    age = (datetime.now() - birth).days // 365
+                except:
+                    age = 25  # Default
+
+            # Get career stats
+            career_stats = data.get('featuredStats', {}).get('regularSeason', {}).get('career', {})
+            goals = career_stats.get('goals', 0)
+            assists = career_stats.get('assists', 0)
+            points = career_stats.get('points', 0)
+            games = career_stats.get('gamesPlayed', 0)
+
+            # Get draft info
+            draft = data.get('draftDetails', {})
+            draft_round = draft.get('round', 0)
+            draft_pick = draft.get('pickInRound', 0)
+            draft_year = draft.get('year', 0)
+            draft_overall = draft.get('overallPick', 0)
+
+            # Height/Weight
+            height = data.get('heightInInches', 72)
+            weight = data.get('weightInPounds', 200)
+
+            return {
+                'name': f"{first_name} {last_name}",
+                'position': position,
+                'team': team,
+                'team_name': team_name,
+                'age': age,
+                'goals': goals,
+                'assists': assists,
+                'points': points,
+                'games': games,
+                'draft_year': draft_year,
+                'draft_round': draft_round,
+                'draft_pick': draft_pick,
+                'draft_overall': draft_overall,
+                'height': height,
+                'weight': weight,
+                'ppg': round(points / games, 2) if games > 0 else 0
+            }
+    except Exception as e:
+        print(f"Error fetching player {player_id}: {e}")
+    return None
+
+def search_nhl_player(query):
+    """Search for an NHL player across all teams"""
+    query = query.lower().strip()
+
+    # Get all teams
+    teams = fetch_nhl_teams()
+    if not teams:
+        # Fallback to common team abbreviations
+        teams = [
+            {'abbrev': 'SJS'}, {'abbrev': 'LAK'}, {'abbrev': 'ANA'}, {'abbrev': 'VGK'},
+            {'abbrev': 'EDM'}, {'abbrev': 'CGY'}, {'abbrev': 'VAN'}, {'abbrev': 'SEA'},
+            {'abbrev': 'COL'}, {'abbrev': 'ARI'}, {'abbrev': 'MIN'}, {'abbrev': 'STL'},
+            {'abbrev': 'CHI'}, {'abbrev': 'NSH'}, {'abbrev': 'DAL'}, {'abbrev': 'WPG'},
+            {'abbrev': 'DET'}, {'abbrev': 'CBJ'}, {'abbrev': 'TOR'}, {'abbrev': 'OTT'},
+            {'abbrev': 'MTL'}, {'abbrev': 'BOS'}, {'abbrev': 'BUF'}, {'abbrev': 'FLA'},
+            {'abbrev': 'TBL'}, {'abbrev': 'CAR'}, {'abbrev': 'WSH'}, {'abbrev': 'PHI'},
+            {'abbrev': 'PIT'}, {'abbrev': 'NYR'}, {'abbrev': 'NYI'}, {'abbrev': 'NJD'}
+        ]
+
+    matches = []
+
+    for team in teams:
+        abbrev = team.get('abbrev', '')
+        if not abbrev:
+            continue
+
+        roster = fetch_team_roster(abbrev)
+        for player in roster:
+            player_name = player.get('name', '').lower()
+            if query in player_name or similarity_score(query, player_name) > 0.7:
+                matches.append(player)
+
+    return matches
+
+def determine_player_archetype(player_info):
+    """Determine the best archetype for a player based on their stats and position"""
+    position = player_info.get('position', 'C')
+    age = player_info.get('age', 25)
+    ppg = player_info.get('ppg', 0)
+    games = player_info.get('games', 0)
+    goals = player_info.get('goals', 0)
+    assists = player_info.get('assists', 0)
+    draft_overall = player_info.get('draft_overall', 100)
+
+    # Goalie
+    if position == 'G':
+        return 'starting_goalie'
+
+    # Defenseman
+    if position == 'D':
+        if ppg > 0.6:
+            return 'offensive_defenseman'
+        else:
+            return 'shutdown_defenseman'
+
+    # Forwards
+    # Young star (under 23, high draft pick or high PPG)
+    if age <= 23 and (draft_overall <= 10 or ppg > 0.8):
+        return 'young_star'
+
+    # Veteran leader (over 32, significant games)
+    if age >= 32 and games > 500:
+        return 'veteran_leader'
+
+    # Elite center (high PPG, plays center)
+    if position == 'C' and ppg > 0.9:
+        return 'elite_center'
+
+    # Goal scorer (goals > assists significantly)
+    if goals > 0 and goals > assists * 1.2:
+        return 'goal_scorer'
+
+    # Playmaker (assists > goals significantly)
+    if assists > 0 and assists > goals * 1.3:
+        return 'playmaker'
+
+    # Power forward (bigger player, moderate scoring)
+    if player_info.get('weight', 200) > 210 and ppg > 0.3:
+        return 'power_forward'
+
+    # Defensive forward (low ppg, still gets ice time)
+    if ppg < 0.4 and games > 100:
+        return 'defensive_forward'
+
+    # Grinder (4th line type)
+    if ppg < 0.3:
+        return 'grinder'
+
+    # Default to goal scorer for forwards
+    return 'goal_scorer'
+
+def generate_player_comparison(player_info):
+    """Generate cross-sport comparisons for any NHL player"""
+    archetype = determine_player_archetype(player_info)
+    arch_data = PLAYER_ARCHETYPES.get(archetype, PLAYER_ARCHETYPES['goal_scorer'])
+
+    name = player_info.get('name', 'Unknown')
+    team = player_info.get('team_name', player_info.get('team', ''))
+    position = player_info.get('position', '')
+    age = player_info.get('age', 0)
+    ppg = player_info.get('ppg', 0)
+    goals = player_info.get('goals', 0)
+    assists = player_info.get('assists', 0)
+    draft_overall = player_info.get('draft_overall', 0)
+
+    # Build position description
+    pos_map = {'C': 'Center', 'L': 'Left Wing', 'R': 'Right Wing', 'D': 'Defenseman', 'G': 'Goaltender'}
+    full_position = pos_map.get(position, position)
+
+    # Build style description
+    style_parts = []
+    if draft_overall > 0 and draft_overall <= 5:
+        style_parts.append(f"Top-5 pick (#{draft_overall} overall)")
+    elif draft_overall > 0 and draft_overall <= 15:
+        style_parts.append(f"First-round pick (#{draft_overall} overall)")
+
+    if ppg > 1.0:
+        style_parts.append("elite scorer")
+    elif ppg > 0.7:
+        style_parts.append("strong offensive player")
+    elif ppg > 0.4:
+        style_parts.append("solid contributor")
+    else:
+        style_parts.append("role player")
+
+    style_parts.append(arch_data['description'])
+
+    # Build accolades
+    accolades_parts = []
+    if goals > 0:
+        accolades_parts.append(f"{goals} career goals")
+    if assists > 0:
+        accolades_parts.append(f"{assists} career assists")
+    if player_info.get('games', 0) > 500:
+        accolades_parts.append(f"{player_info.get('games')}+ games played")
+
+    return {
+        'position': full_position,
+        'team': team,
+        'age': age,
+        'style': ', '.join(style_parts),
+        'accolades': ', '.join(accolades_parts) if accolades_parts else "Current NHL player",
+        'archetype': archetype,
+        'soccer': {
+            'player': arch_data['soccer']['player'],
+            'team': arch_data['soccer']['team'],
+            'explanation': f"{name} plays like {arch_data['soccer']['player']} - {arch_data['soccer']['style']}. Both are {arch_data['description'].lower()}s who impact the game in similar ways."
+        },
+        'nba': {
+            'player': arch_data['nba']['player'],
+            'team': arch_data['nba']['team'],
+            'explanation': f"The NBA equivalent is {arch_data['nba']['player']} - {arch_data['nba']['style']}. Like {name}, they bring a {arch_data['description'].lower()} approach to their team."
+        },
+        'nfl': {
+            'player': arch_data['nfl']['player'],
+            'team': arch_data['nfl']['team'],
+            'explanation': f"Think of {arch_data['nfl']['player']} - {arch_data['nfl']['style']}. {name} fills a similar role as a {arch_data['description'].lower()}."
+        },
+        'mlb': {
+            'player': arch_data['mlb']['player'],
+            'team': arch_data['mlb']['team'],
+            'explanation': f"In baseball terms, {name} is like {arch_data['mlb']['player']} - {arch_data['mlb']['style']}. Both are {arch_data['description'].lower()}s."
+        }
+    }
+
+# =============================================================================
+# GENERAL HOCKEY Q&A - For questions that don't match specific concepts
+# =============================================================================
+
+GENERAL_HOCKEY_QA = {
+    "periods": {
+        "question_keywords": ["period", "periods", "how long", "quarters", "halves", "game length"],
+        "answer": "Hockey has 3 periods of 20 minutes each (60 minutes total), with 18-minute intermissions between periods.",
+        "soccer": "Unlike soccer's two 45-minute halves, hockey has three 20-minute periods. The intermissions allow for ice resurfacing.",
+        "nba": "Similar to quarters in basketball, but hockey has 3 periods instead of 4. Each period is 20 minutes of game time.",
+        "nfl": "Like football quarters but only 3 of them. The clock stops frequently for stoppages, so games last about 2.5 hours total.",
+        "mlb": "Unlike baseball's 9 innings, hockey has 3 set periods. There's always a guaranteed 60 minutes of play (barring overtime)."
+    },
+    "roster": {
+        "question_keywords": ["roster", "players", "how many", "team size", "lineup", "skaters"],
+        "answer": "Teams dress 20 players for a game: 12 forwards (4 lines of 3), 6 defensemen (3 pairs), and 2 goalies. Only 6 players are on ice at once (5 skaters + 1 goalie).",
+        "soccer": "Like soccer's 11 on the pitch, hockey has 6 on the ice. But hockey has unlimited substitutions happening constantly.",
+        "nba": "Similar to 5 players on court, hockey has 5 skaters plus a goalie. Teams rotate lines every 45 seconds.",
+        "nfl": "Like how NFL rotates offensive/defensive units, hockey rotates 'lines' - but the changes happen during live play.",
+        "mlb": "Unlike baseball's 9 fixed positions, hockey players rotate in and out constantly. Same positions, different personnel."
+    },
+    "scoring": {
+        "question_keywords": ["score", "scoring", "points", "goals per game", "high scoring", "low scoring"],
+        "answer": "NHL games typically see 5-7 total goals. A 3-2 or 4-3 game is common. Shutouts (0 goals) happen but are notable achievements.",
+        "soccer": "More goals than soccer on average. A typical NHL game has 5-6 total goals compared to soccer's 2-3.",
+        "nba": "Much lower scoring than basketball. A hat trick (3 goals) by one player is celebrated; NBA players score 20+ routinely.",
+        "nfl": "Similar scoring rhythm to football touchdowns. 3-4 goals per team is a solid offensive performance.",
+        "mlb": "More consistent scoring than baseball. You rarely see 10-1 blowouts in hockey like you do in MLB."
+    },
+    "season": {
+        "question_keywords": ["season", "games", "how many games", "schedule", "playoffs"],
+        "answer": "The NHL regular season is 82 games (October-April). 16 teams make the playoffs, which run April-June with best-of-7 series.",
+        "soccer": "Longer than Premier League's 38 games. NHL plays 82 games plus potentially 28 playoff games.",
+        "nba": "Same 82-game regular season as NBA. Playoffs are also best-of-7, can go to 4 rounds.",
+        "nfl": "Much longer than NFL's 17 games. Hockey players play almost daily at times during the season.",
+        "mlb": "Shorter than MLB's 162 games but still a marathon. The Stanley Cup Playoffs are legendary for intensity."
+    },
+    "positions": {
+        "question_keywords": ["position", "positions", "forward", "defense", "wing", "centre", "center"],
+        "answer": "Hockey has 3 forwards (Left Wing, Center, Right Wing), 2 Defensemen, and 1 Goalie on the ice. Centers take faceoffs, wings play the sides, D-men protect the goal.",
+        "soccer": "Think of it like: Wings = Wingers, Center = Midfielder, Defense = Center Backs, Goalie = Goalkeeper.",
+        "nba": "Center is like a point guard (playmaker). Wings are like shooting guards. Defensemen are like power forwards protecting the paint.",
+        "nfl": "Centers are like quarterbacks (run the offense). Wings are receivers. Defensemen are linebackers. Goalie is the last safety.",
+        "mlb": "Different structure, but Center = shortstop (controls the middle), Wings = outfielders, Defense = corner infielders."
+    },
+    "equipment": {
+        "question_keywords": ["equipment", "gear", "pads", "helmet", "skates", "what do they wear"],
+        "answer": "Players wear: helmet with visor, shoulder pads, elbow pads, gloves, pants with hip/thigh pads, shin guards, and skates. Goalies wear even more protection.",
+        "soccer": "Much more equipment than soccer. Hockey players are padded like NFL players but also on skates.",
+        "nba": "Way more gear than basketball. The puck is hard rubber at 100mph, so protection is essential.",
+        "nfl": "Similar padding philosophy to football. Helmet, shoulder pads, but also specialized skates and a stick.",
+        "mlb": "Think of goalie equipment like catcher's gear but even more. Skaters wear pads like football players."
+    },
+    "rink": {
+        "question_keywords": ["rink", "ice", "size", "arena", "how big", "dimensions"],
+        "answer": "NHL rinks are 200 feet long by 85 feet wide. The ice is kept at 22°F (-5.5°C). Boards surround the ice with glass/plexiglas above.",
+        "soccer": "Much smaller than a soccer pitch. Hockey rinks are enclosed by boards, so the puck never goes out of play (except over the glass).",
+        "nba": "Slightly bigger than an NBA court. The boards create a unique enclosed playing surface.",
+        "nfl": "About 1/5 the length of a football field. The compact space makes the game extremely fast.",
+        "mlb": "Enclosed unlike a baseball diamond. No foul territory - everything is in play off the boards."
+    },
+    "rules": {
+        "question_keywords": ["rules", "basic rules", "how to play", "objective", "goal of the game"],
+        "answer": "Score more goals than the opponent in 60 minutes. Use sticks to pass/shoot the puck. Various rules prevent dangerous play. If tied, overtime and/or shootout.",
+        "soccer": "Same basic objective as soccer - put the ball (puck) in the net more than the other team.",
+        "nba": "Like basketball, it's about scoring more than the opponent. But goals are harder - average is 3 per team per game.",
+        "nfl": "Like football's objective but continuous play. No downs or possessions - just flowing action with line changes.",
+        "mlb": "Unlike baseball's turn-based play, hockey is continuous. Both teams attack and defend simultaneously."
+    },
+    "salary cap": {
+        "question_keywords": ["salary", "cap", "money", "contracts", "how much", "paid"],
+        "answer": "The NHL has a hard salary cap (around $83.5 million in 2024-25). All teams must stay under this limit, creating parity.",
+        "soccer": "Unlike Premier League with no cap, NHL has strict spending limits. Every team operates on similar budgets.",
+        "nba": "Similar to NBA's cap system but stricter. No luxury tax - you simply can't exceed the cap.",
+        "nfl": "Very similar to NFL's hard cap. Teams must manage contracts carefully to build competitive rosters.",
+        "mlb": "Unlike MLB's luxury tax system, NHL teams MUST stay under the cap. No buying championships."
+    },
+    "draft": {
+        "question_keywords": ["draft", "drafted", "prospects", "lottery", "picks"],
+        "answer": "The NHL Draft has 7 rounds. The Draft Lottery determines the top picks, with worse teams having better odds (but not guaranteed). Top prospects are usually 18 years old.",
+        "soccer": "Unlike soccer's transfer system, NHL uses a draft like American sports. Teams select exclusive rights to young players.",
+        "nba": "Very similar to NBA draft but 7 rounds instead of 2. Lottery system for bottom teams.",
+        "nfl": "Similar to NFL draft but players come from junior hockey leagues, not college.",
+        "mlb": "Like MLB draft but shorter. Players are usually NHL-ready within 1-3 years, not 3-5 like baseball."
+    },
+    "minor leagues": {
+        "question_keywords": ["minor league", "ahl", "farm team", "development", "juniors"],
+        "answer": "The AHL (American Hockey League) is the NHL's primary minor league. Teams also have players in the ECHL and junior leagues (OHL, WHL, QMJHL).",
+        "soccer": "Like how Premier League clubs have academy systems and loan players out. The AHL is the equivalent of the Championship level.",
+        "nba": "Similar to the G-League. Top prospects develop in the AHL before getting NHL roster spots.",
+        "nfl": "Like practice squad players, but they play real games in the AHL. More development time than NFL.",
+        "mlb": "Similar to baseball's minor league system (AAA, AA, etc.). The AHL is like Triple-A."
+    },
+    "trades": {
+        "question_keywords": ["trade", "trades", "deadline", "traded", "deals"],
+        "answer": "Teams can trade players and draft picks. The Trade Deadline is in early March. Trades can include cap retention and conditional picks.",
+        "soccer": "Unlike soccer's transfer windows, NHL trades happen anytime until the deadline. No transfer fees - just player/pick swaps.",
+        "nba": "Very similar to NBA trades. Salary matching is important due to the cap.",
+        "nfl": "Like NFL trades but more common. Hockey teams frequently move players, especially at the deadline.",
+        "mlb": "Similar deadline concept. Contenders load up for playoff runs by trading prospects for veterans."
+    }
+}
+
+def find_general_answer(query):
+    """Find a general hockey answer for common questions"""
+    query = query.lower()
+
+    for topic, qa_data in GENERAL_HOCKEY_QA.items():
+        for keyword in qa_data['question_keywords']:
+            if keyword in query:
+                return {
+                    'topic': topic,
+                    'answer': qa_data['answer'],
+                    'soccer': qa_data.get('soccer', ''),
+                    'nba': qa_data.get('nba', ''),
+                    'nfl': qa_data.get('nfl', ''),
+                    'mlb': qa_data.get('mlb', '')
+                }
+
+    return None
 
 # =============================================================================
 # ROUTES
@@ -590,84 +1616,146 @@ def index():
 def list_concepts():
     """Return list of all concepts"""
     return jsonify({
-        'concepts': get_all_concepts()
+        'concepts': get_all_concepts(),
+        'categories': {
+            'rules': ['offside', 'icing', 'the crease', 'blue line'],
+            'gameplay': ['power play', 'penalty kill', 'face-off', 'line change', 'checking'],
+            'scoring': ['hat trick', 'assist', 'one-timer', 'slap shot', 'wrist shot', 'breakaway', 'deke'],
+            'situations': ['overtime', 'goalie pull', 'fighting', 'penalty box'],
+            'basics': ['puck', 'hockey stick', 'goaltender', 'zamboni', 'stanley cup', 'shutout']
+        }
     })
 
 @app.route('/api/players')
 def list_players():
-    """Return list of all players"""
+    """Return list of curated players + note about API search"""
     return jsonify({
-        'players': get_all_players()
+        'players': get_all_players(),
+        'note': 'Search for any current NHL player by name'
     })
 
-@app.route('/api/explain/<concept>')
-def explain_concept(concept):
-    """Explain a hockey concept with sport analogies"""
-    concept = concept.lower().replace('-', ' ').replace('_', ' ')
+@app.route('/api/explain/<path:query>')
+def explain_concept(query):
+    """Explain a hockey concept with sport analogies - with intelligent matching"""
+    query = query.lower().replace('-', ' ').replace('_', ' ').strip()
 
-    # Direct match
-    if concept in HOCKEY_CONCEPTS:
-        data = HOCKEY_CONCEPTS[concept]
+    # 1. Try intelligent concept matching
+    concept_name, concept_data = find_concept_match(query)
+    if concept_name and concept_data:
         return jsonify({
             'found': True,
-            'concept': concept,
-            'data': data
+            'concept': concept_name,
+            'data': concept_data,
+            'match_type': 'concept'
         })
 
-    # Fuzzy search
-    matches = search_concept(concept)
-    if matches:
+    # 2. Try general Q&A matching
+    general_answer = find_general_answer(query)
+    if general_answer:
         return jsonify({
             'found': True,
-            'concept': matches[0],
-            'data': HOCKEY_CONCEPTS[matches[0]],
-            'did_you_mean': matches if len(matches) > 1 else None
+            'concept': general_answer['topic'],
+            'data': {
+                'definition': general_answer['answer'],
+                'soccer': {
+                    'analogy': 'Soccer Comparison',
+                    'explanation': general_answer['soccer'],
+                    'key_difference': ''
+                },
+                'nba': {
+                    'analogy': 'NBA Comparison',
+                    'explanation': general_answer['nba'],
+                    'key_difference': ''
+                },
+                'nfl': {
+                    'analogy': 'NFL Comparison',
+                    'explanation': general_answer['nfl'],
+                    'key_difference': ''
+                },
+                'mlb': {
+                    'analogy': 'MLB Comparison',
+                    'explanation': general_answer['mlb'],
+                    'key_difference': ''
+                }
+            },
+            'match_type': 'general'
         })
+
+    # 3. Suggest related concepts
+    related = search_concept(query)
+    all_concepts = get_all_concepts()
 
     return jsonify({
         'found': False,
-        'message': f"Couldn't find '{concept}'. Try: {', '.join(list(HOCKEY_CONCEPTS.keys())[:5])}..."
+        'query': query,
+        'suggestions': related[:5] if related else all_concepts[:8],
+        'message': f"I don't have a specific entry for '{query}', but try these related topics or ask about: {', '.join(all_concepts[:6])}..."
     })
 
-@app.route('/api/compare/<player>')
+@app.route('/api/compare/<path:player>')
 def compare_player(player):
-    """Compare a hockey player to players in other sports"""
-    player = player.lower()
+    """Compare a hockey player to players in other sports - with NHL API fallback"""
+    player_query = player.lower().strip()
 
-    # Direct match
-    if player in PLAYER_COMPARISONS:
-        data = PLAYER_COMPARISONS[player]
+    # 1. Check curated comparisons first (these have detailed, custom write-ups)
+    if player_query in PLAYER_COMPARISONS:
         return jsonify({
             'found': True,
-            'player': player.title(),
-            'data': data
+            'player': player_query.title(),
+            'data': PLAYER_COMPARISONS[player_query],
+            'source': 'curated'
         })
 
-    # Fuzzy search
-    matches = search_player(player)
+    # 2. Fuzzy search in curated database
+    matches = search_player(player_query)
     if matches:
+        best_match = matches[0]
         return jsonify({
             'found': True,
-            'player': matches[0].title(),
-            'data': PLAYER_COMPARISONS[matches[0]],
+            'player': best_match.title(),
+            'data': PLAYER_COMPARISONS[best_match],
+            'source': 'curated',
             'did_you_mean': [m.title() for m in matches] if len(matches) > 1 else None
         })
 
+    # 3. Search NHL API for any current player
+    nhl_matches = search_nhl_player(player_query)
+    if nhl_matches:
+        # Get detailed info for the first match
+        best_match = nhl_matches[0]
+        player_details = fetch_player_details(best_match['id'])
+
+        if player_details:
+            comparison_data = generate_player_comparison(player_details)
+            return jsonify({
+                'found': True,
+                'player': player_details['name'],
+                'data': comparison_data,
+                'source': 'nhl_api',
+                'api_note': 'Comparison generated based on player stats and profile'
+            })
+
+    # 4. Not found - provide suggestions
     return jsonify({
         'found': False,
-        'message': f"Player not found. Try: {', '.join([p.title() for p in list(PLAYER_COMPARISONS.keys())[:5]])}..."
+        'query': player,
+        'suggestions': [p.title() for p in list(PLAYER_COMPARISONS.keys())[:8]],
+        'message': f"Couldn't find '{player}'. Try searching by full name (first and last). Featured players: {', '.join([p.title() for p in list(PLAYER_COMPARISONS.keys())[:4]])}..."
     })
 
 @app.route('/api/random')
 def random_fact():
     """Return a random concept or comparison"""
-    choice = random.choice(['concept', 'player'])
+    choice = random.choice(['concept', 'concept', 'player'])  # Weight towards concepts
+
+    all_concepts = {**HOCKEY_CONCEPTS, **ADDITIONAL_CONCEPTS}
+
     if choice == 'concept':
-        concept = random.choice(list(HOCKEY_CONCEPTS.keys()))
+        concept = random.choice(list(all_concepts.keys()))
         return jsonify({
             'type': 'concept',
             'name': concept,
-            'data': HOCKEY_CONCEPTS[concept]
+            'data': all_concepts[concept]
         })
     else:
         player = random.choice(list(PLAYER_COMPARISONS.keys()))
@@ -676,6 +1764,62 @@ def random_fact():
             'name': player.title(),
             'data': PLAYER_COMPARISONS[player]
         })
+
+@app.route('/api/search')
+def search():
+    """Universal search endpoint for concepts and players"""
+    query = request.args.get('q', '').lower().strip()
+
+    if not query:
+        return jsonify({
+            'concepts': get_all_concepts()[:10],
+            'players': [p.title() for p in get_all_players()]
+        })
+
+    results = {
+        'concepts': [],
+        'players': [],
+        'query': query
+    }
+
+    # Search concepts
+    concept_name, concept_data = find_concept_match(query)
+    if concept_name:
+        results['concepts'].append({
+            'name': concept_name,
+            'preview': concept_data.get('definition', '')[:100] + '...'
+        })
+
+    # Also add partial matches
+    for concept in search_concept(query):
+        if concept != concept_name:
+            all_concepts = {**HOCKEY_CONCEPTS, **ADDITIONAL_CONCEPTS}
+            if concept in all_concepts:
+                results['concepts'].append({
+                    'name': concept,
+                    'preview': all_concepts[concept].get('definition', '')[:100] + '...'
+                })
+
+    # Search curated players
+    for player_name in PLAYER_COMPARISONS.keys():
+        if query in player_name:
+            results['players'].append({
+                'name': player_name.title(),
+                'team': PLAYER_COMPARISONS[player_name].get('team', ''),
+                'source': 'curated'
+            })
+
+    return jsonify(results)
+
+@app.route('/api/nhl/search/<path:query>')
+def search_nhl_api(query):
+    """Direct NHL API search for players"""
+    matches = search_nhl_player(query)
+
+    return jsonify({
+        'found': len(matches) > 0,
+        'players': [{'name': m['name'], 'team': m['team'], 'position': m['position']} for m in matches[:10]]
+    })
 
 if __name__ == '__main__':
     app.run(debug=True, port=5051)

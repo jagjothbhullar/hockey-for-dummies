@@ -454,6 +454,66 @@
             font-size: 1.1rem;
         }
 
+        .suggestions-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 10px;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .suggestions-box h4 {
+            color: #00d4ff;
+            margin-bottom: 10px;
+        }
+
+        .suggestion-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .suggestion-chip {
+            padding: 6px 14px;
+            background: rgba(0, 212, 255, 0.2);
+            border: 1px solid rgba(0, 212, 255, 0.4);
+            border-radius: 20px;
+            color: #7eb8da;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+        }
+
+        .suggestion-chip:hover {
+            background: rgba(0, 212, 255, 0.4);
+            color: #fff;
+        }
+
+        .source-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            background: rgba(0, 212, 255, 0.2);
+            border-radius: 10px;
+            font-size: 0.75rem;
+            color: #00d4ff;
+            margin-left: 10px;
+        }
+
+        .source-badge.api {
+            background: rgba(255, 107, 107, 0.2);
+            color: #ffb4b4;
+        }
+
+        .api-note {
+            font-size: 0.85rem;
+            color: #7eb8da;
+            font-style: italic;
+            margin-top: 10px;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+        }
+
         footer {
             text-align: center;
             margin-top: 40px;
@@ -566,8 +626,8 @@
         let currentTab = 'concepts';
         let selectedSport = 'all';
 
-        const conceptQuickPicks = ['Power Play', 'Icing', 'Offside', 'Hat Trick', 'Checking', 'Goalie Pull'];
-        const playerQuickPicks = ['Macklin Celebrini', 'Connor McDavid', 'Sidney Crosby', 'Auston Matthews'];
+        const conceptQuickPicks = ['Power Play', 'Icing', 'Offside', 'Hat Trick', 'Breakaway', 'Slap Shot', 'Overtime', 'How many periods?'];
+        const playerQuickPicks = ['Macklin Celebrini', 'Connor McDavid', 'Sidney Crosby', 'Cale Makar', 'Alex Ovechkin', 'Connor Bedard'];
 
         // Initialize
         updateQuickPicks();
@@ -606,8 +666,8 @@
 
         function updatePlaceholder() {
             searchInput.placeholder = currentTab === 'concepts'
-                ? "Ask about power play, icing, offsides..."
-                : "Search for a player like McDavid, Celebrini...";
+                ? "Ask about power play, icing, how many periods..."
+                : "Search ANY NHL player by name...";
         }
 
         function quickSearch(query) {
@@ -636,7 +696,7 @@
                         showPlayerResult(data);
                     }
                 } else {
-                    showError(data.message);
+                    showNotFound(data);
                 }
             } catch (error) {
                 showError('Something went wrong. Please try again.');
@@ -673,6 +733,30 @@
             resultContainer.innerHTML = `
                 <div class="result-card">
                     <div class="error-message">🏒 ${message}</div>
+                </div>
+            `;
+        }
+
+        function showNotFound(data) {
+            const suggestions = data.suggestions || [];
+            const suggestionsHtml = suggestions.length > 0 ? `
+                <div class="suggestions-box">
+                    <h4>Try these instead:</h4>
+                    <div class="suggestion-chips">
+                        ${suggestions.map(s => `<span class="suggestion-chip" onclick="quickSearch('${s}')">${s}</span>`).join('')}
+                    </div>
+                </div>
+            ` : '';
+
+            resultContainer.innerHTML = `
+                <div class="result-card">
+                    <div class="error-message">
+                        🏒 Couldn't find "${data.query || 'that'}"
+                        <p style="font-size:0.9rem;margin-top:10px;color:#7eb8da;">
+                            ${currentTab === 'players' ? 'Try the full name (first and last) of any current NHL player.' : 'Try a different term or check the suggestions below.'}
+                        </p>
+                    </div>
+                    ${suggestionsHtml}
                 </div>
             `;
         }
@@ -765,16 +849,26 @@
                 }
             });
 
+            // Source badge for API-generated vs curated
+            const sourceBadge = data.source === 'nhl_api'
+                ? '<span class="source-badge api">Live from NHL</span>'
+                : '<span class="source-badge">Featured Player</span>';
+
+            // API note if present
+            const apiNote = data.api_note
+                ? `<div class="api-note">ℹ️ ${data.api_note}</div>`
+                : '';
+
             resultContainer.innerHTML = `
                 <div class="result-card">
                     <div class="player-header">
                         <div class="player-avatar">🏒</div>
                         <div class="player-info">
-                            <h2>${data.player}</h2>
+                            <h2>${data.player} ${sourceBadge}</h2>
                             <div class="player-meta">
                                 <span class="player-tag">${player.position}</span>
                                 <span class="player-tag">${player.team}</span>
-                                <span class="player-tag">Age ${player.age}</span>
+                                ${player.age ? `<span class="player-tag">Age ${player.age}</span>` : ''}
                             </div>
                         </div>
                     </div>
@@ -783,6 +877,7 @@
                         <strong>Playing Style:</strong> ${player.style}
                         ${player.accolades ? `<br><br><strong>Accolades:</strong> ${player.accolades}` : ''}
                     </div>
+                    ${apiNote}
 
                     <h3 style="color:#7eb8da;margin-bottom:15px;font-size:0.9rem;text-transform:uppercase;letter-spacing:1px;">
                         Who does ${data.player.split(' ')[0]} play like?
@@ -793,7 +888,7 @@
                     <div class="fun-fact">
                         <span class="fun-fact-icon">🦈</span>
                         <span class="fun-fact-text">
-                            Watch ${data.player.split(' ')[0]} in action at SAP Center! Knowing these comparisons will help you appreciate their playing style.
+                            Watch ${data.player.split(' ')[0]} in action! Knowing these comparisons will help you appreciate their playing style.
                         </span>
                     </div>
                 </div>
