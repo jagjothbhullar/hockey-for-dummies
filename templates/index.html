@@ -299,6 +299,23 @@
             backdrop-filter: blur(10px);
         }
 
+        .return-top-btn {
+            background: linear-gradient(135deg, #3a6ea5 0%, #2d5a87 100%);
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            display: inline-block;
+        }
+
+        .return-top-btn:hover {
+            background: linear-gradient(135deg, #4a7eb5 0%, #3d6a97 100%);
+            transform: translateY(-2px);
+        }
+
         .result-header {
             display: flex;
             align-items: center;
@@ -1518,6 +1535,17 @@
         function searchTerm(term) {
             searchInput.value = term;
             search();
+            // Scroll to results after a brief delay
+            setTimeout(() => {
+                resultContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 300);
+        }
+
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            searchInput.value = '';
+            resultContainer.innerHTML = '';
+            resultContainer.classList.remove('show');
         }
 
         function filterDictionaryTerms(query) {
@@ -2435,12 +2463,14 @@
             const sportNames = { soccer: 'Soccer', nba: 'NBA', nfl: 'NFL', mlb: 'MLB' };
 
             let analogiesHtml = '';
+            let hasAnalogies = false;
 
             sports.forEach(sport => {
                 if (selectedSport !== 'all' && selectedSport !== sport) return;
 
                 const analogy = concept[sport];
                 if (analogy) {
+                    hasAnalogies = true;
                     analogiesHtml += `
                         <div class="analogy-card ${sport}">
                             <div class="analogy-header">
@@ -2455,13 +2485,28 @@
                 }
             });
 
+            // Only show analogies section if there are actual analogies
+            const analogiesSection = hasAnalogies ? `
+                <h3 style="color:#7eb8da;margin-bottom:15px;font-size:0.9rem;text-transform:uppercase;letter-spacing:1px;">
+                    How it translates to other sports:
+                </h3>
+                <div class="analogy-grid">
+                    ${analogiesHtml}
+                </div>
+            ` : '';
+
+            // Category label for dictionary terms
+            const categoryLabel = concept.category ? formatCategory(concept.category) : 'Hockey Term';
+
             resultContainer.innerHTML = `
                 <div class="result-card">
+                    <button class="return-top-btn" onclick="scrollToTop()">↑ Return to Terms</button>
+
                     <div class="result-header">
                         <div class="result-icon">🏒</div>
                         <div class="result-title">
                             <h2>${data.concept}</h2>
-                            <p>Hockey Concept</p>
+                            <p>${categoryLabel}</p>
                         </div>
                     </div>
 
@@ -2471,13 +2516,7 @@
                         ${concept.duration ? `<p style="margin-top:10px;"><strong>Duration:</strong> ${concept.duration}</p>` : ''}
                     </div>
 
-                    <h3 style="color:#7eb8da;margin-bottom:15px;font-size:0.9rem;text-transform:uppercase;letter-spacing:1px;">
-                        How it translates to other sports:
-                    </h3>
-
-                    <div class="analogy-grid">
-                        ${analogiesHtml}
-                    </div>
+                    ${analogiesSection}
 
                     <div class="fun-fact">
                         <span class="fun-fact-icon">💡</span>
@@ -2485,8 +2524,31 @@
                             <strong>Pro tip:</strong> Watch for this during Sharks games! You'll see ${data.concept} situations multiple times per period.
                         </span>
                     </div>
+
+                    <button class="return-top-btn" onclick="scrollToTop()" style="margin-top:20px;">↑ Return to Terms</button>
                 </div>
             `;
+        }
+
+        function formatCategory(category) {
+            const categoryNames = {
+                'game_structure': 'Game Structure',
+                'rink': 'Rink & Locations',
+                'positions': 'Player Positions',
+                'team': 'Team Structure',
+                'gameplay': 'Gameplay',
+                'shots': 'Shots & Scoring',
+                'skills': 'Moves & Skills',
+                'physical': 'Physical Play',
+                'penalties': 'Penalties',
+                'special_teams': 'Special Teams',
+                'rules': 'Rules & Situations',
+                'goalie': 'Goaltending',
+                'stats': 'Statistics',
+                'culture': 'Hockey Culture',
+                'general': 'Hockey Term'
+            };
+            return categoryNames[category] || category.replace('_', ' ').replace(/\b\w/g, c => c.toUpperCase());
         }
 
         function showPlayerResult(data) {

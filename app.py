@@ -3028,8 +3028,14 @@ PLAYER_ARCHETYPES = {
 # =============================================================================
 
 def get_all_concepts():
-    """Return list of all concept names including additional concepts"""
-    return list(HOCKEY_CONCEPTS.keys()) + list(ADDITIONAL_CONCEPTS.keys())
+    """Return list of all concept names including additional concepts and dictionary terms"""
+    concepts = list(HOCKEY_CONCEPTS.keys()) + list(ADDITIONAL_CONCEPTS.keys())
+    # Add dictionary terms (converting underscores to spaces)
+    for term in HOCKEY_DICTIONARY.keys():
+        term_readable = term.replace('_', ' ')
+        if term_readable not in concepts and term not in concepts:
+            concepts.append(term_readable)
+    return concepts
 
 def get_all_players():
     """Return list of all player names in our database"""
@@ -3054,7 +3060,18 @@ def find_concept_match(query):
     if query in ADDITIONAL_CONCEPTS:
         return query, ADDITIONAL_CONCEPTS[query]
 
-    # 3. Check synonym mappings
+    # 3. Check exact match in hockey dictionary (convert spaces to underscores)
+    dict_key = query.replace(' ', '_').replace('-', '_')
+    if dict_key in HOCKEY_DICTIONARY:
+        # Return dictionary entry formatted as a concept
+        dict_entry = HOCKEY_DICTIONARY[dict_key]
+        return dict_key, {
+            'definition': dict_entry['definition'],
+            'category': dict_entry.get('category', 'general'),
+            'from_dictionary': True
+        }
+
+    # 4. Check synonym mappings
     for concept, synonyms in CONCEPT_SYNONYMS.items():
         if query in [s.lower() for s in synonyms]:
             if concept in HOCKEY_CONCEPTS:
@@ -3062,7 +3079,7 @@ def find_concept_match(query):
             elif concept in ADDITIONAL_CONCEPTS:
                 return concept, ADDITIONAL_CONCEPTS[concept]
 
-    # 4. Fuzzy match against all concepts and their definitions
+    # 5. Fuzzy match against all concepts, additional concepts, AND dictionary
     best_match = None
     best_score = 0.0
 
@@ -3083,7 +3100,32 @@ def find_concept_match(query):
                     best_score = score
                     best_match = (concept, data)
 
-    # 5. Check synonyms with fuzzy matching
+    # 6. Fuzzy match against dictionary terms
+    for term, data in HOCKEY_DICTIONARY.items():
+        # Check term name similarity (convert underscores to spaces for matching)
+        term_readable = term.replace('_', ' ')
+        score = similarity_score(query, term_readable)
+        if score > best_score:
+            best_score = score
+            best_match = (term, {
+                'definition': data['definition'],
+                'category': data.get('category', 'general'),
+                'from_dictionary': True
+            })
+
+        # Check if query is in definition
+        if query in data.get('definition', '').lower():
+            if score < 0.5:
+                score = 0.6
+                if score > best_score:
+                    best_score = score
+                    best_match = (term, {
+                        'definition': data['definition'],
+                        'category': data.get('category', 'general'),
+                        'from_dictionary': True
+                    })
+
+    # 7. Check synonyms with fuzzy matching
     for concept, synonyms in CONCEPT_SYNONYMS.items():
         for synonym in synonyms:
             score = similarity_score(query, synonym)
@@ -3110,6 +3152,13 @@ def search_concept(query):
     for concept, data in all_concepts.items():
         if query in concept or query in data.get('definition', '').lower():
             matches.append(concept)
+
+    # Also check dictionary terms
+    for term, data in HOCKEY_DICTIONARY.items():
+        term_readable = term.replace('_', ' ')
+        if query in term_readable or query in data.get('definition', '').lower():
+            if term not in matches:
+                matches.append(term)
 
     # Also check synonyms
     for concept, synonyms in CONCEPT_SYNONYMS.items():
