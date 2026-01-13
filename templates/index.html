@@ -1595,9 +1595,27 @@
             });
         });
 
-        searchBtn.addEventListener('click', search);
+        searchBtn.addEventListener('click', () => {
+            if (currentTab === 'dictionary') {
+                filterDictionary(searchInput.value);
+            } else {
+                search();
+            }
+        });
         searchInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') search();
+            if (e.key === 'Enter') {
+                if (currentTab === 'dictionary') {
+                    filterDictionary(searchInput.value);
+                } else {
+                    search();
+                }
+            }
+        });
+        // Real-time filtering for dictionary
+        searchInput.addEventListener('input', (e) => {
+            if (currentTab === 'dictionary') {
+                filterDictionary(e.target.value);
+            }
         });
 
         function handleTabChange() {
@@ -1640,9 +1658,13 @@
         }
 
         function updatePlaceholder() {
-            searchInput.placeholder = currentTab === 'dictionary'
-                ? "Search hockey terms... (power play, icing, offside)"
-                : "Search ANY NHL player by name...";
+            if (currentTab === 'dictionary') {
+                searchInput.placeholder = "Filter terms... (start typing to filter)";
+                searchBtn.textContent = "Filter";
+            } else {
+                searchInput.placeholder = "Search ANY NHL player by name...";
+                searchBtn.textContent = "Search";
+            }
         }
 
         function quickSearch(query) {
@@ -1719,10 +1741,17 @@
         }
 
         function scrollToTop() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-            searchInput.value = '';
+            // First hide the result container
             resultContainer.innerHTML = '';
             resultContainer.classList.remove('show');
+
+            // Then scroll to the very top of the page
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Focus back on the filter/search input so user can continue
+            setTimeout(() => {
+                searchInput.focus();
+            }, 300);
         }
 
         function filterDictionaryTerms(query) {
