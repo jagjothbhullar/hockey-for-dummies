@@ -85,11 +85,92 @@
             font-size: 1.2rem;
         }
 
+        /* Main layout with sidebar */
+        .main-layout {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .browse-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            min-width: 160px;
+        }
+
+        .browse-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border: 2px solid #3a6ea5;
+            background: rgba(255, 255, 255, 0.05);
+            color: #7eb8da;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: left;
+        }
+
+        .browse-btn:hover {
+            background: rgba(58, 110, 165, 0.3);
+            transform: translateX(5px);
+        }
+
+        .browse-btn.active {
+            background: linear-gradient(135deg, #3a6ea5 0%, #2d5a87 100%);
+            color: #fff;
+            border-color: #00d4ff;
+        }
+
+        .browse-btn.sharks {
+            border-color: #006d75;
+        }
+
+        .browse-btn.sharks:hover,
+        .browse-btn.sharks.active {
+            background: linear-gradient(135deg, #006d75 0%, #004d52 100%);
+            border-color: #00d4ff;
+        }
+
+        .browse-icon {
+            font-size: 1.3rem;
+        }
+
+        .browse-label {
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .search-side {
+            flex: 1;
+        }
+
+        /* Responsive: stack on mobile */
+        @media (max-width: 700px) {
+            .main-layout {
+                flex-direction: column;
+            }
+            .browse-sidebar {
+                flex-direction: row;
+                flex-wrap: wrap;
+                min-width: unset;
+            }
+            .browse-btn {
+                flex: 1;
+                min-width: 140px;
+                justify-content: center;
+            }
+            .browse-btn:hover {
+                transform: none;
+            }
+        }
+
         .search-container {
             background: rgba(255, 255, 255, 0.1);
             border-radius: 20px;
             padding: 25px;
-            margin-bottom: 25px;
             backdrop-filter: blur(10px);
         }
 
@@ -1086,47 +1167,68 @@
             <p class="subtitle">Learn hockey through sports you already know</p>
         </header>
 
-        <div class="sport-selector">
-            <button class="sport-btn active" data-sport="all">
-                <span class="sport-icon">🌐</span> All Sports
-            </button>
-            <button class="sport-btn" data-sport="soccer">
-                <span class="sport-icon">⚽</span> Soccer
-            </button>
-            <button class="sport-btn" data-sport="nba">
-                <span class="sport-icon">🏀</span> NBA
-            </button>
-            <button class="sport-btn" data-sport="nfl">
-                <span class="sport-icon">🏈</span> NFL
-            </button>
-            <button class="sport-btn" data-sport="mlb">
-                <span class="sport-icon">⚾</span> MLB
-            </button>
-        </div>
-
-        <div class="search-container">
-            <div class="tabs">
-                <button class="tab active" data-tab="concepts">Rules & Concepts</button>
-                <button class="tab" data-tab="players">Player Comps</button>
-                <button class="tab sharks" data-tab="sharks">Meet the Sharks</button>
-                <button class="tab" data-tab="rink">The Rink</button>
-                <button class="tab" data-tab="stats">Stats Glossary</button>
-                <button class="tab" data-tab="dictionary">Dictionary</button>
+        <div class="main-layout">
+            <!-- Left sidebar with browse buttons -->
+            <div class="browse-sidebar">
+                <button class="browse-btn sharks" data-tab="sharks">
+                    <span class="browse-icon">🦈</span>
+                    <span class="browse-label">Meet the Sharks</span>
+                </button>
+                <button class="browse-btn" data-tab="rink">
+                    <span class="browse-icon">🧊</span>
+                    <span class="browse-label">The Rink</span>
+                </button>
+                <button class="browse-btn" data-tab="stats">
+                    <span class="browse-icon">📊</span>
+                    <span class="browse-label">Stats Glossary</span>
+                </button>
+                <button class="browse-btn" data-tab="dictionary">
+                    <span class="browse-icon">📖</span>
+                    <span class="browse-label">Dictionary</span>
+                </button>
             </div>
 
-            <div id="search-section">
-                <div class="search-box">
-                    <input type="text" id="search-input" placeholder="Ask about power play, icing, offsides...">
-                    <button class="search-btn" id="search-btn">Explain It!</button>
+            <!-- Right side with search -->
+            <div class="search-side">
+                <div class="sport-selector">
+                    <button class="sport-btn active" data-sport="all">
+                        <span class="sport-icon">🌐</span> All Sports
+                    </button>
+                    <button class="sport-btn" data-sport="soccer">
+                        <span class="sport-icon">⚽</span> Soccer
+                    </button>
+                    <button class="sport-btn" data-sport="nba">
+                        <span class="sport-icon">🏀</span> NBA
+                    </button>
+                    <button class="sport-btn" data-sport="nfl">
+                        <span class="sport-icon">🏈</span> NFL
+                    </button>
+                    <button class="sport-btn" data-sport="mlb">
+                        <span class="sport-icon">⚾</span> MLB
+                    </button>
                 </div>
 
-                <div class="quick-picks" id="quick-picks">
-                    <!-- Populated by JS -->
-                </div>
-            </div>
+                <div class="search-container">
+                    <div class="tabs">
+                        <button class="tab active" data-tab="concepts">Rules & Concepts</button>
+                        <button class="tab" data-tab="players">Player Comps</button>
+                    </div>
 
-            <div id="browse-section" style="display:none;">
-                <!-- For Sharks, Stats, Dictionary - populated by JS -->
+                    <div id="search-section">
+                        <div class="search-box">
+                            <input type="text" id="search-input" placeholder="Ask about power play, icing, offsides...">
+                            <button class="search-btn" id="search-btn">Explain It!</button>
+                        </div>
+
+                        <div class="quick-picks" id="quick-picks">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <div id="browse-section" style="display:none;">
+                    <!-- For Sharks, Stats, Dictionary - populated by JS -->
+                </div>
             </div>
         </div>
 
@@ -1177,12 +1279,30 @@
         // Initialize
         updateQuickPicks();
 
-        // Event Listeners
+        const browseBtns = document.querySelectorAll('.browse-btn');
+
+        // Event Listeners for search tabs
         tabs.forEach(tab => {
             tab.addEventListener('click', () => {
+                // Clear browse button active states
+                browseBtns.forEach(b => b.classList.remove('active'));
+                // Set tab active states
                 tabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
                 currentTab = tab.dataset.tab;
+                handleTabChange();
+            });
+        });
+
+        // Event Listeners for browse buttons
+        browseBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Clear tab active states
+                tabs.forEach(t => t.classList.remove('active'));
+                // Set browse button active states
+                browseBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                currentTab = btn.dataset.tab;
                 handleTabChange();
             });
         });
@@ -1204,26 +1324,29 @@
             resultContainer.classList.remove('show');
             resultContainer.innerHTML = '';
 
+            // Clear input when switching tabs
+            searchInput.value = '';
+
+            // Show sport selector and search container only for search tabs
+            const sportSelector = document.querySelector('.sport-selector');
+            const searchContainer = document.querySelector('.search-container');
+            const isSearchTab = (currentTab === 'concepts' || currentTab === 'players');
+
+            sportSelector.style.display = isSearchTab ? 'flex' : 'none';
+            searchContainer.style.display = isSearchTab ? 'block' : 'none';
+            browseSection.style.display = isSearchTab ? 'none' : 'block';
+
             if (currentTab === 'concepts' || currentTab === 'players') {
                 searchSection.style.display = 'block';
-                browseSection.style.display = 'none';
                 updateQuickPicks();
                 updatePlaceholder();
             } else if (currentTab === 'sharks') {
-                searchSection.style.display = 'none';
-                browseSection.style.display = 'block';
                 loadSharksRoster();
             } else if (currentTab === 'rink') {
-                searchSection.style.display = 'none';
-                browseSection.style.display = 'block';
                 loadRink();
             } else if (currentTab === 'stats') {
-                searchSection.style.display = 'none';
-                browseSection.style.display = 'block';
                 loadStatsGlossary();
             } else if (currentTab === 'dictionary') {
-                searchSection.style.display = 'none';
-                browseSection.style.display = 'block';
                 loadDictionary();
             }
         }
