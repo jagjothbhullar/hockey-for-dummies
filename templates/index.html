@@ -857,6 +857,113 @@
             border-color: #00d4ff;
         }
 
+        /* Rink Visualization Styles */
+        .rink-container {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .rink-svg-container {
+            width: 100%;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .rink-svg {
+            width: 100%;
+            height: auto;
+        }
+
+        .rink-zone {
+            cursor: pointer;
+            transition: all 0.3s;
+            opacity: 0.7;
+        }
+
+        .rink-zone:hover {
+            opacity: 1;
+            filter: brightness(1.3);
+        }
+
+        .rink-zone.active {
+            opacity: 1;
+            filter: brightness(1.5);
+            stroke: #00d4ff;
+            stroke-width: 3;
+        }
+
+        .rink-label {
+            font-size: 8px;
+            fill: rgba(255, 255, 255, 0.8);
+            pointer-events: none;
+            font-weight: bold;
+        }
+
+        .rink-info {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 212, 255, 0.05) 100%);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .rink-info h3 {
+            color: #00d4ff;
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+        }
+
+        .rink-info-section {
+            margin-bottom: 15px;
+        }
+
+        .rink-info-section h4 {
+            color: #7eb8da;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .rink-info-section p {
+            color: #c0d6e8;
+            line-height: 1.6;
+        }
+
+        .rink-instruction {
+            text-align: center;
+            color: #7eb8da;
+            font-size: 1rem;
+            padding: 20px;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 10px;
+            margin-top: 15px;
+        }
+
+        .zone-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.75rem;
+            color: #7eb8da;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 3px;
+        }
+
         @media (max-width: 600px) {
             .sport-selector {
                 gap: 8px;
@@ -902,6 +1009,7 @@
                 <button class="tab active" data-tab="concepts">Rules & Concepts</button>
                 <button class="tab" data-tab="players">Player Comps</button>
                 <button class="tab sharks" data-tab="sharks">Meet the Sharks</button>
+                <button class="tab" data-tab="rink">The Rink</button>
                 <button class="tab" data-tab="stats">Stats Glossary</button>
                 <button class="tab" data-tab="dictionary">Dictionary</button>
             </div>
@@ -1008,6 +1116,10 @@
                 searchSection.style.display = 'none';
                 browseSection.style.display = 'block';
                 loadSharksRoster();
+            } else if (currentTab === 'rink') {
+                searchSection.style.display = 'none';
+                browseSection.style.display = 'block';
+                loadRink();
             } else if (currentTab === 'stats') {
                 searchSection.style.display = 'none';
                 browseSection.style.display = 'block';
@@ -1156,6 +1268,202 @@
         function backToRoster() {
             resultContainer.classList.remove('show');
             resultContainer.innerHTML = '';
+        }
+
+        // ==================== INTERACTIVE RINK ====================
+        function loadRink() {
+            browseSection.innerHTML = `
+                <div class="result-card rink-container">
+                    <h2 style="color:#00d4ff;margin-bottom:5px;">🧊 The Hockey Rink</h2>
+                    <p style="color:#7eb8da;margin-bottom:20px;">Click on any zone to learn what it's called and why it matters</p>
+
+                    <div class="rink-svg-container">
+                        <svg class="rink-svg" viewBox="0 0 400 170" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Rink outline with rounded corners -->
+                            <rect x="5" y="5" width="390" height="160" rx="40" ry="40" fill="#fff" stroke="#333" stroke-width="2"/>
+
+                            <!-- Ice surface -->
+                            <rect x="7" y="7" width="386" height="156" rx="38" ry="38" fill="#e8f4f8"/>
+
+                            <!-- Defensive Zone (left) -->
+                            <path class="rink-zone" data-zone="defensive_zone" d="M7 45 Q7 7 45 7 L100 7 L100 163 L45 163 Q7 163 7 125 Z" fill="#4a6fa5" opacity="0.4"/>
+
+                            <!-- Neutral Zone (center) -->
+                            <rect class="rink-zone" data-zone="neutral_zone" x="100" y="7" width="100" height="156" fill="#6b8e6b" opacity="0.3"/>
+                            <rect class="rink-zone" data-zone="neutral_zone" x="200" y="7" width="100" height="156" fill="#6b8e6b" opacity="0.3"/>
+
+                            <!-- Offensive Zone (right) -->
+                            <path class="rink-zone" data-zone="offensive_zone" d="M300 7 L355 7 Q393 7 393 45 L393 125 Q393 163 355 163 L300 163 Z" fill="#a54a4a" opacity="0.4"/>
+
+                            <!-- Blue lines -->
+                            <rect class="rink-zone" data-zone="blue_line_defensive" x="97" y="7" width="6" height="156" fill="#0066cc"/>
+                            <rect class="rink-zone" data-zone="blue_line_offensive" x="297" y="7" width="6" height="156" fill="#0066cc"/>
+
+                            <!-- Red center line -->
+                            <rect class="rink-zone" data-zone="red_line" x="198" y="7" width="4" height="156" fill="#cc0000"/>
+
+                            <!-- Goal lines -->
+                            <rect class="rink-zone" data-zone="goal_line" x="30" y="7" width="2" height="156" fill="#cc0000" opacity="0.7"/>
+                            <rect class="rink-zone" data-zone="goal_line" x="368" y="7" width="2" height="156" fill="#cc0000" opacity="0.7"/>
+
+                            <!-- Center ice circle -->
+                            <circle class="rink-zone" data-zone="center_ice" cx="200" cy="85" r="25" fill="none" stroke="#0066cc" stroke-width="2"/>
+                            <circle class="rink-zone" data-zone="faceoff_circle_center" cx="200" cy="85" r="4" fill="#0066cc"/>
+
+                            <!-- End zone faceoff circles (left) -->
+                            <circle class="rink-zone" data-zone="faceoff_circle_end" cx="55" cy="50" r="20" fill="none" stroke="#cc0000" stroke-width="1.5"/>
+                            <circle cx="55" cy="50" r="3" fill="#cc0000"/>
+                            <circle class="rink-zone" data-zone="faceoff_circle_end" cx="55" cy="120" r="20" fill="none" stroke="#cc0000" stroke-width="1.5"/>
+                            <circle cx="55" cy="120" r="3" fill="#cc0000"/>
+
+                            <!-- End zone faceoff circles (right) -->
+                            <circle class="rink-zone" data-zone="faceoff_circle_end" cx="345" cy="50" r="20" fill="none" stroke="#cc0000" stroke-width="1.5"/>
+                            <circle cx="345" cy="50" r="3" fill="#cc0000"/>
+                            <circle class="rink-zone" data-zone="faceoff_circle_end" cx="345" cy="120" r="20" fill="none" stroke="#cc0000" stroke-width="1.5"/>
+                            <circle cx="345" cy="120" r="3" fill="#cc0000"/>
+
+                            <!-- Neutral zone faceoff dots -->
+                            <circle cx="130" cy="50" r="3" fill="#cc0000"/>
+                            <circle cx="130" cy="120" r="3" fill="#cc0000"/>
+                            <circle cx="270" cy="50" r="3" fill="#cc0000"/>
+                            <circle cx="270" cy="120" r="3" fill="#cc0000"/>
+
+                            <!-- Goal creases -->
+                            <path class="rink-zone" data-zone="goal_crease" d="M30 70 Q45 70 45 85 Q45 100 30 100" fill="#87ceeb" stroke="#cc0000" stroke-width="1"/>
+                            <path class="rink-zone" data-zone="goal_crease" d="M370 70 Q355 70 355 85 Q355 100 370 100" fill="#87ceeb" stroke="#cc0000" stroke-width="1"/>
+
+                            <!-- Goals -->
+                            <rect x="22" y="75" width="8" height="20" fill="#fff" stroke="#cc0000" stroke-width="1.5"/>
+                            <rect x="370" y="75" width="8" height="20" fill="#fff" stroke="#cc0000" stroke-width="1.5"/>
+
+                            <!-- Trapezoids behind goals -->
+                            <path class="rink-zone" data-zone="trapezoid" d="M7 55 L22 65 L22 105 L7 115" fill="none" stroke="#cc0000" stroke-width="1" stroke-dasharray="3,2"/>
+                            <path class="rink-zone" data-zone="trapezoid" d="M393 55 L378 65 L378 105 L393 115" fill="none" stroke="#cc0000" stroke-width="1" stroke-dasharray="3,2"/>
+
+                            <!-- The Slot areas (invisible clickable) -->
+                            <rect class="rink-zone" data-zone="slot" x="35" y="55" width="35" height="60" fill="#ffcc00" opacity="0.15"/>
+                            <rect class="rink-zone" data-zone="slot" x="330" y="55" width="35" height="60" fill="#ffcc00" opacity="0.15"/>
+
+                            <!-- The Point areas -->
+                            <rect class="rink-zone" data-zone="point" x="70" y="7" width="27" height="156" fill="#9933ff" opacity="0.1"/>
+                            <rect class="rink-zone" data-zone="point" x="303" y="7" width="27" height="156" fill="#9933ff" opacity="0.1"/>
+
+                            <!-- Boards (perimeter) -->
+                            <rect class="rink-zone" data-zone="boards" x="5" y="5" width="390" height="160" rx="40" ry="40" fill="none" stroke="#8b4513" stroke-width="4"/>
+
+                            <!-- Benches (on one side) -->
+                            <rect class="rink-zone" data-zone="bench" x="115" y="0" width="70" height="7" fill="#4a4a4a"/>
+                            <rect class="rink-zone" data-zone="bench" x="215" y="0" width="70" height="7" fill="#4a4a4a"/>
+
+                            <!-- Penalty boxes -->
+                            <rect class="rink-zone" data-zone="penalty_box" x="185" y="163" width="30" height="7" fill="#cc4444"/>
+
+                            <!-- Labels -->
+                            <text class="rink-label" x="50" y="88" text-anchor="middle">DEF</text>
+                            <text class="rink-label" x="150" y="88" text-anchor="middle">NEUTRAL</text>
+                            <text class="rink-label" x="250" y="88" text-anchor="middle">NEUTRAL</text>
+                            <text class="rink-label" x="350" y="88" text-anchor="middle">OFF</text>
+                        </svg>
+                    </div>
+
+                    <div class="zone-legend">
+                        <div class="legend-item"><span class="legend-color" style="background:#4a6fa5;"></span> Defensive Zone</div>
+                        <div class="legend-item"><span class="legend-color" style="background:#6b8e6b;"></span> Neutral Zone</div>
+                        <div class="legend-item"><span class="legend-color" style="background:#a54a4a;"></span> Offensive Zone</div>
+                        <div class="legend-item"><span class="legend-color" style="background:#0066cc;"></span> Blue Lines</div>
+                        <div class="legend-item"><span class="legend-color" style="background:#cc0000;"></span> Red Line/Goals</div>
+                    </div>
+
+                    <div class="rink-instruction" id="rink-instruction">
+                        👆 Click on any area of the rink to learn about it
+                    </div>
+
+                    <div id="rink-info-container"></div>
+                </div>
+            `;
+
+            // Add click handlers to all zones
+            document.querySelectorAll('.rink-zone').forEach(zone => {
+                zone.addEventListener('click', () => {
+                    const zoneId = zone.dataset.zone;
+                    loadZoneInfo(zoneId);
+
+                    // Highlight active zone
+                    document.querySelectorAll('.rink-zone').forEach(z => z.classList.remove('active'));
+                    document.querySelectorAll(`.rink-zone[data-zone="${zoneId}"]`).forEach(z => z.classList.add('active'));
+                });
+            });
+        }
+
+        async function loadZoneInfo(zoneId) {
+            const infoContainer = document.getElementById('rink-info-container');
+            const instruction = document.getElementById('rink-instruction');
+
+            instruction.style.display = 'none';
+            infoContainer.innerHTML = '<div class="loading"><div class="loading-puck"></div><p>Loading zone info...</p></div>';
+
+            try {
+                const response = await fetch(`/api/rink/${encodeURIComponent(zoneId)}`);
+                const data = await response.json();
+
+                if (!data.found) {
+                    infoContainer.innerHTML = '<div class="error-message">Zone not found</div>';
+                    return;
+                }
+
+                const sports = ['soccer', 'nba', 'nfl', 'mlb'];
+                const sportIcons = { soccer: '⚽', nba: '🏀', nfl: '🏈', mlb: '⚾' };
+                const sportNames = { soccer: 'Soccer', nba: 'NBA', nfl: 'NFL', mlb: 'MLB' };
+
+                let analogiesHtml = '';
+                sports.forEach(sport => {
+                    if (selectedSport !== 'all' && selectedSport !== sport) return;
+                    const analogy = data.analogies[sport];
+                    if (analogy) {
+                        analogiesHtml += `
+                            <div class="analogy-card ${sport}">
+                                <div class="analogy-header">
+                                    <span class="analogy-sport">${sportIcons[sport]}</span>
+                                    <span class="analogy-name">${sportNames[sport]} Comparison</span>
+                                </div>
+                                <div class="analogy-content">${analogy}</div>
+                            </div>
+                        `;
+                    }
+                });
+
+                infoContainer.innerHTML = `
+                    <div class="rink-info">
+                        <h3>📍 ${data.name}</h3>
+
+                        <div class="rink-info-section">
+                            <h4>What is it?</h4>
+                            <p>${data.description}</p>
+                        </div>
+
+                        <div class="rink-info-section">
+                            <h4>Why does it matter?</h4>
+                            <p>${data.purpose}</p>
+                        </div>
+
+                        <div class="fun-fact" style="margin:15px 0;">
+                            <span class="fun-fact-icon">💡</span>
+                            <span class="fun-fact-text">${data.fun_fact}</span>
+                        </div>
+
+                        ${analogiesHtml ? `
+                            <h4 style="color:#7eb8da;margin:15px 0 10px;font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;">
+                                Sports Comparisons
+                            </h4>
+                            <div class="analogy-grid">
+                                ${analogiesHtml}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            } catch (error) {
+                infoContainer.innerHTML = '<div class="error-message">Failed to load zone info</div>';
+            }
         }
 
         // ==================== STATS GLOSSARY ====================

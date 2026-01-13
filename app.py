@@ -612,6 +612,193 @@ STATS_GLOSSARY = {
 }
 
 # =============================================================================
+# RINK ZONES - Interactive Rink Map Data
+# =============================================================================
+
+RINK_ZONES = {
+    "center_ice": {
+        "name": "Center Ice",
+        "description": "The middle of the rink where the game begins. The center face-off dot and circle are here.",
+        "purpose": "Every period and game starts with a face-off at center ice. After every goal, play restarts here.",
+        "fun_fact": "The center ice logo is usually the home team's logo - for the Sharks, it's the iconic Shark biting a hockey stick.",
+        "soccer": "Like the center circle kickoff spot - where play begins and restarts after goals.",
+        "nba": "Like the tip-off circle at half court.",
+        "nfl": "Like the 50-yard line - neutral territory where play begins.",
+        "mlb": "Like the pitcher's mound - the central point where action initiates."
+    },
+    "offensive_zone": {
+        "name": "Offensive Zone",
+        "description": "The area past the opponent's blue line where your team attacks. Contains the opposing goal.",
+        "purpose": "This is where you score goals! Teams try to maintain possession here and create scoring chances.",
+        "fun_fact": "Teams average about 20-25 minutes of offensive zone time per game. Elite teams push 30+.",
+        "soccer": "Like the attacking third - the area closest to the opponent's goal.",
+        "nba": "Like being in the paint/key area - prime scoring territory.",
+        "nfl": "Like the red zone - inside the opponent's 20-yard line.",
+        "mlb": "Like having runners in scoring position - you're threatening to score."
+    },
+    "defensive_zone": {
+        "name": "Defensive Zone",
+        "description": "The area behind your own blue line. Contains your goal that you must protect.",
+        "purpose": "Keep the puck out of your net! Clear pucks, block shots, and get the puck to neutral ice.",
+        "fun_fact": "Goalies face an average of 30 shots per game, with most coming from this zone.",
+        "soccer": "Like your defensive third - protecting your own goal.",
+        "nba": "Like protecting your own basket against an opposing fast break.",
+        "nfl": "Like defending your own end zone.",
+        "mlb": "Like your infield defense trying to prevent runs from scoring."
+    },
+    "neutral_zone": {
+        "name": "Neutral Zone",
+        "description": "The area between the two blue lines. Neither team's territory.",
+        "purpose": "Transition area! Teams move the puck through here to enter the offensive zone. Turnovers here are dangerous.",
+        "fun_fact": "The neutral zone trap is a defensive strategy where teams clog this area to prevent attacks.",
+        "soccer": "Like the midfield - transitional space between attack and defense.",
+        "nba": "Like the half-court area during transition.",
+        "nfl": "Like the area between the 20-yard lines - moving territory.",
+        "mlb": "Like the gap between infield and outfield."
+    },
+    "blue_line_offensive": {
+        "name": "Blue Line (Offensive)",
+        "description": "The line marking entry into the offensive zone. The puck must cross before any attacking player.",
+        "purpose": "Determines offside! If an attacking player crosses before the puck, play stops.",
+        "fun_fact": "Defensemen often position themselves 'at the point' just inside this line to keep plays alive and take slap shots.",
+        "soccer": "Functions like the offside line - you can't be ahead of the puck entering the zone.",
+        "nba": "Like the three-point line in reverse - a boundary that changes the rules.",
+        "nfl": "Like the line of scrimmage - crossing early is a penalty.",
+        "mlb": "Like the baseline - defines fair territory for scoring."
+    },
+    "blue_line_defensive": {
+        "name": "Blue Line (Defensive)",
+        "description": "The line marking your defensive zone. Once cleared past this line, you've relieved pressure.",
+        "purpose": "Get the puck past this line to clear the zone! Dump-and-chase plays aim to get puck deep past it.",
+        "fun_fact": "When a team ices the puck, it must cross both the center red line AND this blue line.",
+        "soccer": "Like clearing out of your defensive third.",
+        "nba": "Like crossing half court to escape backcourt pressure.",
+        "nfl": "Like gaining positive yards past the line of scrimmage.",
+        "mlb": "Like getting the ball out of the infield."
+    },
+    "red_line": {
+        "name": "Red Line (Center Line)",
+        "description": "The thick red line at center ice dividing the rink in half.",
+        "purpose": "Key for icing calls! If you shoot from behind your side and it crosses the goal line untouched, it's icing.",
+        "fun_fact": "Before 2005, two-line passes across the red line were illegal. Removing this rule sped up the game significantly.",
+        "soccer": "Like the halfway line dividing the pitch.",
+        "nba": "Like the half-court line - cross it and you can't go back (8-second rule).",
+        "nfl": "Like the 50-yard line - true midfield.",
+        "mlb": "Like the line between fair and foul - defines legal plays."
+    },
+    "goal_crease": {
+        "name": "Goal Crease",
+        "description": "The blue painted semicircle directly in front of the goal. The goalie's protected zone.",
+        "purpose": "Goalies have special rights here. Attackers can't interfere with the goalie in the crease. Goals can be disallowed if there's crease violation.",
+        "fun_fact": "The crease is 8 feet wide and extends 4.5 feet from the goal line. It was made larger in 1999 to protect goalies.",
+        "soccer": "Like the 6-yard box - the goalkeeper's protected area.",
+        "nba": "Like the restricted area under the basket - special rules apply.",
+        "nfl": "Like the end zone - the most protected scoring area.",
+        "mlb": "Like home plate area - where plays at the plate happen."
+    },
+    "faceoff_circle_center": {
+        "name": "Center Face-off Circle",
+        "description": "The large circle at center ice (30 feet diameter) with a face-off dot in the middle.",
+        "purpose": "Only the two players taking the face-off can be inside until the puck drops. All other players must stay outside.",
+        "fun_fact": "Face-off wins are tracked as a stat. Elite centers win 55%+ of their draws.",
+        "soccer": "Like the center circle at kickoff - only one team's players inside initially.",
+        "nba": "Like the tip-off circle - where the jump ball happens.",
+        "nfl": "Like the coin toss spot - ceremonial start location.",
+        "mlb": "Like home plate before the first pitch."
+    },
+    "faceoff_circle_end": {
+        "name": "End Zone Face-off Circles",
+        "description": "The two circles in each end zone (4 total), 30 feet in diameter. Face-offs here after icings, penalties, and stoppages in the zone.",
+        "purpose": "Face-offs in your defensive zone are dangerous - the opponent has good scoring position. Face-offs in offensive zone are opportunities!",
+        "fun_fact": "After an icing, the offending team cannot change lines, giving the opponent fresh legs for the face-off.",
+        "soccer": "Like taking a corner kick vs defending one - position matters hugely.",
+        "nba": "Like an inbound play under your own basket vs the opponent's.",
+        "nfl": "Like starting a drive at your 5-yard line vs the opponent's 5.",
+        "mlb": "Like batting with bases loaded vs pitching with bases loaded."
+    },
+    "goal_line": {
+        "name": "Goal Line",
+        "description": "The red line that runs across the width of the rink at each end, passing through the goal.",
+        "purpose": "The puck must FULLY cross this line inside the goal posts for it to count as a goal. Also used for icing calls.",
+        "fun_fact": "Modern NHL arenas have cameras in the goal posts and crossbar to help determine if the puck crossed the line.",
+        "soccer": "Like the goal line in soccer - the puck must completely cross just like the ball.",
+        "nba": "Like the baseline - out of bounds and scoring boundary.",
+        "nfl": "Like the goal line - must break the plane to score.",
+        "mlb": "Like home plate - cross it to score a run."
+    },
+    "trapezoid": {
+        "name": "Trapezoid",
+        "description": "The trapezoid-shaped area behind each goal where goalies ARE allowed to play the puck.",
+        "purpose": "Goalies can only play the puck in the crease or in the trapezoid. Playing it elsewhere is a delay of game penalty.",
+        "fun_fact": "Called the 'Martin Brodeur Rule' - added in 2005 to limit his puck-handling which was considered too dominant.",
+        "soccer": "Goalies have the whole box - hockey restricts them to this zone plus the crease.",
+        "nba": "No equivalent - hockey goalies have unique territorial restrictions.",
+        "nfl": "Like a kicker/punter's operating zone - specialized player, specialized space.",
+        "mlb": "Like the catcher's box - defined area for a specialized defensive player."
+    },
+    "boards": {
+        "name": "Boards",
+        "description": "The 42-inch high walls surrounding the ice. Made of fiberglass and topped with protective glass/netting.",
+        "purpose": "Keep the puck (and players) in play. Players use boards strategically to bank passes and battle for pucks.",
+        "fun_fact": "Board battles are a key part of hockey. Physical players who excel along the boards are called 'power forwards.'",
+        "soccer": "No equivalent - soccer has touchlines where the ball goes out of play.",
+        "nba": "Like the baseline/sidelines but you CAN'T go out - the wall keeps play alive.",
+        "nfl": "Like if the sidelines were walls you could bounce off of.",
+        "mlb": "Like the outfield wall - balls (pucks) play off it and stay live."
+    },
+    "bench": {
+        "name": "Players' Bench",
+        "description": "Where each team's players sit when not on the ice. Located on one side of the neutral zone.",
+        "purpose": "Players substitute on-the-fly here during play! No stoppages needed. Usually 5 forwards and 4 defensemen waiting.",
+        "fun_fact": "Line changes happen every 30-45 seconds. Getting caught on a 'long shift' is exhausting - shifts over 90 seconds are brutal.",
+        "soccer": "Like the technical area but subs happen DURING play, not just at stoppages.",
+        "nba": "Like the bench but subs happen freely during live action.",
+        "nfl": "Like the sideline but imagine if you could sub during the play.",
+        "mlb": "Like the dugout - where position players wait their turn."
+    },
+    "penalty_box": {
+        "name": "Penalty Box",
+        "description": "The area where players serve penalty time. Also called 'the sin bin.' Each team has one, across from their bench.",
+        "purpose": "When you commit a penalty, you sit here for 2-5 minutes while your team plays short-handed (power play for opponents).",
+        "fun_fact": "There's a penalty box attendant who opens and closes the door. Players have been known to chat with them during long penalties!",
+        "soccer": "No equivalent - soccer uses cards and sends players off entirely.",
+        "nba": "Like fouling out but it's temporary and you come back.",
+        "nfl": "Like an ejection but just for a few minutes.",
+        "mlb": "Like being in the dugout after an ejection - but you get to return."
+    },
+    "slot": {
+        "name": "The Slot",
+        "description": "The area directly in front of the goal, between the face-off circles. Prime scoring territory.",
+        "purpose": "Most goals are scored from here! Teams fight hard to get the puck into the slot and fight hard to keep it out.",
+        "fun_fact": "Goals scored from the slot have the highest percentage. Coaches always talk about 'getting to the dirty areas' - this is it.",
+        "soccer": "Like the space right in front of goal - the danger zone.",
+        "nba": "Like the paint/key area - highest percentage shots.",
+        "nfl": "Like goal-line plays - high-percentage scoring territory.",
+        "mlb": "Like having a hanging curveball - prime opportunity to score."
+    },
+    "point": {
+        "name": "The Point",
+        "description": "The area just inside the offensive blue line, usually manned by defensemen during offensive pressure.",
+        "purpose": "Defensemen at the point take slap shots, keep pucks in the zone, and quarterback the power play.",
+        "fun_fact": "Point shots often aim to get deflected or screened. A clean 'point shot' through traffic is a classic way to score.",
+        "soccer": "Like a deep-lying playmaker position - controlling play from behind.",
+        "nba": "Like the point guard position at the top of the key.",
+        "nfl": "Like the quarterback position - orchestrating from behind the play.",
+        "mlb": "Like a pitcher controlling the game from the mound."
+    },
+    "hash_marks": {
+        "name": "Hash Marks",
+        "description": "The small lines inside the face-off circles where players must line up for a face-off.",
+        "purpose": "Players taking the face-off must have skates on or inside the hash marks. Everyone else must stay outside the circle.",
+        "fun_fact": "Face-off violations (moving early) result in being kicked out. Another player must take the draw.",
+        "soccer": "Like the penalty spot - precise location for a set piece.",
+        "nba": "Like the free throw lane marks - defines where players can stand.",
+        "nfl": "Like the hash marks on the field marking yard lines.",
+        "mlb": "Like the batter's box lines - you must stay within them."
+    }
+}
+
+# =============================================================================
 # HOCKEY DICTIONARY - Comprehensive Term Definitions
 # =============================================================================
 
@@ -3539,6 +3726,81 @@ def get_dictionary_term(term):
         'found': False,
         'error': f"Term '{term}' not found",
         'suggestion': 'Try browsing by category at /api/dictionary'
+    })
+
+# =============================================================================
+# RINK MAP ROUTES
+# =============================================================================
+
+@app.route('/api/rink')
+def get_rink_zones():
+    """Get all rink zones for the interactive map"""
+    zones = []
+    for zone_id, info in RINK_ZONES.items():
+        zones.append({
+            'id': zone_id,
+            'name': info['name'],
+            'description': info['description'][:100] + '...' if len(info['description']) > 100 else info['description']
+        })
+    return jsonify({
+        'zones': zones,
+        'count': len(zones)
+    })
+
+@app.route('/api/rink/<path:zone>')
+def get_rink_zone(zone):
+    """Get detailed info for a specific rink zone"""
+    zone_lower = zone.lower().strip().replace(' ', '_').replace('-', '_')
+
+    if zone_lower in RINK_ZONES:
+        info = RINK_ZONES[zone_lower]
+        return jsonify({
+            'found': True,
+            'id': zone_lower,
+            'name': info['name'],
+            'description': info['description'],
+            'purpose': info['purpose'],
+            'fun_fact': info['fun_fact'],
+            'analogies': {
+                'soccer': info.get('soccer', ''),
+                'nba': info.get('nba', ''),
+                'nfl': info.get('nfl', ''),
+                'mlb': info.get('mlb', '')
+            }
+        })
+
+    # Try fuzzy match
+    from difflib import SequenceMatcher
+    best_match = None
+    best_score = 0
+
+    for name in RINK_ZONES.keys():
+        score = SequenceMatcher(None, zone_lower, name).ratio()
+        if score > best_score:
+            best_score = score
+            best_match = name
+
+    if best_match and best_score > 0.5:
+        info = RINK_ZONES[best_match]
+        return jsonify({
+            'found': True,
+            'id': best_match,
+            'name': info['name'],
+            'description': info['description'],
+            'purpose': info['purpose'],
+            'fun_fact': info['fun_fact'],
+            'analogies': {
+                'soccer': info.get('soccer', ''),
+                'nba': info.get('nba', ''),
+                'nfl': info.get('nfl', ''),
+                'mlb': info.get('mlb', '')
+            }
+        })
+
+    return jsonify({
+        'found': False,
+        'error': f"Zone '{zone}' not found",
+        'available_zones': [name for name in RINK_ZONES.keys()]
     })
 
 def initialize_app():
