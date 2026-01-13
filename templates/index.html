@@ -1293,9 +1293,13 @@
         <div class="main-layout">
             <!-- Left sidebar with browse buttons -->
             <div class="browse-sidebar">
-                <button class="browse-btn home" data-tab="concepts">
+                <button class="browse-btn home active" data-tab="dictionary">
                     <span class="browse-icon">🏠</span>
                     <span class="browse-label">Home</span>
+                </button>
+                <button class="browse-btn" data-tab="players">
+                    <span class="browse-icon">🏒</span>
+                    <span class="browse-label">Player Comps</span>
                 </button>
                 <button class="browse-btn sharks" data-tab="sharks">
                     <span class="browse-icon">🦈</span>
@@ -1309,17 +1313,13 @@
                     <span class="browse-icon">📊</span>
                     <span class="browse-label">Stats Explained</span>
                 </button>
-                <button class="browse-btn" data-tab="dictionary">
-                    <span class="browse-icon">📖</span>
-                    <span class="browse-label">Hockey Dictionary</span>
-                </button>
                 <button class="browse-btn sharks" data-tab="schedule">
                     <span class="browse-icon">📅</span>
                     <span class="browse-label">Sharks Schedule</span>
                 </button>
             </div>
 
-            <!-- Right side with search -->
+            <!-- Right side with main content -->
             <div class="search-side">
                 <div class="sport-selector">
                     <button class="sport-btn active" data-sport="all">
@@ -1340,15 +1340,10 @@
                 </div>
 
                 <div class="search-container">
-                    <div class="tabs">
-                        <button class="tab active" data-tab="concepts">Rules & Concepts</button>
-                        <button class="tab" data-tab="players">Player Comps</button>
-                    </div>
-
                     <div id="search-section">
                         <div class="search-box">
-                            <input type="text" id="search-input" placeholder="Ask about power play, icing, offsides...">
-                            <button class="search-btn" id="search-btn">Explain It!</button>
+                            <input type="text" id="search-input" placeholder="Search hockey terms... (power play, icing, offside)">
+                            <button class="search-btn" id="search-btn">Search</button>
                         </div>
 
                         <div class="quick-picks" id="quick-picks">
@@ -1380,13 +1375,12 @@
         const quickPicksContainer = document.getElementById('quick-picks');
         const searchSection = document.getElementById('search-section');
         const browseSection = document.getElementById('browse-section');
-        const tabs = document.querySelectorAll('.tab');
         const sportBtns = document.querySelectorAll('.sport-btn');
 
-        let currentTab = 'concepts';
+        let currentTab = 'dictionary';
         let selectedSport = 'all';
 
-        const conceptQuickPicks = ['Power Play', 'Icing', 'Offside', 'Hat Trick', 'Breakaway', 'Slap Shot', 'Overtime', 'How many periods?'];
+        const dictionaryQuickPicks = ['Power Play', 'Icing', 'Offside', 'Hat Trick', 'Breakaway', 'Slap Shot', 'Penalty Box', 'Blue Line'];
         const playerQuickPicks = ['Macklin Celebrini', 'Connor McDavid', 'Sidney Crosby', 'Cale Makar', 'Alex Ovechkin', 'Connor Bedard'];
 
         const categoryIcons = {
@@ -1412,35 +1406,14 @@
 
         const browseBtns = document.querySelectorAll('.browse-btn');
 
-        // Event Listeners for search tabs
-        tabs.forEach(tab => {
-            tab.addEventListener('click', () => {
-                // Clear browse button active states
-                browseBtns.forEach(b => b.classList.remove('active'));
-                // Set tab active states
-                tabs.forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                currentTab = tab.dataset.tab;
-                handleTabChange();
-            });
-        });
-
         // Event Listeners for browse buttons
         browseBtns.forEach(btn => {
             btn.addEventListener('click', () => {
                 const targetTab = btn.dataset.tab;
 
                 // Clear all active states
-                tabs.forEach(t => t.classList.remove('active'));
                 browseBtns.forEach(b => b.classList.remove('active'));
-
-                // If Home button (concepts or players), activate the corresponding tab
-                if (targetTab === 'concepts' || targetTab === 'players') {
-                    const matchingTab = document.querySelector(`.tab[data-tab="${targetTab}"]`);
-                    if (matchingTab) matchingTab.classList.add('active');
-                } else {
-                    btn.classList.add('active');
-                }
+                btn.classList.add('active');
 
                 currentTab = targetTab;
                 handleTabChange();
@@ -1467,16 +1440,16 @@
             // Clear input when switching tabs
             searchInput.value = '';
 
-            // Show sport selector and search container only for search tabs
+            // Show sport selector and search container for dictionary and players
             const sportSelector = document.querySelector('.sport-selector');
             const searchContainer = document.querySelector('.search-container');
-            const isSearchTab = (currentTab === 'concepts' || currentTab === 'players');
+            const isSearchTab = (currentTab === 'dictionary' || currentTab === 'players');
 
             sportSelector.style.display = isSearchTab ? 'flex' : 'none';
             searchContainer.style.display = isSearchTab ? 'block' : 'none';
             browseSection.style.display = isSearchTab ? 'none' : 'block';
 
-            if (currentTab === 'concepts' || currentTab === 'players') {
+            if (currentTab === 'dictionary' || currentTab === 'players') {
                 searchSection.style.display = 'block';
                 updateQuickPicks();
                 updatePlaceholder();
@@ -1486,23 +1459,21 @@
                 loadRink();
             } else if (currentTab === 'stats') {
                 loadStatsGlossary();
-            } else if (currentTab === 'dictionary') {
-                loadDictionary();
             } else if (currentTab === 'schedule') {
                 loadSchedule();
             }
         }
 
         function updateQuickPicks() {
-            const picks = currentTab === 'concepts' ? conceptQuickPicks : playerQuickPicks;
+            const picks = currentTab === 'dictionary' ? dictionaryQuickPicks : playerQuickPicks;
             quickPicksContainer.innerHTML = picks.map(p =>
                 `<span class="quick-pick" onclick="quickSearch('${p}')">${p}</span>`
             ).join('');
         }
 
         function updatePlaceholder() {
-            searchInput.placeholder = currentTab === 'concepts'
-                ? "Ask about power play, icing, how many periods..."
+            searchInput.placeholder = currentTab === 'dictionary'
+                ? "Search hockey terms... (power play, icing, offside)"
                 : "Search ANY NHL player by name...";
         }
 
@@ -2340,7 +2311,7 @@
             showLoading();
 
             try {
-                const endpoint = currentTab === 'concepts'
+                const endpoint = currentTab === 'dictionary'
                     ? `/api/explain/${encodeURIComponent(query)}`
                     : `/api/compare/${encodeURIComponent(query)}`;
 
@@ -2348,7 +2319,7 @@
                 const data = await response.json();
 
                 if (data.found) {
-                    if (currentTab === 'concepts') {
+                    if (currentTab === 'dictionary') {
                         showConceptResult(data);
                     } else {
                         showPlayerResult(data);
@@ -2395,7 +2366,7 @@
                     <div class="error-message">
                         🏒 Couldn't find "${data.query || 'that'}"
                         <p style="font-size:0.9rem;margin-top:10px;color:#7eb8da;">
-                            ${currentTab === 'players' ? 'Try the full name (first and last) of any current NHL player.' : 'Try a different term or check the suggestions below.'}
+                            ${currentTab === 'players' ? 'Try the full name (first and last) of any current NHL player.' : 'Try a different hockey term or check the suggestions below.'}
                         </p>
                     </div>
                     ${suggestionsHtml}
