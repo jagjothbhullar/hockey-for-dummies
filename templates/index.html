@@ -1170,6 +1170,10 @@
         <div class="main-layout">
             <!-- Left sidebar with browse buttons -->
             <div class="browse-sidebar">
+                <button class="browse-btn home" data-tab="concepts">
+                    <span class="browse-icon">🏠</span>
+                    <span class="browse-label">Home</span>
+                </button>
                 <button class="browse-btn sharks" data-tab="sharks">
                     <span class="browse-icon">🦈</span>
                     <span class="browse-label">Meet the Sharks</span>
@@ -1297,12 +1301,21 @@
         // Event Listeners for browse buttons
         browseBtns.forEach(btn => {
             btn.addEventListener('click', () => {
-                // Clear tab active states
+                const targetTab = btn.dataset.tab;
+
+                // Clear all active states
                 tabs.forEach(t => t.classList.remove('active'));
-                // Set browse button active states
                 browseBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                currentTab = btn.dataset.tab;
+
+                // If Home button (concepts or players), activate the corresponding tab
+                if (targetTab === 'concepts' || targetTab === 'players') {
+                    const matchingTab = document.querySelector(`.tab[data-tab="${targetTab}"]`);
+                    if (matchingTab) matchingTab.classList.add('active');
+                } else {
+                    btn.classList.add('active');
+                }
+
+                currentTab = targetTab;
                 handleTabChange();
             });
         });
