@@ -15,21 +15,57 @@ app = Flask(__name__)
 # NHL API Base URL
 NHL_API_BASE = "https://api-web.nhle.com/v1"
 
+# Path to cached roster file
+import os
+ROSTER_FILE = os.path.join(os.path.dirname(__file__), 'nhl_rosters.json')
+
 # =============================================================================
-# NHL ROSTER CACHE - Load all players once at startup for fast search
+# NHL ROSTER CACHE - Load from JSON file for instant startup
 # =============================================================================
 
 NHL_ROSTER_CACHE = []
 NHL_ROSTER_LOADED = False
 
+def load_rosters_from_file():
+    """Load rosters from JSON file (instant)"""
+    global NHL_ROSTER_CACHE, NHL_ROSTER_LOADED
+
+    try:
+        import json
+        with open(ROSTER_FILE, 'r') as f:
+            NHL_ROSTER_CACHE = json.load(f)
+        NHL_ROSTER_LOADED = True
+        print(f"Loaded {len(NHL_ROSTER_CACHE)} players from cache file")
+        return True
+    except Exception as e:
+        print(f"Could not load from file: {e}")
+        return False
+
+def save_rosters_to_file():
+    """Save current roster cache to JSON file"""
+    try:
+        import json
+        with open(ROSTER_FILE, 'w') as f:
+            json.dump(NHL_ROSTER_CACHE, f)
+        print(f"Saved {len(NHL_ROSTER_CACHE)} players to cache file")
+        return True
+    except Exception as e:
+        print(f"Could not save to file: {e}")
+        return False
+
 def load_all_nhl_rosters():
-    """Load all NHL rosters into cache at startup"""
+    """Load all NHL rosters - from file first, then API as fallback"""
     global NHL_ROSTER_CACHE, NHL_ROSTER_LOADED
 
     if NHL_ROSTER_LOADED:
         return
 
-    print("Loading NHL rosters...")
+    # Try loading from file first (instant)
+    if load_rosters_from_file():
+        return
+
+    # Fallback: load from API (slower, but ensures data exists)
+    print("Loading NHL rosters from API...")
 
     # All 32 NHL team abbreviations
     teams = [
@@ -62,7 +98,51 @@ def load_all_nhl_rosters():
 
     NHL_ROSTER_CACHE = all_players
     NHL_ROSTER_LOADED = True
-    print(f"Loaded {len(all_players)} NHL players")
+    print(f"Loaded {len(all_players)} NHL players from API")
+
+    # Save to file for next time
+    save_rosters_to_file()
+
+def refresh_rosters_from_api():
+    """Force refresh rosters from NHL API and update cache file"""
+    global NHL_ROSTER_CACHE, NHL_ROSTER_LOADED
+
+    print("Refreshing NHL rosters from API...")
+    NHL_ROSTER_LOADED = False
+    NHL_ROSTER_CACHE = []
+
+    teams = [
+        'ANA', 'BOS', 'BUF', 'CGY', 'CAR', 'CHI', 'COL', 'CBJ',
+        'DAL', 'DET', 'EDM', 'FLA', 'LAK', 'MIN', 'MTL', 'NSH',
+        'NJD', 'NYI', 'NYR', 'OTT', 'PHI', 'PIT', 'SJS', 'SEA',
+        'STL', 'TBL', 'TOR', 'UTA', 'VAN', 'VGK', 'WSH', 'WPG'
+    ]
+
+    all_players = []
+
+    for team in teams:
+        try:
+            response = requests.get(f"{NHL_API_BASE}/roster/{team}/current", timeout=10)
+            if response.status_code == 200:
+                data = response.json()
+                for pos in ['forwards', 'defensemen', 'goalies']:
+                    for player in data.get(pos, []):
+                        all_players.append({
+                            'id': player.get('id'),
+                            'name': f"{player.get('firstName', {}).get('default', '')} {player.get('lastName', {}).get('default', '')}",
+                            'first_name': player.get('firstName', {}).get('default', ''),
+                            'last_name': player.get('lastName', {}).get('default', ''),
+                            'position': player.get('positionCode', ''),
+                            'number': player.get('sweaterNumber', ''),
+                            'team': team
+                        })
+        except Exception as e:
+            print(f"Error loading {team}: {e}")
+
+    NHL_ROSTER_CACHE = all_players
+    NHL_ROSTER_LOADED = True
+    save_rosters_to_file()
+    return len(all_players)
 
 # =============================================================================
 # HOCKEY CONCEPTS KNOWLEDGE BASE
@@ -2120,6 +2200,31 @@ def search_nhl_api(query):
     return jsonify({
         'found': len(matches) > 0,
         'players': [{'name': m['name'], 'team': m['team'], 'position': m['position']} for m in matches[:10]]
+    })
+
+@app.route('/api/admin/refresh-rosters')
+def admin_refresh_rosters():
+    """Refresh NHL rosters from API (use after trades/roster changes)"""
+    try:
+        count = refresh_rosters_from_api()
+        return jsonify({
+            'success': True,
+            'message': f'Refreshed {count} players from NHL API',
+            'player_count': count
+        })
+    except Exception as e:
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@app.route('/api/admin/roster-status')
+def admin_roster_status():
+    """Check roster cache status"""
+    return jsonify({
+        'loaded': NHL_ROSTER_LOADED,
+        'player_count': len(NHL_ROSTER_CACHE),
+        'sample_players': [p['name'] for p in NHL_ROSTER_CACHE[:5]] if NHL_ROSTER_CACHE else []
     })
 
 def initialize_app():
