@@ -1063,93 +1063,333 @@ ADDITIONAL_CONCEPTS = {
 }
 
 # =============================================================================
-# PLAYER ARCHETYPES - For generating comparisons for any NHL player
+# PLAYER ARCHETYPES - Multiple options per archetype for variety
 # =============================================================================
 
 PLAYER_ARCHETYPES = {
     "elite_center": {
         "description": "Elite two-way center, franchise cornerstone",
-        "soccer": {"player": "Kevin De Bruyne", "team": "Manchester City", "style": "Elite playmaker who controls the game from the middle"},
-        "nba": {"player": "Nikola Jokic", "team": "Denver Nuggets", "style": "Complete player who makes everyone around them better"},
-        "nfl": {"player": "Lamar Jackson", "team": "Baltimore Ravens", "style": "Dynamic playmaker who can do it all"},
-        "mlb": {"player": "Mookie Betts", "team": "LA Dodgers", "style": "Five-tool player, elite at everything"}
+        "soccer": [
+            {"player": "Kevin De Bruyne", "team": "Manchester City", "style": "Elite playmaker who controls the game from the middle"},
+            {"player": "Rodri", "team": "Manchester City", "style": "Midfield maestro, Ballon d'Or winner who dictates tempo"},
+            {"player": "Jude Bellingham", "team": "Real Madrid", "style": "Complete midfielder who scores, creates, and defends"}
+        ],
+        "nba": [
+            {"player": "Nikola Jokic", "team": "Denver Nuggets", "style": "Complete player who makes everyone around them better"},
+            {"player": "Shai Gilgeous-Alexander", "team": "Oklahoma City Thunder", "style": "Two-way star who dominates on both ends"},
+            {"player": "Jayson Tatum", "team": "Boston Celtics", "style": "Franchise cornerstone, championship-caliber player"}
+        ],
+        "nfl": [
+            {"player": "Lamar Jackson", "team": "Baltimore Ravens", "style": "Dynamic playmaker who can do it all"},
+            {"player": "Josh Allen", "team": "Buffalo Bills", "style": "Elite dual-threat who carries his team"},
+            {"player": "Jalen Hurts", "team": "Philadelphia Eagles", "style": "Complete QB, runs the show on offense"}
+        ],
+        "mlb": [
+            {"player": "Mookie Betts", "team": "LA Dodgers", "style": "Five-tool player, elite at everything"},
+            {"player": "Corey Seager", "team": "Texas Rangers", "style": "Championship-proven, complete player"},
+            {"player": "Marcus Semien", "team": "Texas Rangers", "style": "All-around excellence, durable star"}
+        ]
     },
     "goal_scorer": {
         "description": "Pure goal scorer with lethal shot",
-        "soccer": {"player": "Erling Haaland", "team": "Manchester City", "style": "Elite finisher, born goal scorer"},
-        "nba": {"player": "Kevin Durant", "team": "Phoenix Suns", "style": "Pure scorer, impossible to stop when hot"},
-        "nfl": {"player": "Tyreek Hill", "team": "Miami Dolphins", "style": "Big play threat, scores from anywhere"},
-        "mlb": {"player": "Aaron Judge", "team": "NY Yankees", "style": "Power hitter, home run threat every at-bat"}
+        "soccer": [
+            {"player": "Erling Haaland", "team": "Manchester City", "style": "Elite finisher, born goal scorer"},
+            {"player": "Kylian Mbappe", "team": "Real Madrid", "style": "Explosive scorer with devastating pace"},
+            {"player": "Mohamed Salah", "team": "Liverpool", "style": "Clinical finisher, scores in every big game"},
+            {"player": "Harry Kane", "team": "Bayern Munich", "style": "Complete striker, lethal from anywhere"}
+        ],
+        "nba": [
+            {"player": "Kevin Durant", "team": "Phoenix Suns", "style": "Pure scorer, impossible to stop when hot"},
+            {"player": "Devin Booker", "team": "Phoenix Suns", "style": "Bucket getter, scores at will"},
+            {"player": "Donovan Mitchell", "team": "Cleveland Cavaliers", "style": "Dynamic scorer who can explode any night"},
+            {"player": "Zach LaVine", "team": "Chicago Bulls", "style": "Athletic scorer with limitless range"}
+        ],
+        "nfl": [
+            {"player": "Tyreek Hill", "team": "Miami Dolphins", "style": "Big play threat, scores from anywhere"},
+            {"player": "Ja'Marr Chase", "team": "Cincinnati Bengals", "style": "Elite receiver who dominates in the red zone"},
+            {"player": "Davante Adams", "team": "Las Vegas Raiders", "style": "Route-running master, touchdown machine"},
+            {"player": "Justin Jefferson", "team": "Minnesota Vikings", "style": "Explosive playmaker, game-breaking talent"}
+        ],
+        "mlb": [
+            {"player": "Aaron Judge", "team": "NY Yankees", "style": "Power hitter, home run threat every at-bat"},
+            {"player": "Kyle Schwarber", "team": "Philadelphia Phillies", "style": "Power lefty who crushes the ball"},
+            {"player": "Pete Alonso", "team": "NY Mets", "style": "Polar Bear power, dangerous slugger"},
+            {"player": "Matt Olson", "team": "Atlanta Braves", "style": "Elite power bat, run producer"}
+        ]
     },
     "playmaker": {
         "description": "Elite passer and setup man",
-        "soccer": {"player": "Martin Odegaard", "team": "Arsenal", "style": "Creative genius who sees passes others don't"},
-        "nba": {"player": "Chris Paul", "team": "San Antonio Spurs", "style": "Point god, elite court vision and passing"},
-        "nfl": {"player": "Travis Kelce", "team": "Kansas City Chiefs", "style": "Security blanket who always finds the open space"},
-        "mlb": {"player": "Jose Altuve", "team": "Houston Astros", "style": "Table setter, always getting on base"}
+        "soccer": [
+            {"player": "Martin Odegaard", "team": "Arsenal", "style": "Creative genius who sees passes others don't"},
+            {"player": "Bruno Fernandes", "team": "Manchester United", "style": "Chance creator with elite vision"},
+            {"player": "Bukayo Saka", "team": "Arsenal", "style": "Creative winger who makes things happen"},
+            {"player": "Cole Palmer", "team": "Chelsea", "style": "Young creator with incredible technique"}
+        ],
+        "nba": [
+            {"player": "Chris Paul", "team": "San Antonio Spurs", "style": "Point god, elite court vision and passing"},
+            {"player": "Tyrese Haliburton", "team": "Indiana Pacers", "style": "Floor general with elite assist numbers"},
+            {"player": "Trae Young", "team": "Atlanta Hawks", "style": "Elite passer who runs the offense"},
+            {"player": "LaMelo Ball", "team": "Charlotte Hornets", "style": "Creative playmaker with flashy passing"}
+        ],
+        "nfl": [
+            {"player": "Travis Kelce", "team": "Kansas City Chiefs", "style": "Security blanket who always finds the open space"},
+            {"player": "George Kittle", "team": "San Francisco 49ers", "style": "Playmaking tight end, moves the chains"},
+            {"player": "CeeDee Lamb", "team": "Dallas Cowboys", "style": "Route runner who creates separation"},
+            {"player": "Amon-Ra St. Brown", "team": "Detroit Lions", "style": "Reliable target who moves the chains"}
+        ],
+        "mlb": [
+            {"player": "Jose Altuve", "team": "Houston Astros", "style": "Table setter, always getting on base"},
+            {"player": "Trea Turner", "team": "Philadelphia Phillies", "style": "Catalyst at the top of the order"},
+            {"player": "Luis Arraez", "team": "San Diego Padres", "style": "Contact king, elite bat-to-ball skills"},
+            {"player": "Steven Kwan", "team": "Cleveland Guardians", "style": "On-base machine, pesky hitter"}
+        ]
     },
     "power_forward": {
         "description": "Physical, hard-nosed player who scores and hits",
-        "soccer": {"player": "Darwin Nunez", "team": "Liverpool", "style": "Physical striker who bullies defenders"},
-        "nba": {"player": "Giannis Antetokounmpo", "team": "Milwaukee Bucks", "style": "Physical freak who dominates through power"},
-        "nfl": {"player": "Derrick Henry", "team": "Tennessee Titans", "style": "Bruising runner who punishes defenders"},
-        "mlb": {"player": "Yordan Alvarez", "team": "Houston Astros", "style": "Power bat who crushes the ball"}
+        "soccer": [
+            {"player": "Darwin Nunez", "team": "Liverpool", "style": "Physical striker who bullies defenders"},
+            {"player": "Romelu Lukaku", "team": "Napoli", "style": "Powerful target man who holds up play"},
+            {"player": "Alexander Isak", "team": "Newcastle", "style": "Physical presence with clinical finishing"},
+            {"player": "Ivan Toney", "team": "Al-Ahli", "style": "Strong forward who wins aerial duels"}
+        ],
+        "nba": [
+            {"player": "Giannis Antetokounmpo", "team": "Milwaukee Bucks", "style": "Physical freak who dominates through power"},
+            {"player": "Zion Williamson", "team": "New Orleans Pelicans", "style": "Unstoppable force at the rim"},
+            {"player": "Paolo Banchero", "team": "Orlando Magic", "style": "Physical scorer who bullies defenders"},
+            {"player": "Julius Randle", "team": "New York Knicks", "style": "Power forward who creates his own shot"}
+        ],
+        "nfl": [
+            {"player": "Derrick Henry", "team": "Baltimore Ravens", "style": "Bruising runner who punishes defenders"},
+            {"player": "Josh Jacobs", "team": "Green Bay Packers", "style": "Physical back who wears down defenses"},
+            {"player": "Saquon Barkley", "team": "Philadelphia Eagles", "style": "Power and speed combination"},
+            {"player": "Nick Chubb", "team": "Cleveland Browns", "style": "Powerful runner who breaks tackles"}
+        ],
+        "mlb": [
+            {"player": "Yordan Alvarez", "team": "Houston Astros", "style": "Power bat who crushes the ball"},
+            {"player": "Giancarlo Stanton", "team": "NY Yankees", "style": "Raw power, tape-measure home runs"},
+            {"player": "Marcell Ozuna", "team": "Atlanta Braves", "style": "Middle-of-the-order power threat"},
+            {"player": "Rhys Hoskins", "team": "Milwaukee Brewers", "style": "Power-hitting first baseman"}
+        ]
     },
     "defensive_forward": {
         "description": "Responsible two-way forward, shutdown role",
-        "soccer": {"player": "N'Golo Kante", "team": "Al-Ittihad", "style": "Tireless worker who wins the ball everywhere"},
-        "nba": {"player": "Marcus Smart", "team": "Memphis Grizzlies", "style": "Defensive specialist who does the dirty work"},
-        "nfl": {"player": "Nick Bosa", "team": "San Francisco 49ers", "style": "Disruptive defender who impacts every play"},
-        "mlb": {"player": "Andrelton Simmons", "team": "Free Agent", "style": "Elite defender, Gold Glove caliber"}
+        "soccer": [
+            {"player": "N'Golo Kante", "team": "Al-Ittihad", "style": "Tireless worker who wins the ball everywhere"},
+            {"player": "Declan Rice", "team": "Arsenal", "style": "Defensive midfielder who breaks up play"},
+            {"player": "Casemiro", "team": "Manchester United", "style": "Destroyer who protects the back line"},
+            {"player": "Moises Caicedo", "team": "Chelsea", "style": "Ball-winner with endless energy"}
+        ],
+        "nba": [
+            {"player": "Marcus Smart", "team": "Memphis Grizzlies", "style": "Defensive specialist who does the dirty work"},
+            {"player": "Alex Caruso", "team": "Oklahoma City Thunder", "style": "Hustle player, elite perimeter defender"},
+            {"player": "Herb Jones", "team": "New Orleans Pelicans", "style": "Lockdown defender who guards the best"},
+            {"player": "Jrue Holiday", "team": "Boston Celtics", "style": "Two-way guard, championship defender"}
+        ],
+        "nfl": [
+            {"player": "Nick Bosa", "team": "San Francisco 49ers", "style": "Disruptive defender who impacts every play"},
+            {"player": "T.J. Watt", "team": "Pittsburgh Steelers", "style": "Dominant pass rusher, game-wrecker"},
+            {"player": "Myles Garrett", "team": "Cleveland Browns", "style": "Elite edge rusher, sack machine"},
+            {"player": "Maxx Crosby", "team": "Las Vegas Raiders", "style": "Relentless motor, high-effort player"}
+        ],
+        "mlb": [
+            {"player": "Andrelton Simmons", "team": "Free Agent", "style": "Elite defender, Gold Glove caliber"},
+            {"player": "Kevin Kiermaier", "team": "Toronto Blue Jays", "style": "Outfield wizard, highlight-reel catches"},
+            {"player": "Harrison Bader", "team": "New York Mets", "style": "Elite center fielder, defensive specialist"},
+            {"player": "Dansby Swanson", "team": "Chicago Cubs", "style": "Gold Glove shortstop, steady defender"}
+        ]
     },
     "offensive_defenseman": {
         "description": "Defenseman who quarterbacks the offense",
-        "soccer": {"player": "Trent Alexander-Arnold", "team": "Liverpool", "style": "Attacking fullback who creates from deep"},
-        "nba": {"player": "Draymond Green", "team": "Golden State Warriors", "style": "Defensive anchor who runs the offense"},
-        "nfl": {"player": "Micah Parsons", "team": "Dallas Cowboys", "style": "Dynamic defender who makes plays everywhere"},
-        "mlb": {"player": "Francisco Lindor", "team": "NY Mets", "style": "Elite defender with offensive pop"}
+        "soccer": [
+            {"player": "Trent Alexander-Arnold", "team": "Liverpool", "style": "Attacking fullback who creates from deep"},
+            {"player": "Josko Gvardiol", "team": "Manchester City", "style": "Ball-playing defender who joins attacks"},
+            {"player": "Achraf Hakimi", "team": "PSG", "style": "Attacking wingback with pace and skill"},
+            {"player": "Reece James", "team": "Chelsea", "style": "Complete fullback who contributes offensively"}
+        ],
+        "nba": [
+            {"player": "Draymond Green", "team": "Golden State Warriors", "style": "Defensive anchor who runs the offense"},
+            {"player": "Bam Adebayo", "team": "Miami Heat", "style": "Defensive big who facilitates offense"},
+            {"player": "Evan Mobley", "team": "Cleveland Cavaliers", "style": "Two-way big with playmaking ability"},
+            {"player": "Jaren Jackson Jr.", "team": "Memphis Grizzlies", "style": "Shot-blocking big who can shoot"}
+        ],
+        "nfl": [
+            {"player": "Micah Parsons", "team": "Dallas Cowboys", "style": "Dynamic defender who makes plays everywhere"},
+            {"player": "Fred Warner", "team": "San Francisco 49ers", "style": "Sideline-to-sideline linebacker"},
+            {"player": "Roquan Smith", "team": "Baltimore Ravens", "style": "Playmaking linebacker, tackles machine"},
+            {"player": "Bobby Wagner", "team": "Washington Commanders", "style": "Veteran playmaker, still elite"}
+        ],
+        "mlb": [
+            {"player": "Francisco Lindor", "team": "NY Mets", "style": "Elite defender with offensive pop"},
+            {"player": "Bo Bichette", "team": "Toronto Blue Jays", "style": "Shortstop with offensive upside"},
+            {"player": "Xander Bogaerts", "team": "San Diego Padres", "style": "Complete shortstop, bat and glove"},
+            {"player": "Willy Adames", "team": "Milwaukee Brewers", "style": "Power-hitting shortstop"}
+        ]
     },
     "shutdown_defenseman": {
         "description": "Stay-at-home defenseman, defensive specialist",
-        "soccer": {"player": "Virgil van Dijk", "team": "Liverpool", "style": "Dominant defender who shuts down attackers"},
-        "nba": {"player": "Rudy Gobert", "team": "Minnesota Timberwolves", "style": "Defensive anchor, protects the paint"},
-        "nfl": {"player": "Aaron Donald", "team": "LA Rams (Retired)", "style": "Dominant force who disrupts everything"},
-        "mlb": {"player": "Matt Chapman", "team": "San Francisco Giants", "style": "Elite defender, vacuum at the position"}
+        "soccer": [
+            {"player": "Virgil van Dijk", "team": "Liverpool", "style": "Dominant defender who shuts down attackers"},
+            {"player": "Ruben Dias", "team": "Manchester City", "style": "Rock-solid center back, defensive leader"},
+            {"player": "William Saliba", "team": "Arsenal", "style": "Young but composed defender"},
+            {"player": "Antonio Rudiger", "team": "Real Madrid", "style": "Aggressive defender, wins every duel"}
+        ],
+        "nba": [
+            {"player": "Rudy Gobert", "team": "Minnesota Timberwolves", "style": "Defensive anchor, protects the paint"},
+            {"player": "Giannis Antetokounmpo", "team": "Milwaukee Bucks", "style": "DPOY candidate, elite rim protector"},
+            {"player": "Anthony Davis", "team": "Los Angeles Lakers", "style": "Elite shot-blocker, defensive anchor"},
+            {"player": "Chet Holmgren", "team": "Oklahoma City Thunder", "style": "Length and timing, blocks everything"}
+        ],
+        "nfl": [
+            {"player": "Aaron Donald", "team": "LA Rams (Retired)", "style": "Dominant force who disrupts everything"},
+            {"player": "Chris Jones", "team": "Kansas City Chiefs", "style": "Interior dominance, pass-rush specialist"},
+            {"player": "Quinnen Williams", "team": "New York Jets", "style": "Run-stuffer who collapses pockets"},
+            {"player": "Dexter Lawrence", "team": "New York Giants", "style": "Massive presence, immovable object"}
+        ],
+        "mlb": [
+            {"player": "Matt Chapman", "team": "San Francisco Giants", "style": "Elite defender, vacuum at the position"},
+            {"player": "Nolan Arenado", "team": "St. Louis Cardinals", "style": "Gold Glove third baseman, defensive wizard"},
+            {"player": "Ke'Bryan Hayes", "team": "Pittsburgh Pirates", "style": "Elite defender, smooth at third"},
+            {"player": "Jose Iglesias", "team": "New York Mets", "style": "Defensive specialist, sure hands"}
+        ]
     },
     "starting_goalie": {
         "description": "Starting goaltender, the last line of defense",
-        "soccer": {"player": "Alisson Becker", "team": "Liverpool", "style": "Elite shot-stopper, commands the box"},
-        "nba": {"player": "Rudy Gobert", "team": "Minnesota Timberwolves", "style": "Rim protector, alters every shot"},
-        "nfl": {"player": "Minkah Fitzpatrick", "team": "Pittsburgh Steelers", "style": "Last line of defense, ball hawk"},
-        "mlb": {"player": "J.T. Realmuto", "team": "Philadelphia Phillies", "style": "Elite catcher, controls the game"}
+        "soccer": [
+            {"player": "Alisson Becker", "team": "Liverpool", "style": "Elite shot-stopper, commands the box"},
+            {"player": "Ederson", "team": "Manchester City", "style": "Sweeper-keeper with elite distribution"},
+            {"player": "Thibaut Courtois", "team": "Real Madrid", "style": "Big-game goalkeeper, clutch saves"},
+            {"player": "David Raya", "team": "Arsenal", "style": "Shot-stopper who plays with the ball"}
+        ],
+        "nba": [
+            {"player": "Rudy Gobert", "team": "Minnesota Timberwolves", "style": "Rim protector, alters every shot"},
+            {"player": "Brook Lopez", "team": "Milwaukee Bucks", "style": "Veteran rim protector, anchor"},
+            {"player": "Walker Kessler", "team": "Utah Jazz", "style": "Young shot-blocker with elite timing"},
+            {"player": "Mitchell Robinson", "team": "New York Knicks", "style": "Athletic rim protector, alley-oop threat"}
+        ],
+        "nfl": [
+            {"player": "Minkah Fitzpatrick", "team": "Pittsburgh Steelers", "style": "Last line of defense, ball hawk"},
+            {"player": "Jessie Bates III", "team": "Atlanta Falcons", "style": "Rangey safety, covers ground"},
+            {"player": "Derwin James", "team": "Los Angeles Chargers", "style": "Versatile safety, does everything"},
+            {"player": "Antoine Winfield Jr.", "team": "Tampa Bay Buccaneers", "style": "Playmaking safety, big-play threat"}
+        ],
+        "mlb": [
+            {"player": "J.T. Realmuto", "team": "Philadelphia Phillies", "style": "Elite catcher, controls the game"},
+            {"player": "Will Smith", "team": "Los Angeles Dodgers", "style": "Complete catcher, bat and glove"},
+            {"player": "Adley Rutschman", "team": "Baltimore Orioles", "style": "Young franchise catcher, leader"},
+            {"player": "Sean Murphy", "team": "Atlanta Braves", "style": "Elite defensive catcher with pop"}
+        ]
     },
     "young_star": {
         "description": "Young phenom, rising star",
-        "soccer": {"player": "Lamine Yamal", "team": "Barcelona", "style": "Teenage sensation with unlimited potential"},
-        "nba": {"player": "Victor Wembanyama", "team": "San Antonio Spurs", "style": "Generational talent, franchise-changing"},
-        "nfl": {"player": "C.J. Stroud", "team": "Houston Texans", "style": "Young star performing beyond his years"},
-        "mlb": {"player": "Elly De La Cruz", "team": "Cincinnati Reds", "style": "Electric young talent, game-changer"}
+        "soccer": [
+            {"player": "Lamine Yamal", "team": "Barcelona", "style": "Teenage sensation with unlimited potential"},
+            {"player": "Florian Wirtz", "team": "Bayer Leverkusen", "style": "Young German playmaker, future superstar"},
+            {"player": "Jamal Musiala", "team": "Bayern Munich", "style": "Skillful young star, dribbling wizard"},
+            {"player": "Pedri", "team": "Barcelona", "style": "Young midfield maestro, beyond his years"},
+            {"player": "Kobbie Mainoo", "team": "Manchester United", "style": "Breakthrough teenager, composed beyond his years"}
+        ],
+        "nba": [
+            {"player": "Victor Wembanyama", "team": "San Antonio Spurs", "style": "Generational talent, franchise-changing"},
+            {"player": "Chet Holmgren", "team": "Oklahoma City Thunder", "style": "Unicorn big man, does everything"},
+            {"player": "Anthony Edwards", "team": "Minnesota Timberwolves", "style": "Young superstar, athletic freak"},
+            {"player": "Tyrese Maxey", "team": "Philadelphia 76ers", "style": "Explosive young guard, rising star"},
+            {"player": "Jalen Williams", "team": "Oklahoma City Thunder", "style": "Two-way young star, does it all"}
+        ],
+        "nfl": [
+            {"player": "C.J. Stroud", "team": "Houston Texans", "style": "Young star performing beyond his years"},
+            {"player": "Puka Nacua", "team": "Los Angeles Rams", "style": "Rookie sensation, record-breaker"},
+            {"player": "Brock Bowers", "team": "Las Vegas Raiders", "style": "Young tight end, immediate impact"},
+            {"player": "Jayden Daniels", "team": "Washington Commanders", "style": "Dual-threat rookie QB, electric"},
+            {"player": "Malik Nabers", "team": "New York Giants", "style": "Young receiver, explosive playmaker"}
+        ],
+        "mlb": [
+            {"player": "Elly De La Cruz", "team": "Cincinnati Reds", "style": "Electric young talent, game-changer"},
+            {"player": "Gunnar Henderson", "team": "Baltimore Orioles", "style": "Young superstar, five-tool talent"},
+            {"player": "Corbin Carroll", "team": "Arizona Diamondbacks", "style": "Speed and power, dynamic leadoff"},
+            {"player": "Jackson Chourio", "team": "Milwaukee Brewers", "style": "Teenage phenom, exciting talent"},
+            {"player": "Jackson Merrill", "team": "San Diego Padres", "style": "Rookie sensation, breakout star"}
+        ]
     },
     "veteran_leader": {
         "description": "Experienced veteran, locker room leader",
-        "soccer": {"player": "Luka Modric", "team": "Real Madrid", "style": "Ageless leader who controls the game"},
-        "nba": {"player": "LeBron James", "team": "Los Angeles Lakers", "style": "Veteran leader still performing at elite level"},
-        "nfl": {"player": "Aaron Rodgers", "team": "New York Jets", "style": "Experienced leader, seen it all"},
-        "mlb": {"player": "Clayton Kershaw", "team": "Los Angeles Dodgers", "style": "Veteran ace, team leader"}
+        "soccer": [
+            {"player": "Luka Modric", "team": "Real Madrid", "style": "Ageless leader who controls the game"},
+            {"player": "Thiago Silva", "team": "Fluminense", "style": "Veteran leader, still performing at high level"},
+            {"player": "James Milner", "team": "Brighton", "style": "Ultimate professional, leads by example"},
+            {"player": "Olivier Giroud", "team": "AC Milan", "style": "Veteran striker, clutch performer"}
+        ],
+        "nba": [
+            {"player": "LeBron James", "team": "Los Angeles Lakers", "style": "Veteran leader still performing at elite level"},
+            {"player": "Stephen Curry", "team": "Golden State Warriors", "style": "All-time great, championship DNA"},
+            {"player": "Chris Paul", "team": "San Antonio Spurs", "style": "Point God, mentor to young players"},
+            {"player": "Kevin Durant", "team": "Phoenix Suns", "style": "Veteran scorer, still elite"}
+        ],
+        "nfl": [
+            {"player": "Aaron Rodgers", "team": "New York Jets", "style": "Experienced leader, seen it all"},
+            {"player": "Davante Adams", "team": "Las Vegas Raiders", "style": "Veteran receiver, route-running master"},
+            {"player": "Travis Kelce", "team": "Kansas City Chiefs", "style": "Veteran playmaker, championship experience"},
+            {"player": "Derrick Henry", "team": "Baltimore Ravens", "style": "Veteran workhorse, still dominant"}
+        ],
+        "mlb": [
+            {"player": "Clayton Kershaw", "team": "Los Angeles Dodgers", "style": "Veteran ace, team leader"},
+            {"player": "Justin Verlander", "team": "San Francisco Giants", "style": "Future Hall of Famer, still competing"},
+            {"player": "Max Scherzer", "team": "Texas Rangers", "style": "Intense competitor, championship proven"},
+            {"player": "Miguel Cabrera", "team": "Retired", "style": "Hall of Fame career, respected veteran"}
+        ]
     },
     "grinder": {
         "description": "Energy player, hard worker, 4th line role",
-        "soccer": {"player": "James Milner", "team": "Brighton", "style": "Utility player, does everything asked"},
-        "nba": {"player": "Patrick Beverley", "team": "Various", "style": "Energy guy, does the dirty work"},
-        "nfl": {"player": "Cordarrelle Patterson", "team": "Pittsburgh Steelers", "style": "Versatile role player, special teams ace"},
-        "mlb": {"player": "Kiké Hernandez", "team": "LA Dodgers", "style": "Super utility, postseason hero"}
+        "soccer": [
+            {"player": "James Milner", "team": "Brighton", "style": "Utility player, does everything asked"},
+            {"player": "Mateo Kovacic", "team": "Manchester City", "style": "Engine room player, tireless worker"},
+            {"player": "Conor Gallagher", "team": "Atletico Madrid", "style": "High-energy midfielder, never stops running"},
+            {"player": "Pascal Gross", "team": "Brighton", "style": "Workmanlike player, reliable performer"}
+        ],
+        "nba": [
+            {"player": "Patrick Beverley", "team": "Various", "style": "Energy guy, does the dirty work"},
+            {"player": "P.J. Tucker", "team": "LA Clippers", "style": "Corner specialist, defensive hustle"},
+            {"player": "Royce O'Neale", "team": "Phoenix Suns", "style": "3-and-D role player, does the little things"},
+            {"player": "Torrey Craig", "team": "Chicago Bulls", "style": "Energy wing, hustle plays"}
+        ],
+        "nfl": [
+            {"player": "Cordarrelle Patterson", "team": "Pittsburgh Steelers", "style": "Versatile role player, special teams ace"},
+            {"player": "Taysom Hill", "team": "New Orleans Saints", "style": "Swiss Army knife, does everything"},
+            {"player": "Rex Burkhead", "team": "Houston Texans", "style": "Versatile back, reliable veteran"},
+            {"player": "C.J. Ham", "team": "Minnesota Vikings", "style": "Fullback, blocking specialist"}
+        ],
+        "mlb": [
+            {"player": "Kiké Hernandez", "team": "LA Dodgers", "style": "Super utility, postseason hero"},
+            {"player": "Tommy Edman", "team": "LA Dodgers", "style": "Versatile defender, plays everywhere"},
+            {"player": "Isiah Kiner-Falefa", "team": "Toronto Blue Jays", "style": "Utility player, defensive versatility"},
+            {"player": "David Fletcher", "team": "Atlanta Braves", "style": "Contact hitter, plays multiple positions"}
+        ]
     },
     "enforcer": {
         "description": "Physical presence, protects teammates",
-        "soccer": {"player": "Roy Keane (Classic)", "team": "Retired", "style": "Intimidator who protected teammates"},
-        "nba": {"player": "Draymond Green", "team": "Golden State Warriors", "style": "Physical, emotional leader, protector"},
-        "nfl": {"player": "Ray Lewis (Classic)", "team": "Retired", "style": "Intimidating presence, enforcer mentality"},
-        "mlb": {"player": "Chase Utley (Classic)", "team": "Retired", "style": "Hard-nosed, didn't back down"}
+        "soccer": [
+            {"player": "Roy Keane (Classic)", "team": "Retired", "style": "Intimidator who protected teammates"},
+            {"player": "Sergio Ramos", "team": "Retired", "style": "Hard-nosed defender, feared competitor"},
+            {"player": "Bruno Guimaraes", "team": "Newcastle", "style": "Tough midfielder who battles for everything"},
+            {"player": "Rodri", "team": "Manchester City", "style": "Physical presence, wins every duel"}
+        ],
+        "nba": [
+            {"player": "Draymond Green", "team": "Golden State Warriors", "style": "Physical, emotional leader, protector"},
+            {"player": "Steven Adams", "team": "Houston Rockets", "style": "Enforcer, sets hard screens, protects teammates"},
+            {"player": "Jusuf Nurkic", "team": "Phoenix Suns", "style": "Physical center, tough competitor"},
+            {"player": "Montrezl Harrell", "team": "Various", "style": "Energy big, physical presence"}
+        ],
+        "nfl": [
+            {"player": "Ray Lewis (Classic)", "team": "Retired", "style": "Intimidating presence, enforcer mentality"},
+            {"player": "Cam Heyward", "team": "Pittsburgh Steelers", "style": "Veteran enforcer, physical leader"},
+            {"player": "Budda Baker", "team": "Arizona Cardinals", "style": "Hard-hitting safety, enforcer"},
+            {"player": "Zack Baun", "team": "Philadelphia Eagles", "style": "Physical linebacker, thumper"}
+        ],
+        "mlb": [
+            {"player": "Chase Utley (Classic)", "team": "Retired", "style": "Hard-nosed, didn't back down"},
+            {"player": "Pete Rose (Classic)", "team": "Retired", "style": "Charlie Hustle, played hard every play"},
+            {"player": "Ty Cobb (Classic)", "team": "Retired", "style": "Aggressive, fiery competitor"},
+            {"player": "Josh Donaldson", "team": "Retired", "style": "Intense competitor, fired up teammates"}
+        ]
     }
 }
 
@@ -1469,6 +1709,12 @@ def generate_player_comparison(player_info):
     assists = player_info.get('assists', 0)
     draft_overall = player_info.get('draft_overall', 0)
 
+    # Randomly pick one comparison per sport from the options
+    soccer_comp = random.choice(arch_data['soccer'])
+    nba_comp = random.choice(arch_data['nba'])
+    nfl_comp = random.choice(arch_data['nfl'])
+    mlb_comp = random.choice(arch_data['mlb'])
+
     # Build position description
     pos_map = {'C': 'Center', 'L': 'Left Wing', 'R': 'Right Wing', 'D': 'Defenseman', 'G': 'Goaltender'}
     full_position = pos_map.get(position, position)
@@ -1508,24 +1754,24 @@ def generate_player_comparison(player_info):
         'accolades': ', '.join(accolades_parts) if accolades_parts else "Current NHL player",
         'archetype': archetype,
         'soccer': {
-            'player': arch_data['soccer']['player'],
-            'team': arch_data['soccer']['team'],
-            'explanation': f"{name} plays like {arch_data['soccer']['player']} - {arch_data['soccer']['style']}. Both are {arch_data['description'].lower()}s who impact the game in similar ways."
+            'player': soccer_comp['player'],
+            'team': soccer_comp['team'],
+            'explanation': f"{name} plays like {soccer_comp['player']} - {soccer_comp['style']}. Both are {arch_data['description'].lower()}s who impact the game in similar ways."
         },
         'nba': {
-            'player': arch_data['nba']['player'],
-            'team': arch_data['nba']['team'],
-            'explanation': f"The NBA equivalent is {arch_data['nba']['player']} - {arch_data['nba']['style']}. Like {name}, they bring a {arch_data['description'].lower()} approach to their team."
+            'player': nba_comp['player'],
+            'team': nba_comp['team'],
+            'explanation': f"The NBA equivalent is {nba_comp['player']} - {nba_comp['style']}. Like {name}, they bring a {arch_data['description'].lower()} approach to their team."
         },
         'nfl': {
-            'player': arch_data['nfl']['player'],
-            'team': arch_data['nfl']['team'],
-            'explanation': f"Think of {arch_data['nfl']['player']} - {arch_data['nfl']['style']}. {name} fills a similar role as a {arch_data['description'].lower()}."
+            'player': nfl_comp['player'],
+            'team': nfl_comp['team'],
+            'explanation': f"Think of {nfl_comp['player']} - {nfl_comp['style']}. {name} fills a similar role as a {arch_data['description'].lower()}."
         },
         'mlb': {
-            'player': arch_data['mlb']['player'],
-            'team': arch_data['mlb']['team'],
-            'explanation': f"In baseball terms, {name} is like {arch_data['mlb']['player']} - {arch_data['mlb']['style']}. Both are {arch_data['description'].lower()}s."
+            'player': mlb_comp['player'],
+            'team': mlb_comp['team'],
+            'explanation': f"In baseball terms, {name} is like {mlb_comp['player']} - {mlb_comp['style']}. Both are {arch_data['description'].lower()}s."
         }
     }
 
