@@ -172,21 +172,6 @@
             box-shadow: 0 5px 20px rgba(0, 212, 255, 0.4);
         }
 
-        .random-btn {
-            padding: 15px 20px;
-            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a5a 100%);
-            color: #fff;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            font-size: 1rem;
-        }
-
-        .random-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(255, 107, 107, 0.4);
-        }
-
         .quick-picks {
             margin-top: 15px;
             display: flex;
@@ -964,6 +949,111 @@
             border-radius: 3px;
         }
 
+        /* Flashcard Modal Styles */
+        .flashcard-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            padding: 20px;
+            animation: fadeIn 0.2s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .flashcard {
+            background: linear-gradient(135deg, #1a3a5c 0%, #0c1929 100%);
+            border: 2px solid rgba(0, 212, 255, 0.4);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 600px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        @keyframes popIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .flashcard-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #7eb8da;
+            font-size: 1.5rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .flashcard-close:hover {
+            background: rgba(255, 107, 107, 0.3);
+            border-color: #ff6b6b;
+            color: #ff6b6b;
+        }
+
+        .flashcard h2 {
+            color: #00d4ff;
+            margin-bottom: 20px;
+            padding-right: 40px;
+        }
+
+        .flashcard-section {
+            margin-bottom: 20px;
+        }
+
+        .flashcard-section h4 {
+            color: #7eb8da;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .flashcard-section p {
+            color: #c0d6e8;
+            line-height: 1.6;
+        }
+
+        /* Haptic feedback animation for clickable items */
+        .term-chip, .stat-card {
+            transition: all 0.15s ease;
+        }
+
+        .term-chip:active, .stat-card:active {
+            transform: scale(0.95);
+        }
+
+        .term-chip.clicked, .stat-card.clicked {
+            animation: hapticPulse 0.3s ease;
+        }
+
+        @keyframes hapticPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.92); background: rgba(0, 212, 255, 0.4); }
+            100% { transform: scale(1); }
+        }
+
         @media (max-width: 600px) {
             .sport-selector {
                 gap: 8px;
@@ -1018,7 +1108,6 @@
                 <div class="search-box">
                     <input type="text" id="search-input" placeholder="Ask about power play, icing, offsides...">
                     <button class="search-btn" id="search-btn">Explain It!</button>
-                    <button class="random-btn" id="random-btn">🎲 Random</button>
                 </div>
 
                 <div class="quick-picks" id="quick-picks">
@@ -1044,7 +1133,6 @@
     <script>
         const searchInput = document.getElementById('search-input');
         const searchBtn = document.getElementById('search-btn');
-        const randomBtn = document.getElementById('random-btn');
         const resultContainer = document.getElementById('result');
         const quickPicksContainer = document.getElementById('quick-picks');
         const searchSection = document.getElementById('search-section');
@@ -1098,7 +1186,6 @@
         });
 
         searchBtn.addEventListener('click', search);
-        randomBtn.addEventListener('click', getRandom);
         searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') search();
         });
@@ -1151,25 +1238,33 @@
 
         // ==================== SHARKS ROSTER ====================
         async function loadSharksRoster() {
-            browseSection.innerHTML = '<div class="loading"><div class="loading-puck"></div><p>Loading roster...</p></div>';
+            browseSection.innerHTML = '<div class="loading"><div class="loading-puck"></div><p>Loading live roster...</p></div>';
 
             try {
                 const response = await fetch('/api/sharks');
                 const data = await response.json();
 
+                const sourceLabel = data.source === 'live'
+                    ? '<span style="background:#00ff87;color:#000;padding:2px 8px;border-radius:10px;font-size:0.7rem;margin-left:10px;">LIVE</span>'
+                    : '';
+
                 let html = `
                     <div class="result-card shark-detail" style="padding:20px;">
-                        <h2 style="color:#006d75;margin-bottom:5px;">🦈 San Jose Sharks</h2>
-                        <p style="color:#7eb8da;margin-bottom:20px;">Click on a player to learn more about them</p>
+                        <h2 style="color:#006d75;margin-bottom:5px;">🦈 San Jose Sharks ${sourceLabel}</h2>
+                        <p style="color:#7eb8da;margin-bottom:20px;">${data.count} players on roster. Click on a player to see stats and comparisons.</p>
                         <div class="roster-grid">
                 `;
 
                 data.players.forEach(player => {
+                    const headshotHtml = player.headshot
+                        ? `<img src="${player.headshot}" alt="${player.name}" style="width:60px;height:60px;border-radius:50%;object-fit:cover;margin-bottom:8px;" onerror="this.style.display='none'">`
+                        : `<div class="roster-number">#${player.number}</div>`;
+
                     html += `
                         <div class="roster-player" onclick="loadSharkPlayer('${player.name.toLowerCase()}')">
-                            <div class="roster-number">#${player.number}</div>
+                            ${headshotHtml}
                             <div class="roster-name">${player.name}</div>
-                            <div class="roster-position">${player.position}</div>
+                            <div class="roster-position">#${player.number} | ${player.position}</div>
                             <div class="roster-role">${player.role}</div>
                         </div>
                     `;
@@ -1184,7 +1279,7 @@
 
         async function loadSharkPlayer(playerName) {
             resultContainer.classList.add('show');
-            resultContainer.innerHTML = '<div class="loading"><div class="loading-puck"></div><p>Loading player info...</p></div>';
+            resultContainer.innerHTML = '<div class="loading"><div class="loading-puck"></div><p>Loading player stats...</p></div>';
 
             try {
                 const response = await fetch(`/api/sharks/${encodeURIComponent(playerName)}`);
@@ -1195,69 +1290,154 @@
                     return;
                 }
 
+                // Build comparisons HTML
                 const sports = ['soccer', 'nba', 'nfl', 'mlb'];
                 const sportIcons = { soccer: '⚽', nba: '🏀', nfl: '🏈', mlb: '⚾' };
 
                 let comparisonsHtml = '';
-                sports.forEach(sport => {
-                    if (selectedSport !== 'all' && selectedSport !== sport) return;
-                    const comp = data.comparisons[sport];
-                    if (comp) {
-                        comparisonsHtml += `
-                            <div class="comparison-card">
-                                <div class="comparison-header">
-                                    <span class="comparison-sport-icon">${sportIcons[sport]}</span>
-                                    <div class="comparison-player">
-                                        <h3>${comp.player}</h3>
-                                        <p>${sport.toUpperCase()}</p>
+                if (data.comparisons) {
+                    sports.forEach(sport => {
+                        if (selectedSport !== 'all' && selectedSport !== sport) return;
+                        const comp = data.comparisons[sport];
+                        if (comp && comp.player) {
+                            comparisonsHtml += `
+                                <div class="comparison-card">
+                                    <div class="comparison-header">
+                                        <span class="comparison-sport-icon">${sportIcons[sport]}</span>
+                                        <div class="comparison-player">
+                                            <h3>${comp.player}</h3>
+                                            <p>${sport.toUpperCase()}</p>
+                                        </div>
                                     </div>
+                                    <div class="comparison-why">${comp.why || ''}</div>
                                 </div>
-                                <div class="comparison-why">${comp.why}</div>
+                            `;
+                        }
+                    });
+                }
+
+                // Build stats HTML
+                let statsHtml = '';
+                if (data.stats) {
+                    const s = data.stats;
+                    if (data.position === 'Goalie') {
+                        statsHtml = `
+                            <div class="shark-section" style="background:rgba(0,212,255,0.1);">
+                                <h4>📊 2024-25 Season Stats</h4>
+                                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:15px;text-align:center;margin-top:10px;">
+                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.games}</div><div style="font-size:0.75rem;color:#7eb8da;">Games</div></div>
+                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.wins}-${s.losses}</div><div style="font-size:0.75rem;color:#7eb8da;">W-L</div></div>
+                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.gaa}</div><div style="font-size:0.75rem;color:#7eb8da;">GAA</div></div>
+                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.save_pct}%</div><div style="font-size:0.75rem;color:#7eb8da;">SV%</div></div>
+                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.shutouts}</div><div style="font-size:0.75rem;color:#7eb8da;">SO</div></div>
+                                </div>
+                            </div>
+                        `;
+                    } else {
+                        statsHtml = `
+                            <div class="shark-section" style="background:rgba(0,212,255,0.1);">
+                                <h4>📊 2024-25 Season Stats</h4>
+                                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:15px;text-align:center;margin-top:10px;">
+                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.games}</div><div style="font-size:0.75rem;color:#7eb8da;">Games</div></div>
+                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.goals}</div><div style="font-size:0.75rem;color:#7eb8da;">Goals</div></div>
+                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.assists}</div><div style="font-size:0.75rem;color:#7eb8da;">Assists</div></div>
+                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.points}</div><div style="font-size:0.75rem;color:#7eb8da;">Points</div></div>
+                                    <div><div style="font-size:1.5rem;color:${s.plus_minus >= 0 ? '#00ff87' : '#ff6b6b'};font-weight:bold;">${s.plus_minus >= 0 ? '+' : ''}${s.plus_minus}</div><div style="font-size:0.75rem;color:#7eb8da;">+/-</div></div>
+                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.pim}</div><div style="font-size:0.75rem;color:#7eb8da;">PIM</div></div>
+                                </div>
                             </div>
                         `;
                     }
-                });
+                }
+
+                // Build career stats HTML
+                let careerHtml = '';
+                if (data.career_stats) {
+                    const c = data.career_stats;
+                    if (data.position === 'Goalie') {
+                        careerHtml = `
+                            <div class="shark-section" style="background:rgba(255,255,255,0.05);">
+                                <h4>📈 Career Stats</h4>
+                                <p style="font-size:0.9rem;">${c.games} GP | ${c.wins} W | ${c.gaa} GAA | ${c.save_pct}% SV%</p>
+                            </div>
+                        `;
+                    } else {
+                        careerHtml = `
+                            <div class="shark-section" style="background:rgba(255,255,255,0.05);">
+                                <h4>📈 Career Stats</h4>
+                                <p style="font-size:0.9rem;">${c.games} GP | ${c.goals} G | ${c.assists} A | ${c.points} PTS</p>
+                            </div>
+                        `;
+                    }
+                }
+
+                // Headshot or jersey number
+                const headerVisual = data.headshot
+                    ? `<img src="${data.headshot}" alt="${data.name}" style="width:100px;height:100px;border-radius:15px;object-fit:cover;" onerror="this.outerHTML='<div class=\\'shark-jersey\\'>${data.number}</div>'">`
+                    : `<div class="shark-jersey">${data.number}</div>`;
+
+                // Bio info
+                const bioInfo = [];
+                if (data.age) bioInfo.push(`Age ${data.age}`);
+                if (data.height) bioInfo.push(data.height);
+                if (data.weight) bioInfo.push(data.weight);
+                if (data.shoots) bioInfo.push(`Shoots ${data.shoots}`);
+
+                const birthplace = data.birthplace || data.from || '';
 
                 resultContainer.innerHTML = `
                     <button class="back-btn" onclick="backToRoster()">← Back to Roster</button>
                     <div class="shark-detail">
                         <div class="shark-detail-header">
-                            <div class="shark-jersey">${data.number}</div>
+                            ${headerVisual}
                             <div class="shark-info">
-                                <h2>${data.name}</h2>
+                                <h2>#${data.number} ${data.name}</h2>
                                 <div class="shark-tags">
                                     <span class="shark-tag">${data.position}</span>
-                                    <span class="shark-tag">Age ${data.age}</span>
-                                    <span class="shark-tag">${data.from}</span>
-                                    <span class="shark-tag shark-role-badge">${data.role}</span>
+                                    ${bioInfo.map(b => `<span class="shark-tag">${b}</span>`).join('')}
+                                    <span class="shark-tag shark-role-badge">${data.role || 'Roster Player'}</span>
                                 </div>
+                                ${birthplace ? `<p style="color:#7eb8da;font-size:0.85rem;margin-top:8px;">📍 ${birthplace}</p>` : ''}
                             </div>
                         </div>
 
-                        <div class="shark-section">
-                            <h4>Draft</h4>
-                            <p>${data.draft}</p>
-                        </div>
+                        ${statsHtml}
+                        ${careerHtml}
 
-                        <div class="shark-section">
-                            <h4>Role on the Team</h4>
-                            <p>${data.role_description}</p>
-                        </div>
+                        ${data.draft ? `
+                            <div class="shark-section">
+                                <h4>🎯 Draft</h4>
+                                <p>${data.draft}</p>
+                            </div>
+                        ` : ''}
 
-                        <div class="shark-section">
-                            <h4>Playing Style</h4>
-                            <p>${data.play_style}</p>
-                        </div>
+                        ${data.role_description ? `
+                            <div class="shark-section">
+                                <h4>🦈 Role on the Team</h4>
+                                <p>${data.role_description}</p>
+                            </div>
+                        ` : ''}
 
-                        <h3 style="color:#7eb8da;margin:20px 0 15px;font-size:0.9rem;text-transform:uppercase;letter-spacing:1px;">
-                            Player Comparisons
-                        </h3>
-                        ${comparisonsHtml}
+                        ${data.play_style ? `
+                            <div class="shark-section">
+                                <h4>🏒 Playing Style</h4>
+                                <p>${data.play_style}</p>
+                            </div>
+                        ` : ''}
 
-                        <div class="fun-fact">
-                            <span class="fun-fact-icon">💡</span>
-                            <span class="fun-fact-text">${data.fun_fact}</span>
-                        </div>
+                        ${comparisonsHtml ? `
+                            <h3 style="color:#7eb8da;margin:20px 0 15px;font-size:0.9rem;text-transform:uppercase;letter-spacing:1px;">
+                                Player Comparisons
+                            </h3>
+                            ${comparisonsHtml}
+                        ` : ''}
+
+                        ${data.fun_fact ? `
+                            <div class="fun-fact">
+                                <span class="fun-fact-icon">💡</span>
+                                <span class="fun-fact-text">${data.fun_fact}</span>
+                            </div>
+                        ` : ''}
                     </div>
                 `;
             } catch (error) {
@@ -1483,7 +1663,7 @@
 
                 data.stats.forEach(stat => {
                     html += `
-                        <div class="stat-card" onclick="loadStatDetail('${stat.name.toLowerCase().replace(/ /g, '_')}')">
+                        <div class="stat-card" onclick="loadStatDetail('${stat.name.toLowerCase().replace(/ /g, '_')}', this)">
                             <div class="stat-abbrev">${stat.abbrev || '—'}</div>
                             <div class="stat-name">${stat.name}</div>
                             <div class="stat-preview">${stat.short_def}</div>
@@ -1498,16 +1678,18 @@
             }
         }
 
-        async function loadStatDetail(statName) {
-            resultContainer.classList.add('show');
-            resultContainer.innerHTML = '<div class="loading"><div class="loading-puck"></div><p>Loading stat info...</p></div>';
+        async function loadStatDetail(statName, clickedElement) {
+            // Add haptic feedback
+            if (clickedElement) {
+                clickedElement.classList.add('clicked');
+                setTimeout(() => clickedElement.classList.remove('clicked'), 300);
+            }
 
             try {
                 const response = await fetch(`/api/stats/${encodeURIComponent(statName)}`);
                 const data = await response.json();
 
                 if (!data.found) {
-                    resultContainer.innerHTML = '<div class="error-message">Stat not found</div>';
                     return;
                 }
 
@@ -1521,10 +1703,10 @@
                     const analogy = data.analogies[sport];
                     if (analogy) {
                         analogiesHtml += `
-                            <div class="analogy-card ${sport}">
+                            <div class="analogy-card ${sport}" style="margin-bottom:10px;">
                                 <div class="analogy-header">
                                     <span class="analogy-sport">${sportIcons[sport]}</span>
-                                    <span class="analogy-name">${sportNames[sport]} Comparison</span>
+                                    <span class="analogy-name">${sportNames[sport]}</span>
                                 </div>
                                 <div class="analogy-content">${analogy}</div>
                             </div>
@@ -1532,34 +1714,30 @@
                     }
                 });
 
-                resultContainer.innerHTML = `
-                    <button class="back-btn" onclick="backToStats()">← Back to Stats</button>
-                    <div class="stat-detail">
-                        <h2>${data.name} ${data.abbrev ? `<span class="stat-abbrev-large">${data.abbrev}</span>` : ''}</h2>
+                showFlashcard(`
+                    <h2>📊 ${data.name} ${data.abbrev ? `<span class="stat-abbrev-large">${data.abbrev}</span>` : ''}</h2>
 
-                        <div class="definition-box" style="margin:20px 0;">
-                            <h3>Definition</h3>
-                            <p>${data.definition}</p>
+                    <div class="flashcard-section">
+                        <h4>Definition</h4>
+                        <p>${data.definition}</p>
+                    </div>
+
+                    ${data.good_number ? `
+                        <div class="good-number" style="margin-bottom:20px;">
+                            📈 <strong>What's a good number?</strong> ${data.good_number}
                         </div>
+                    ` : ''}
 
-                        ${data.good_number ? `<div class="good-number">📈 <strong>What's a good number?</strong> ${data.good_number}</div>` : ''}
-
-                        <h3 style="color:#7eb8da;margin:20px 0 15px;font-size:0.9rem;text-transform:uppercase;letter-spacing:1px;">
-                            How it compares to other sports
-                        </h3>
-                        <div class="analogy-grid">
+                    ${analogiesHtml ? `
+                        <div class="flashcard-section">
+                            <h4>Sports Comparisons</h4>
                             ${analogiesHtml}
                         </div>
-                    </div>
-                `;
+                    ` : ''}
+                `);
             } catch (error) {
-                resultContainer.innerHTML = '<div class="error-message">Failed to load stat</div>';
+                console.error('Failed to load stat', error);
             }
-        }
-
-        function backToStats() {
-            resultContainer.classList.remove('show');
-            resultContainer.innerHTML = '';
         }
 
         // ==================== HOCKEY DICTIONARY ====================
@@ -1599,7 +1777,7 @@
                             </div>
                             <div class="terms-grid">
                                 ${data.categories[category].map(t =>
-                                    `<span class="term-chip" onclick="loadTermDetail('${t.term.toLowerCase().replace(/ /g, '_')}')">${t.term}</span>`
+                                    `<span class="term-chip" onclick="loadTermDetail('${t.term.toLowerCase().replace(/ /g, '_')}', this)">${t.term}</span>`
                                 ).join('')}
                             </div>
                         </div>
@@ -1618,7 +1796,7 @@
                             </div>
                             <div class="terms-grid">
                                 ${data.categories[category].map(t =>
-                                    `<span class="term-chip" onclick="loadTermDetail('${t.term.toLowerCase().replace(/ /g, '_')}')">${t.term}</span>`
+                                    `<span class="term-chip" onclick="loadTermDetail('${t.term.toLowerCase().replace(/ /g, '_')}', this)">${t.term}</span>`
                                 ).join('')}
                             </div>
                         </div>
@@ -1646,16 +1824,18 @@
             });
         }
 
-        async function loadTermDetail(termName) {
-            resultContainer.classList.add('show');
-            resultContainer.innerHTML = '<div class="loading"><div class="loading-puck"></div><p>Loading term...</p></div>';
+        async function loadTermDetail(termName, clickedElement) {
+            // Add haptic feedback
+            if (clickedElement) {
+                clickedElement.classList.add('clicked');
+                setTimeout(() => clickedElement.classList.remove('clicked'), 300);
+            }
 
             try {
                 const response = await fetch(`/api/dictionary/${encodeURIComponent(termName)}`);
                 const data = await response.json();
 
                 if (!data.found) {
-                    resultContainer.innerHTML = '<div class="error-message">Term not found</div>';
                     return;
                 }
 
@@ -1670,7 +1850,7 @@
                         const analogy = data.analogies[sport];
                         if (analogy && analogy.analogy) {
                             analogiesHtml += `
-                                <div class="analogy-card ${sport}">
+                                <div class="analogy-card ${sport}" style="margin-bottom:10px;">
                                     <div class="analogy-header">
                                         <span class="analogy-sport">${sportIcons[sport]}</span>
                                         <span class="analogy-name">${analogy.analogy}</span>
@@ -1684,34 +1864,68 @@
                     });
                 }
 
-                resultContainer.innerHTML = `
-                    <button class="back-btn" onclick="backToDictionary()">← Back to Dictionary</button>
-                    <div class="term-detail">
-                        <h2>${data.term}<span class="term-category-badge">${data.category.replace(/_/g, ' ')}</span></h2>
+                showFlashcard(`
+                    <h2>📖 ${data.term}<span class="term-category-badge">${data.category.replace(/_/g, ' ')}</span></h2>
 
-                        <div class="definition-box" style="margin:20px 0;">
-                            <h3>Definition</h3>
-                            <p>${data.definition}</p>
-                        </div>
-
-                        ${analogiesHtml ? `
-                            <h3 style="color:#7eb8da;margin:20px 0 15px;font-size:0.9rem;text-transform:uppercase;letter-spacing:1px;">
-                                Sports Analogies
-                            </h3>
-                            <div class="analogy-grid">
-                                ${analogiesHtml}
-                            </div>
-                        ` : ''}
+                    <div class="flashcard-section">
+                        <h4>Definition</h4>
+                        <p>${data.definition}</p>
                     </div>
-                `;
+
+                    ${analogiesHtml ? `
+                        <div class="flashcard-section">
+                            <h4>Sports Analogies</h4>
+                            ${analogiesHtml}
+                        </div>
+                    ` : ''}
+                `);
             } catch (error) {
-                resultContainer.innerHTML = '<div class="error-message">Failed to load term</div>';
+                console.error('Failed to load term', error);
             }
         }
 
-        function backToDictionary() {
-            resultContainer.classList.remove('show');
-            resultContainer.innerHTML = '';
+        // ==================== FLASHCARD MODAL ====================
+        function showFlashcard(content) {
+            // Remove any existing flashcard
+            closeFlashcard();
+
+            const overlay = document.createElement('div');
+            overlay.className = 'flashcard-overlay';
+            overlay.id = 'flashcard-overlay';
+            overlay.innerHTML = `
+                <div class="flashcard">
+                    <button class="flashcard-close" onclick="closeFlashcard()">×</button>
+                    ${content}
+                </div>
+            `;
+
+            // Close on overlay click (not card click)
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    closeFlashcard();
+                }
+            });
+
+            // Close on Escape key
+            document.addEventListener('keydown', handleEscKey);
+
+            document.body.appendChild(overlay);
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeFlashcard() {
+            const overlay = document.getElementById('flashcard-overlay');
+            if (overlay) {
+                overlay.remove();
+                document.body.style.overflow = '';
+                document.removeEventListener('keydown', handleEscKey);
+            }
+        }
+
+        function handleEscKey(e) {
+            if (e.key === 'Escape') {
+                closeFlashcard();
+            }
         }
 
         // ==================== ORIGINAL SEARCH FUNCTIONS ====================
@@ -1737,22 +1951,6 @@
                     }
                 } else {
                     showNotFound(data);
-                }
-            } catch (error) {
-                showError('Something went wrong. Please try again.');
-            }
-        }
-
-        async function getRandom() {
-            showLoading();
-            try {
-                const response = await fetch(`/api/random?type=${currentTab}`);
-                const data = await response.json();
-
-                if (data.type === 'concept') {
-                    showConceptResult({ concept: data.name, data: data.data });
-                } else {
-                    showPlayerResult({ player: data.name, data: data.data });
                 }
             } catch (error) {
                 showError('Something went wrong. Please try again.');

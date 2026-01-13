@@ -3456,12 +3456,174 @@ def admin_roster_status():
     })
 
 # =============================================================================
-# MEET THE SHARKS ROUTES
+# MEET THE SHARKS ROUTES - Live Data from NHL API
 # =============================================================================
+
+# Cache for live Sharks data
+SHARKS_LIVE_CACHE = {
+    'roster': None,
+    'stats': {},
+    'last_updated': None
+}
+
+def fetch_live_sharks_roster():
+    """Fetch current Sharks roster from NHL API with stats"""
+    import requests
+    from datetime import datetime
+
+    # Check cache (refresh every 10 minutes)
+    if SHARKS_LIVE_CACHE['roster'] and SHARKS_LIVE_CACHE['last_updated']:
+        age = (datetime.now() - SHARKS_LIVE_CACHE['last_updated']).seconds
+        if age < 600:  # 10 minutes
+            return SHARKS_LIVE_CACHE['roster']
+
+    try:
+        # Fetch roster
+        roster_url = "https://api-web.nhle.com/v1/roster/SJS/current"
+        resp = requests.get(roster_url, timeout=10)
+        if resp.status_code != 200:
+            return None
+
+        roster_data = resp.json()
+        players = []
+
+        # Process forwards, defensemen, goalies
+        for position_group in ['forwards', 'defensemen', 'goalies']:
+            for player in roster_data.get(position_group, []):
+                player_id = player.get('id')
+                first_name = player.get('firstName', {}).get('default', '')
+                last_name = player.get('lastName', {}).get('default', '')
+                full_name = f"{first_name} {last_name}"
+
+                # Get headshot URL
+                headshot = f"https://assets.nhle.com/mugs/nhl/20242025/SJS/{player_id}.png"
+
+                # Position mapping
+                pos_code = player.get('positionCode', '')
+                position_map = {
+                    'C': 'Center', 'L': 'Left Wing', 'R': 'Right Wing',
+                    'D': 'Defenseman', 'G': 'Goalie'
+                }
+                position = position_map.get(pos_code, pos_code)
+
+                players.append({
+                    'id': player_id,
+                    'name': full_name,
+                    'number': player.get('sweaterNumber', 0),
+                    'position': position,
+                    'position_code': pos_code,
+                    'headshot': headshot,
+                    'height': player.get('heightInInches', 0),
+                    'weight': player.get('weightInPounds', 0),
+                    'birth_date': player.get('birthDate', ''),
+                    'birth_city': player.get('birthCity', {}).get('default', ''),
+                    'birth_country': player.get('birthCountry', ''),
+                    'shoots_catches': player.get('shootsCatches', '')
+                })
+
+        # Sort by jersey number
+        players.sort(key=lambda x: x['number'] if x['number'] else 99)
+
+        SHARKS_LIVE_CACHE['roster'] = players
+        SHARKS_LIVE_CACHE['last_updated'] = datetime.now()
+
+        return players
+
+    except Exception as e:
+        print(f"Error fetching Sharks roster: {e}")
+        return None
+
+def fetch_player_stats(player_id):
+    """Fetch current season stats for a player"""
+    import requests
+
+    # Check cache
+    if player_id in SHARKS_LIVE_CACHE['stats']:
+        return SHARKS_LIVE_CACHE['stats'][player_id]
+
+    try:
+        url = f"https://api-web.nhle.com/v1/player/{player_id}/landing"
+        resp = requests.get(url, timeout=10)
+        if resp.status_code != 200:
+            return None
+
+        data = resp.json()
+
+        # Get current season stats
+        featured_stats = data.get('featuredStats', {})
+        current_season = featured_stats.get('regularSeason', {}).get('subSeason', {})
+        career_stats = featured_stats.get('regularSeason', {}).get('career', {})
+
+        # Get draft info
+        draft_details = data.get('draftDetails', {})
+        draft_info = None
+        if draft_details:
+            draft_info = f"Round {draft_details.get('round', '?')}, Pick {draft_details.get('pickInRound', '?')} ({draft_details.get('year', '?')})"
+
+        stats = {
+            'current_season': current_season,
+            'career': career_stats,
+            'draft': draft_info,
+            'birth_date': data.get('birthDate', ''),
+            'birth_city': data.get('birthCity', {}).get('default', ''),
+            'birth_country': data.get('birthCountry', ''),
+            'height_inches': data.get('heightInInches', 0),
+            'weight_lbs': data.get('weightInPounds', 0),
+            'position': data.get('position', '')
+        }
+
+        SHARKS_LIVE_CACHE['stats'][player_id] = stats
+        return stats
+
+    except Exception as e:
+        print(f"Error fetching player stats: {e}")
+        return None
+
+def calculate_age(birth_date):
+    """Calculate age from birth date string"""
+    from datetime import datetime
+    try:
+        birth = datetime.strptime(birth_date, '%Y-%m-%d')
+        today = datetime.now()
+        age = today.year - birth.year - ((today.month, today.day) < (birth.month, birth.day))
+        return age
+    except:
+        return None
 
 @app.route('/api/sharks')
 def get_sharks_roster():
-    """Get all Sharks players with basic info"""
+    """Get all Sharks players with live data from NHL API"""
+    # Try to get live data first
+    live_roster = fetch_live_sharks_roster()
+
+    if live_roster:
+        players = []
+        for player in live_roster:
+            # Get curated role if available
+            name_lower = player['name'].lower()
+            curated = SHARKS_ROSTER.get(name_lower, {})
+            role = curated.get('role', 'Roster Player')
+
+            age = calculate_age(player['birth_date'])
+
+            players.append({
+                'id': player['id'],
+                'name': player['name'],
+                'number': player['number'],
+                'position': player['position'],
+                'role': role,
+                'age': age,
+                'headshot': player['headshot']
+            })
+
+        return jsonify({
+            'team': 'San Jose Sharks',
+            'players': players,
+            'count': len(players),
+            'source': 'live'
+        })
+
+    # Fallback to curated data
     players = []
     for name, info in SHARKS_ROSTER.items():
         players.append({
@@ -3469,26 +3631,148 @@ def get_sharks_roster():
             'number': info['number'],
             'position': info['position'],
             'role': info['role'],
-            'age': info['age']
+            'age': info['age'],
+            'headshot': None
         })
-    # Sort by jersey number
     players.sort(key=lambda x: x['number'])
+
     return jsonify({
         'team': 'San Jose Sharks',
         'players': players,
-        'count': len(players)
+        'count': len(players),
+        'source': 'curated'
     })
 
 @app.route('/api/sharks/<path:player>')
 def get_shark_player(player):
-    """Get detailed info for a specific Sharks player"""
+    """Get detailed info for a specific Sharks player with live stats"""
+    from difflib import SequenceMatcher
+
     player_lower = player.lower().strip()
 
-    # Try exact match first
+    # Try to find in live roster first
+    live_roster = fetch_live_sharks_roster()
+    matched_player = None
+
+    if live_roster:
+        # Try exact match
+        for p in live_roster:
+            if p['name'].lower() == player_lower:
+                matched_player = p
+                break
+
+        # Try fuzzy match
+        if not matched_player:
+            best_score = 0
+            for p in live_roster:
+                score = SequenceMatcher(None, player_lower, p['name'].lower()).ratio()
+                if score > best_score:
+                    best_score = score
+                    matched_player = p
+
+            if best_score < 0.6:
+                matched_player = None
+
+    if matched_player:
+        # Get live stats
+        stats = fetch_player_stats(matched_player['id'])
+
+        # Get curated info if available
+        name_lower = matched_player['name'].lower()
+        curated = SHARKS_ROSTER.get(name_lower, {})
+
+        # Calculate age
+        age = calculate_age(matched_player['birth_date'])
+
+        # Format height
+        height_in = matched_player.get('height', 0)
+        height_str = f"{height_in // 12}'{height_in % 12}\"" if height_in else None
+
+        # Build response
+        response = {
+            'found': True,
+            'source': 'live',
+            'id': matched_player['id'],
+            'name': matched_player['name'],
+            'number': matched_player['number'],
+            'position': matched_player['position'],
+            'headshot': matched_player['headshot'],
+            'age': age,
+            'height': height_str,
+            'weight': f"{matched_player.get('weight', 0)} lbs" if matched_player.get('weight') else None,
+            'birthplace': f"{matched_player.get('birth_city', '')}, {matched_player.get('birth_country', '')}".strip(', '),
+            'shoots': matched_player.get('shoots_catches', '')
+        }
+
+        # Add live stats if available
+        if stats:
+            response['draft'] = stats.get('draft', curated.get('draft', 'Undrafted'))
+
+            current = stats.get('current_season', {})
+            if current:
+                if matched_player['position'] == 'Goalie':
+                    response['stats'] = {
+                        'games': current.get('gamesPlayed', 0),
+                        'wins': current.get('wins', 0),
+                        'losses': current.get('losses', 0),
+                        'gaa': round(current.get('goalsAgainstAvg', 0), 2),
+                        'save_pct': round(current.get('savePctg', 0) * 100, 1) if current.get('savePctg') else 0,
+                        'shutouts': current.get('shutouts', 0)
+                    }
+                else:
+                    response['stats'] = {
+                        'games': current.get('gamesPlayed', 0),
+                        'goals': current.get('goals', 0),
+                        'assists': current.get('assists', 0),
+                        'points': current.get('points', 0),
+                        'plus_minus': current.get('plusMinus', 0),
+                        'pim': current.get('pim', 0)
+                    }
+
+            career = stats.get('career', {})
+            if career:
+                if matched_player['position'] == 'Goalie':
+                    response['career_stats'] = {
+                        'games': career.get('gamesPlayed', 0),
+                        'wins': career.get('wins', 0),
+                        'gaa': round(career.get('goalsAgainstAvg', 0), 2),
+                        'save_pct': round(career.get('savePctg', 0) * 100, 1) if career.get('savePctg') else 0
+                    }
+                else:
+                    response['career_stats'] = {
+                        'games': career.get('gamesPlayed', 0),
+                        'goals': career.get('goals', 0),
+                        'assists': career.get('assists', 0),
+                        'points': career.get('points', 0)
+                    }
+
+        # Add curated content if available
+        if curated:
+            response['role'] = curated.get('role', 'Roster Player')
+            response['role_description'] = curated.get('role_description', '')
+            response['play_style'] = curated.get('play_style', '')
+            response['fun_fact'] = curated.get('fun_fact', '')
+            response['comparisons'] = {
+                'soccer': curated.get('soccer_comp', {}),
+                'nba': curated.get('nba_comp', {}),
+                'nfl': curated.get('nfl_comp', {}),
+                'mlb': curated.get('mlb_comp', {})
+            }
+        else:
+            response['role'] = 'Roster Player'
+            response['role_description'] = f"A key member of the Sharks roster at {matched_player['position']}."
+            response['play_style'] = ''
+            response['fun_fact'] = ''
+            response['comparisons'] = {}
+
+        return jsonify(response)
+
+    # Fallback to curated data only
     if player_lower in SHARKS_ROSTER:
         info = SHARKS_ROSTER[player_lower]
         return jsonify({
             'found': True,
+            'source': 'curated',
             'name': player_lower.title(),
             'number': info['number'],
             'position': info['position'],
@@ -3507,11 +3791,9 @@ def get_shark_player(player):
             }
         })
 
-    # Try fuzzy match
-    from difflib import SequenceMatcher
+    # Try fuzzy match on curated
     best_match = None
     best_score = 0
-
     for name in SHARKS_ROSTER.keys():
         score = SequenceMatcher(None, player_lower, name).ratio()
         if score > best_score:
@@ -3522,6 +3804,7 @@ def get_shark_player(player):
         info = SHARKS_ROSTER[best_match]
         return jsonify({
             'found': True,
+            'source': 'curated',
             'name': best_match.title(),
             'number': info['number'],
             'position': info['position'],
@@ -3542,8 +3825,7 @@ def get_shark_player(player):
 
     return jsonify({
         'found': False,
-        'error': f"Player '{player}' not found in Sharks roster",
-        'available_players': [name.title() for name in SHARKS_ROSTER.keys()]
+        'error': f"Player '{player}' not found in Sharks roster"
     })
 
 # =============================================================================
