@@ -2011,17 +2011,7 @@ def explain_concept(query):
     """Explain a hockey concept with sport analogies - with intelligent matching"""
     query = query.lower().replace('-', ' ').replace('_', ' ').strip()
 
-    # 1. Try intelligent concept matching
-    concept_name, concept_data = find_concept_match(query)
-    if concept_name and concept_data:
-        return jsonify({
-            'found': True,
-            'concept': concept_name,
-            'data': concept_data,
-            'match_type': 'concept'
-        })
-
-    # 2. Try general Q&A matching
+    # 1. Try general Q&A matching FIRST (for questions like "how many periods")
     general_answer = find_general_answer(query)
     if general_answer:
         return jsonify({
@@ -2051,6 +2041,16 @@ def explain_concept(query):
                 }
             },
             'match_type': 'general'
+        })
+
+    # 2. Try concept matching (exact + fuzzy)
+    concept_name, concept_data = find_concept_match(query)
+    if concept_name and concept_data:
+        return jsonify({
+            'found': True,
+            'concept': concept_name,
+            'data': concept_data,
+            'match_type': 'concept'
         })
 
     # 3. Suggest related concepts
