@@ -101,13 +101,13 @@
 
         .tab {
             flex: 1;
-            padding: 12px;
+            padding: 10px 8px;
             border: none;
             background: rgba(255, 255, 255, 0.1);
             color: #7eb8da;
             border-radius: 10px;
             cursor: pointer;
-            font-size: 0.95rem;
+            font-size: 0.8rem;
             transition: all 0.3s;
         }
 
@@ -118,6 +118,15 @@
         .tab.active {
             background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
             color: #fff;
+        }
+
+        .tab.sharks {
+            background: rgba(0, 109, 117, 0.3);
+            border: 1px solid #006d75;
+        }
+
+        .tab.sharks.active {
+            background: linear-gradient(135deg, #006d75 0%, #004d52 100%);
         }
 
         .search-box {
@@ -547,6 +556,307 @@
             line-height: 1.5;
         }
 
+        /* Sharks Roster Styles */
+        .roster-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .roster-player {
+            background: rgba(0, 109, 117, 0.2);
+            border: 2px solid rgba(0, 109, 117, 0.4);
+            border-radius: 15px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .roster-player:hover {
+            background: rgba(0, 109, 117, 0.4);
+            border-color: #006d75;
+            transform: translateY(-3px);
+        }
+
+        .roster-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #006d75;
+        }
+
+        .roster-name {
+            color: #fff;
+            font-weight: bold;
+            margin: 8px 0 5px;
+        }
+
+        .roster-position {
+            color: #7eb8da;
+            font-size: 0.85rem;
+        }
+
+        .roster-role {
+            margin-top: 8px;
+            padding: 4px 10px;
+            background: rgba(0, 109, 117, 0.3);
+            border-radius: 10px;
+            font-size: 0.75rem;
+            color: #00d4ff;
+        }
+
+        /* Player Detail Styles */
+        .shark-detail {
+            background: linear-gradient(135deg, rgba(0, 109, 117, 0.3) 0%, rgba(0, 109, 117, 0.1) 100%);
+            border: 2px solid rgba(0, 109, 117, 0.5);
+            border-radius: 20px;
+            padding: 25px;
+        }
+
+        .shark-detail-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .shark-jersey {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #006d75 0%, #004d52 100%);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .shark-info h2 {
+            color: #00d4ff;
+            font-size: 1.8rem;
+        }
+
+        .shark-tags {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+
+        .shark-tag {
+            padding: 4px 12px;
+            background: rgba(0, 109, 117, 0.3);
+            border-radius: 15px;
+            font-size: 0.85rem;
+            color: #7eb8da;
+        }
+
+        .shark-role-badge {
+            background: linear-gradient(135deg, #006d75 0%, #004d52 100%);
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .shark-section {
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            padding: 15px 20px;
+            margin-bottom: 15px;
+        }
+
+        .shark-section h4 {
+            color: #00d4ff;
+            margin-bottom: 10px;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .shark-section p {
+            color: #c0d6e8;
+            line-height: 1.6;
+        }
+
+        .back-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 10px;
+            color: #7eb8da;
+            cursor: pointer;
+            margin-bottom: 20px;
+            transition: all 0.2s;
+        }
+
+        .back-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Stats Glossary Styles */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 107, 107, 0.1);
+            border: 2px solid rgba(255, 107, 107, 0.3);
+            border-radius: 15px;
+            padding: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .stat-card:hover {
+            background: rgba(255, 107, 107, 0.2);
+            border-color: #ff6b6b;
+            transform: translateY(-3px);
+        }
+
+        .stat-abbrev {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #ff6b6b;
+        }
+
+        .stat-name {
+            color: #fff;
+            font-weight: bold;
+            margin: 5px 0;
+        }
+
+        .stat-preview {
+            color: #7eb8da;
+            font-size: 0.85rem;
+            line-height: 1.4;
+        }
+
+        .stat-detail {
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.2) 0%, rgba(255, 107, 107, 0.05) 100%);
+            border: 2px solid rgba(255, 107, 107, 0.3);
+            border-radius: 20px;
+            padding: 25px;
+        }
+
+        .stat-detail h2 {
+            color: #ff6b6b;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .stat-abbrev-large {
+            padding: 8px 15px;
+            background: rgba(255, 107, 107, 0.3);
+            border-radius: 10px;
+            font-size: 1rem;
+        }
+
+        .good-number {
+            background: rgba(0, 255, 135, 0.1);
+            border: 1px solid rgba(0, 255, 135, 0.3);
+            border-radius: 10px;
+            padding: 12px 15px;
+            margin: 15px 0;
+            color: #00ff87;
+            font-size: 0.9rem;
+        }
+
+        /* Dictionary Styles */
+        .dictionary-categories {
+            margin-top: 20px;
+        }
+
+        .category-section {
+            margin-bottom: 25px;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .category-icon {
+            font-size: 1.5rem;
+        }
+
+        .category-title {
+            color: #00d4ff;
+            font-size: 1.1rem;
+            text-transform: capitalize;
+        }
+
+        .terms-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .term-chip {
+            padding: 8px 15px;
+            background: rgba(0, 212, 255, 0.1);
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            color: #7eb8da;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.85rem;
+        }
+
+        .term-chip:hover {
+            background: rgba(0, 212, 255, 0.3);
+            color: #fff;
+        }
+
+        .term-detail {
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 212, 255, 0.05) 100%);
+            border: 2px solid rgba(0, 212, 255, 0.3);
+            border-radius: 20px;
+            padding: 25px;
+        }
+
+        .term-detail h2 {
+            color: #00d4ff;
+        }
+
+        .term-category-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(0, 212, 255, 0.2);
+            border-radius: 15px;
+            font-size: 0.8rem;
+            color: #7eb8da;
+            margin-left: 15px;
+            text-transform: capitalize;
+        }
+
+        /* Search filter for dictionary */
+        .filter-input {
+            width: 100%;
+            padding: 12px 20px;
+            font-size: 1rem;
+            border: 2px solid #3a6ea5;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .filter-input:focus {
+            outline: none;
+            border-color: #00d4ff;
+        }
+
         @media (max-width: 600px) {
             .sport-selector {
                 gap: 8px;
@@ -589,18 +899,27 @@
 
         <div class="search-container">
             <div class="tabs">
-                <button class="tab active" data-tab="concepts">Hockey Rules & Concepts</button>
-                <button class="tab" data-tab="players">Player Comparisons</button>
+                <button class="tab active" data-tab="concepts">Rules & Concepts</button>
+                <button class="tab" data-tab="players">Player Comps</button>
+                <button class="tab sharks" data-tab="sharks">Meet the Sharks</button>
+                <button class="tab" data-tab="stats">Stats Glossary</button>
+                <button class="tab" data-tab="dictionary">Dictionary</button>
             </div>
 
-            <div class="search-box">
-                <input type="text" id="search-input" placeholder="Ask about power play, icing, offsides...">
-                <button class="search-btn" id="search-btn">Explain It!</button>
-                <button class="random-btn" id="random-btn">🎲 Random</button>
+            <div id="search-section">
+                <div class="search-box">
+                    <input type="text" id="search-input" placeholder="Ask about power play, icing, offsides...">
+                    <button class="search-btn" id="search-btn">Explain It!</button>
+                    <button class="random-btn" id="random-btn">🎲 Random</button>
+                </div>
+
+                <div class="quick-picks" id="quick-picks">
+                    <!-- Populated by JS -->
+                </div>
             </div>
 
-            <div class="quick-picks" id="quick-picks">
-                <!-- Populated by JS -->
+            <div id="browse-section" style="display:none;">
+                <!-- For Sharks, Stats, Dictionary - populated by JS -->
             </div>
         </div>
 
@@ -620,6 +939,8 @@
         const randomBtn = document.getElementById('random-btn');
         const resultContainer = document.getElementById('result');
         const quickPicksContainer = document.getElementById('quick-picks');
+        const searchSection = document.getElementById('search-section');
+        const browseSection = document.getElementById('browse-section');
         const tabs = document.querySelectorAll('.tab');
         const sportBtns = document.querySelectorAll('.sport-btn');
 
@@ -628,6 +949,24 @@
 
         const conceptQuickPicks = ['Power Play', 'Icing', 'Offside', 'Hat Trick', 'Breakaway', 'Slap Shot', 'Overtime', 'How many periods?'];
         const playerQuickPicks = ['Macklin Celebrini', 'Connor McDavid', 'Sidney Crosby', 'Cale Makar', 'Alex Ovechkin', 'Connor Bedard'];
+
+        const categoryIcons = {
+            'game_structure': '🏟️',
+            'rink': '🧊',
+            'positions': '👥',
+            'team': '🦈',
+            'gameplay': '🎮',
+            'shots': '🥅',
+            'skills': '⭐',
+            'physical': '💪',
+            'penalties': '⚠️',
+            'special_teams': '🔥',
+            'rules': '📋',
+            'achievements': '🏆',
+            'goalie': '🥅',
+            'slang': '🗣️',
+            'general': '🏒'
+        };
 
         // Initialize
         updateQuickPicks();
@@ -638,8 +977,7 @@
                 tabs.forEach(t => t.classList.remove('active'));
                 tab.classList.add('active');
                 currentTab = tab.dataset.tab;
-                updateQuickPicks();
-                updatePlaceholder();
+                handleTabChange();
             });
         });
 
@@ -656,6 +994,30 @@
         searchInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter') search();
         });
+
+        function handleTabChange() {
+            resultContainer.classList.remove('show');
+            resultContainer.innerHTML = '';
+
+            if (currentTab === 'concepts' || currentTab === 'players') {
+                searchSection.style.display = 'block';
+                browseSection.style.display = 'none';
+                updateQuickPicks();
+                updatePlaceholder();
+            } else if (currentTab === 'sharks') {
+                searchSection.style.display = 'none';
+                browseSection.style.display = 'block';
+                loadSharksRoster();
+            } else if (currentTab === 'stats') {
+                searchSection.style.display = 'none';
+                browseSection.style.display = 'block';
+                loadStatsGlossary();
+            } else if (currentTab === 'dictionary') {
+                searchSection.style.display = 'none';
+                browseSection.style.display = 'block';
+                loadDictionary();
+            }
+        }
 
         function updateQuickPicks() {
             const picks = currentTab === 'concepts' ? conceptQuickPicks : playerQuickPicks;
@@ -675,6 +1037,376 @@
             search();
         }
 
+        // ==================== SHARKS ROSTER ====================
+        async function loadSharksRoster() {
+            browseSection.innerHTML = '<div class="loading"><div class="loading-puck"></div><p>Loading roster...</p></div>';
+
+            try {
+                const response = await fetch('/api/sharks');
+                const data = await response.json();
+
+                let html = `
+                    <div class="result-card shark-detail" style="padding:20px;">
+                        <h2 style="color:#006d75;margin-bottom:5px;">🦈 San Jose Sharks</h2>
+                        <p style="color:#7eb8da;margin-bottom:20px;">Click on a player to learn more about them</p>
+                        <div class="roster-grid">
+                `;
+
+                data.players.forEach(player => {
+                    html += `
+                        <div class="roster-player" onclick="loadSharkPlayer('${player.name.toLowerCase()}')">
+                            <div class="roster-number">#${player.number}</div>
+                            <div class="roster-name">${player.name}</div>
+                            <div class="roster-position">${player.position}</div>
+                            <div class="roster-role">${player.role}</div>
+                        </div>
+                    `;
+                });
+
+                html += '</div></div>';
+                browseSection.innerHTML = html;
+            } catch (error) {
+                browseSection.innerHTML = '<div class="error-message">Failed to load roster</div>';
+            }
+        }
+
+        async function loadSharkPlayer(playerName) {
+            resultContainer.classList.add('show');
+            resultContainer.innerHTML = '<div class="loading"><div class="loading-puck"></div><p>Loading player info...</p></div>';
+
+            try {
+                const response = await fetch(`/api/sharks/${encodeURIComponent(playerName)}`);
+                const data = await response.json();
+
+                if (!data.found) {
+                    resultContainer.innerHTML = '<div class="error-message">Player not found</div>';
+                    return;
+                }
+
+                const sports = ['soccer', 'nba', 'nfl', 'mlb'];
+                const sportIcons = { soccer: '⚽', nba: '🏀', nfl: '🏈', mlb: '⚾' };
+
+                let comparisonsHtml = '';
+                sports.forEach(sport => {
+                    if (selectedSport !== 'all' && selectedSport !== sport) return;
+                    const comp = data.comparisons[sport];
+                    if (comp) {
+                        comparisonsHtml += `
+                            <div class="comparison-card">
+                                <div class="comparison-header">
+                                    <span class="comparison-sport-icon">${sportIcons[sport]}</span>
+                                    <div class="comparison-player">
+                                        <h3>${comp.player}</h3>
+                                        <p>${sport.toUpperCase()}</p>
+                                    </div>
+                                </div>
+                                <div class="comparison-why">${comp.why}</div>
+                            </div>
+                        `;
+                    }
+                });
+
+                resultContainer.innerHTML = `
+                    <button class="back-btn" onclick="backToRoster()">← Back to Roster</button>
+                    <div class="shark-detail">
+                        <div class="shark-detail-header">
+                            <div class="shark-jersey">${data.number}</div>
+                            <div class="shark-info">
+                                <h2>${data.name}</h2>
+                                <div class="shark-tags">
+                                    <span class="shark-tag">${data.position}</span>
+                                    <span class="shark-tag">Age ${data.age}</span>
+                                    <span class="shark-tag">${data.from}</span>
+                                    <span class="shark-tag shark-role-badge">${data.role}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="shark-section">
+                            <h4>Draft</h4>
+                            <p>${data.draft}</p>
+                        </div>
+
+                        <div class="shark-section">
+                            <h4>Role on the Team</h4>
+                            <p>${data.role_description}</p>
+                        </div>
+
+                        <div class="shark-section">
+                            <h4>Playing Style</h4>
+                            <p>${data.play_style}</p>
+                        </div>
+
+                        <h3 style="color:#7eb8da;margin:20px 0 15px;font-size:0.9rem;text-transform:uppercase;letter-spacing:1px;">
+                            Player Comparisons
+                        </h3>
+                        ${comparisonsHtml}
+
+                        <div class="fun-fact">
+                            <span class="fun-fact-icon">💡</span>
+                            <span class="fun-fact-text">${data.fun_fact}</span>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                resultContainer.innerHTML = '<div class="error-message">Failed to load player</div>';
+            }
+        }
+
+        function backToRoster() {
+            resultContainer.classList.remove('show');
+            resultContainer.innerHTML = '';
+        }
+
+        // ==================== STATS GLOSSARY ====================
+        async function loadStatsGlossary() {
+            browseSection.innerHTML = '<div class="loading"><div class="loading-puck"></div><p>Loading stats...</p></div>';
+
+            try {
+                const response = await fetch('/api/stats');
+                const data = await response.json();
+
+                let html = `
+                    <div class="result-card stat-detail" style="padding:20px;">
+                        <h2 style="color:#ff6b6b;margin-bottom:5px;">📊 Stats Glossary</h2>
+                        <p style="color:#7eb8da;margin-bottom:20px;">Click on a stat to learn what it means and how it compares to other sports</p>
+                        <div class="stats-grid">
+                `;
+
+                data.stats.forEach(stat => {
+                    html += `
+                        <div class="stat-card" onclick="loadStatDetail('${stat.name.toLowerCase().replace(/ /g, '_')}')">
+                            <div class="stat-abbrev">${stat.abbrev || '—'}</div>
+                            <div class="stat-name">${stat.name}</div>
+                            <div class="stat-preview">${stat.short_def}</div>
+                        </div>
+                    `;
+                });
+
+                html += '</div></div>';
+                browseSection.innerHTML = html;
+            } catch (error) {
+                browseSection.innerHTML = '<div class="error-message">Failed to load stats</div>';
+            }
+        }
+
+        async function loadStatDetail(statName) {
+            resultContainer.classList.add('show');
+            resultContainer.innerHTML = '<div class="loading"><div class="loading-puck"></div><p>Loading stat info...</p></div>';
+
+            try {
+                const response = await fetch(`/api/stats/${encodeURIComponent(statName)}`);
+                const data = await response.json();
+
+                if (!data.found) {
+                    resultContainer.innerHTML = '<div class="error-message">Stat not found</div>';
+                    return;
+                }
+
+                const sports = ['soccer', 'nba', 'nfl', 'mlb'];
+                const sportIcons = { soccer: '⚽', nba: '🏀', nfl: '🏈', mlb: '⚾' };
+                const sportNames = { soccer: 'Soccer', nba: 'NBA', nfl: 'NFL', mlb: 'MLB' };
+
+                let analogiesHtml = '';
+                sports.forEach(sport => {
+                    if (selectedSport !== 'all' && selectedSport !== sport) return;
+                    const analogy = data.analogies[sport];
+                    if (analogy) {
+                        analogiesHtml += `
+                            <div class="analogy-card ${sport}">
+                                <div class="analogy-header">
+                                    <span class="analogy-sport">${sportIcons[sport]}</span>
+                                    <span class="analogy-name">${sportNames[sport]} Comparison</span>
+                                </div>
+                                <div class="analogy-content">${analogy}</div>
+                            </div>
+                        `;
+                    }
+                });
+
+                resultContainer.innerHTML = `
+                    <button class="back-btn" onclick="backToStats()">← Back to Stats</button>
+                    <div class="stat-detail">
+                        <h2>${data.name} ${data.abbrev ? `<span class="stat-abbrev-large">${data.abbrev}</span>` : ''}</h2>
+
+                        <div class="definition-box" style="margin:20px 0;">
+                            <h3>Definition</h3>
+                            <p>${data.definition}</p>
+                        </div>
+
+                        ${data.good_number ? `<div class="good-number">📈 <strong>What's a good number?</strong> ${data.good_number}</div>` : ''}
+
+                        <h3 style="color:#7eb8da;margin:20px 0 15px;font-size:0.9rem;text-transform:uppercase;letter-spacing:1px;">
+                            How it compares to other sports
+                        </h3>
+                        <div class="analogy-grid">
+                            ${analogiesHtml}
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                resultContainer.innerHTML = '<div class="error-message">Failed to load stat</div>';
+            }
+        }
+
+        function backToStats() {
+            resultContainer.classList.remove('show');
+            resultContainer.innerHTML = '';
+        }
+
+        // ==================== HOCKEY DICTIONARY ====================
+        let dictionaryData = null;
+
+        async function loadDictionary() {
+            browseSection.innerHTML = '<div class="loading"><div class="loading-puck"></div><p>Loading dictionary...</p></div>';
+
+            try {
+                const response = await fetch('/api/dictionary');
+                dictionaryData = await response.json();
+                renderDictionary(dictionaryData);
+            } catch (error) {
+                browseSection.innerHTML = '<div class="error-message">Failed to load dictionary</div>';
+            }
+        }
+
+        function renderDictionary(data) {
+            let html = `
+                <div class="result-card term-detail" style="padding:20px;">
+                    <h2 style="color:#00d4ff;margin-bottom:5px;">📖 Hockey Dictionary</h2>
+                    <p style="color:#7eb8da;margin-bottom:20px;">${data.total_terms} terms to learn. Click any term to see its full definition.</p>
+                    <input type="text" class="filter-input" placeholder="Filter terms..." oninput="filterDictionary(this.value)">
+                    <div class="dictionary-categories" id="dictionary-content">
+            `;
+
+            const categoryOrder = ['game_structure', 'rink', 'positions', 'gameplay', 'shots', 'skills', 'physical', 'penalties', 'special_teams', 'rules', 'achievements', 'goalie', 'slang'];
+
+            categoryOrder.forEach(category => {
+                if (data.categories[category]) {
+                    html += `
+                        <div class="category-section" data-category="${category}">
+                            <div class="category-header">
+                                <span class="category-icon">${categoryIcons[category] || '🏒'}</span>
+                                <span class="category-title">${category.replace(/_/g, ' ')}</span>
+                                <span style="color:#5a7a9a;font-size:0.85rem;">(${data.categories[category].length})</span>
+                            </div>
+                            <div class="terms-grid">
+                                ${data.categories[category].map(t =>
+                                    `<span class="term-chip" onclick="loadTermDetail('${t.term.toLowerCase().replace(/ /g, '_')}')">${t.term}</span>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            // Handle any remaining categories
+            Object.keys(data.categories).forEach(category => {
+                if (!categoryOrder.includes(category)) {
+                    html += `
+                        <div class="category-section" data-category="${category}">
+                            <div class="category-header">
+                                <span class="category-icon">${categoryIcons[category] || '🏒'}</span>
+                                <span class="category-title">${category.replace(/_/g, ' ')}</span>
+                            </div>
+                            <div class="terms-grid">
+                                ${data.categories[category].map(t =>
+                                    `<span class="term-chip" onclick="loadTermDetail('${t.term.toLowerCase().replace(/ /g, '_')}')">${t.term}</span>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            html += '</div></div>';
+            browseSection.innerHTML = html;
+        }
+
+        function filterDictionary(query) {
+            query = query.toLowerCase();
+            const termChips = document.querySelectorAll('.term-chip');
+            const categorySections = document.querySelectorAll('.category-section');
+
+            termChips.forEach(chip => {
+                const matches = chip.textContent.toLowerCase().includes(query);
+                chip.style.display = matches ? '' : 'none';
+            });
+
+            categorySections.forEach(section => {
+                const visibleChips = section.querySelectorAll('.term-chip:not([style*="display: none"])');
+                section.style.display = visibleChips.length > 0 ? '' : 'none';
+            });
+        }
+
+        async function loadTermDetail(termName) {
+            resultContainer.classList.add('show');
+            resultContainer.innerHTML = '<div class="loading"><div class="loading-puck"></div><p>Loading term...</p></div>';
+
+            try {
+                const response = await fetch(`/api/dictionary/${encodeURIComponent(termName)}`);
+                const data = await response.json();
+
+                if (!data.found) {
+                    resultContainer.innerHTML = '<div class="error-message">Term not found</div>';
+                    return;
+                }
+
+                let analogiesHtml = '';
+                if (data.analogies) {
+                    const sports = ['soccer', 'nba', 'nfl', 'mlb'];
+                    const sportIcons = { soccer: '⚽', nba: '🏀', nfl: '🏈', mlb: '⚾' };
+                    const sportNames = { soccer: 'Soccer', nba: 'NBA', nfl: 'NFL', mlb: 'MLB' };
+
+                    sports.forEach(sport => {
+                        if (selectedSport !== 'all' && selectedSport !== sport) return;
+                        const analogy = data.analogies[sport];
+                        if (analogy && analogy.analogy) {
+                            analogiesHtml += `
+                                <div class="analogy-card ${sport}">
+                                    <div class="analogy-header">
+                                        <span class="analogy-sport">${sportIcons[sport]}</span>
+                                        <span class="analogy-name">${analogy.analogy}</span>
+                                        <span class="analogy-label">${sportNames[sport]}</span>
+                                    </div>
+                                    <div class="analogy-content">${analogy.explanation}</div>
+                                    ${analogy.key_difference ? `<div class="analogy-diff"><strong>Key Difference:</strong> ${analogy.key_difference}</div>` : ''}
+                                </div>
+                            `;
+                        }
+                    });
+                }
+
+                resultContainer.innerHTML = `
+                    <button class="back-btn" onclick="backToDictionary()">← Back to Dictionary</button>
+                    <div class="term-detail">
+                        <h2>${data.term}<span class="term-category-badge">${data.category.replace(/_/g, ' ')}</span></h2>
+
+                        <div class="definition-box" style="margin:20px 0;">
+                            <h3>Definition</h3>
+                            <p>${data.definition}</p>
+                        </div>
+
+                        ${analogiesHtml ? `
+                            <h3 style="color:#7eb8da;margin:20px 0 15px;font-size:0.9rem;text-transform:uppercase;letter-spacing:1px;">
+                                Sports Analogies
+                            </h3>
+                            <div class="analogy-grid">
+                                ${analogiesHtml}
+                            </div>
+                        ` : ''}
+                    </div>
+                `;
+            } catch (error) {
+                resultContainer.innerHTML = '<div class="error-message">Failed to load term</div>';
+            }
+        }
+
+        function backToDictionary() {
+            resultContainer.classList.remove('show');
+            resultContainer.innerHTML = '';
+        }
+
+        // ==================== ORIGINAL SEARCH FUNCTIONS ====================
         async function search() {
             const query = searchInput.value.trim();
             if (!query) return;
@@ -706,7 +1438,6 @@
         async function getRandom() {
             showLoading();
             try {
-                // Pass the current tab type to get appropriate random result
                 const response = await fetch(`/api/random?type=${currentTab}`);
                 const data = await response.json();
 
@@ -850,12 +1581,10 @@
                 }
             });
 
-            // Source badge for API-generated vs curated
             const sourceBadge = data.source === 'nhl_api'
                 ? '<span class="source-badge api">Live from NHL</span>'
                 : '<span class="source-badge">Featured Player</span>';
 
-            // API note if present
             const apiNote = data.api_note
                 ? `<div class="api-note">ℹ️ ${data.api_note}</div>`
                 : '';

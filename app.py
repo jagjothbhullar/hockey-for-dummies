@@ -145,6 +145,1047 @@ def refresh_rosters_from_api():
     return len(all_players)
 
 # =============================================================================
+# MEET THE SHARKS - San Jose Sharks Roster with Roles & Comparisons
+# =============================================================================
+
+SHARKS_ROSTER = {
+    "macklin celebrini": {
+        "number": 71,
+        "position": "Center",
+        "age": 18,
+        "from": "Vancouver, BC",
+        "draft": "#1 Overall, 2024",
+        "role": "Franchise Cornerstone",
+        "role_description": "The future of the franchise. Celebrini is expected to be the offensive catalyst and face of the Sharks for the next decade+. Think of him as the new foundation everything is being built around.",
+        "play_style": "Elite skating, incredible hockey IQ, can score and set up teammates equally well. Already showing NHL-level compete despite his age.",
+        "fun_fact": "First #1 pick in Sharks history. Won the Hobey Baker Award (college hockey's Heisman) as a freshman.",
+        "soccer_comp": {"player": "Jude Bellingham", "why": "Teenage phenom who immediately became a franchise cornerstone"},
+        "nba_comp": {"player": "Victor Wembanyama", "why": "Generational #1 pick expected to transform a struggling franchise"},
+        "nfl_comp": {"player": "Caleb Williams", "why": "Top pick brought in to be the new face of the franchise"},
+        "mlb_comp": {"player": "Jackson Holliday", "why": "Top prospect with elite bloodlines and expectations"}
+    },
+    "william eklund": {
+        "number": 72,
+        "position": "Left Wing",
+        "age": 22,
+        "from": "Stockholm, Sweden",
+        "draft": "#7 Overall, 2021",
+        "role": "Top-6 Playmaker",
+        "role_description": "Skilled Swedish winger who creates offense with vision and puck skills. Part of the young core being built around Celebrini.",
+        "play_style": "Excellent passer, smart positional player, sees plays develop before they happen. Still developing his shot and physical game.",
+        "fun_fact": "One of the top Swedish prospects of his generation. Made the team out of camp as an 18-year-old.",
+        "soccer_comp": {"player": "Florian Wirtz", "why": "Young creative talent from a country known for producing skilled players"},
+        "nba_comp": {"player": "Tyrese Maxey", "why": "Young guard developing into a star alongside other young talent"},
+        "nfl_comp": {"player": "Garrett Wilson", "why": "Young receiver still growing into his potential"},
+        "mlb_comp": {"player": "Corbin Carroll", "why": "Young talent with speed and skill, still maturing"}
+    },
+    "will smith": {
+        "number": 9,
+        "position": "Center",
+        "age": 19,
+        "from": "Lexington, MA",
+        "draft": "#4 Overall, 2023",
+        "role": "Future Top-Line Center",
+        "role_description": "Another blue-chip prospect in the Sharks' rebuild. Will center one of the top lines alongside Celebrini in the future.",
+        "play_style": "Excellent offensive instincts, great vision, skilled playmaker. Smart two-way player who can be trusted defensively.",
+        "fun_fact": "Played at Boston College. His dad was also a hockey player at BC.",
+        "soccer_comp": {"player": "Kobbie Mainoo", "why": "Young midfielder breaking through, expected to be a star"},
+        "nba_comp": {"player": "Chet Holmgren", "why": "High draft pick with unique skills, part of a rebuild"},
+        "nfl_comp": {"player": "Drake Maye", "why": "Top-5 pick expected to be a franchise building block"},
+        "mlb_comp": {"player": "Paul Skenes", "why": "Top draft pick making an immediate impact"}
+    },
+    "mikael granlund": {
+        "number": 64,
+        "position": "Center/Wing",
+        "age": 32,
+        "from": "Oulu, Finland",
+        "draft": "#9 Overall, 2010",
+        "role": "Veteran Leader",
+        "role_description": "Experienced Finnish forward who provides leadership and playoff experience. Mentors the young players while still producing offensively.",
+        "play_style": "Crafty playmaker with excellent hands. Smart positional player, good on the power play. Responsible defensively.",
+        "fun_fact": "Famous for scoring a lacrosse-style goal in international competition. Has played in two Olympics for Finland.",
+        "soccer_comp": {"player": "Luka Modric", "why": "Veteran playmaker who leads by example"},
+        "nba_comp": {"player": "Chris Paul", "why": "Veteran floor general mentoring young talent"},
+        "nfl_comp": {"player": "Aaron Rodgers", "why": "Experienced QB leading a young team"},
+        "mlb_comp": {"player": "Justin Verlander", "why": "Veteran presence guiding a rebuilding roster"}
+    },
+    "tyler toffoli": {
+        "number": 73,
+        "position": "Right Wing",
+        "age": 31,
+        "from": "Scarborough, ON",
+        "draft": "#47 Overall, 2010",
+        "role": "Top-Line Scorer",
+        "role_description": "Proven goal scorer who provides offensive punch. Stanley Cup champion who brings winning experience to a young team.",
+        "play_style": "Pure goal scorer with a lethal shot. Finds soft spots in the defense, excellent around the net. Good on the power play.",
+        "fun_fact": "Won the Stanley Cup with LA Kings in 2014. Has scored 30+ goals in a season.",
+        "soccer_comp": {"player": "Jamie Vardy", "why": "Proven goal scorer who's been there and done that"},
+        "nba_comp": {"player": "Klay Thompson", "why": "Championship-winning scorer who can still fill it up"},
+        "nfl_comp": {"player": "Davante Adams", "why": "Veteran receiver with championship experience"},
+        "mlb_comp": {"player": "Teoscar Hernandez", "why": "Veteran bat who provides pop in the lineup"}
+    },
+    "fabian zetterlund": {
+        "number": 20,
+        "position": "Right Wing",
+        "age": 25,
+        "from": "Stockholm, Sweden",
+        "draft": "#63 Overall, 2018",
+        "role": "Middle-Six Scorer",
+        "role_description": "Solid two-way winger who can chip in offensively while playing a responsible game. Brings energy every shift.",
+        "play_style": "Good shot, plays physical for his size, responsible in his own zone. Can play up and down the lineup.",
+        "fun_fact": "Originally drafted by New Jersey, acquired by Sharks in 2022. Fellow Swede with Eklund.",
+        "soccer_comp": {"player": "Jarrod Bowen", "why": "Hard-working winger who contributes on both ends"},
+        "nba_comp": {"player": "Donte DiVincenzo", "why": "Energy player who does a bit of everything"},
+        "nfl_comp": {"player": "Jaylen Waddle", "why": "Dynamic player who makes plays when given opportunities"},
+        "mlb_comp": {"player": "Bryan Reynolds", "why": "Solid all-around player, does everything well"}
+    },
+    "logan couture": {
+        "number": 39,
+        "position": "Center",
+        "age": 35,
+        "from": "Guelph, ON",
+        "draft": "#9 Overall, 2007",
+        "role": "Captain / Veteran Mentor",
+        "role_description": "Team captain and franchise icon. While his playing time has decreased due to injuries, he remains the heart and soul of the locker room.",
+        "play_style": "Elite two-way center in his prime. Known for clutch playoff performances and leadership. One of the best Sharks ever.",
+        "fun_fact": "Sharks all-time playoff leader in goals and points. Has been captain since 2019.",
+        "soccer_comp": {"player": "Jordan Henderson", "why": "Long-time captain, the heartbeat of the team"},
+        "nba_comp": {"player": "Udonis Haslem", "why": "Franchise lifer, more valuable as a leader now"},
+        "nfl_comp": {"player": "Eli Manning", "why": "Franchise legend, beloved by fans and teammates"},
+        "mlb_comp": {"player": "Buster Posey", "why": "Franchise icon who led through example"}
+    },
+    "mario ferraro": {
+        "number": 38,
+        "position": "Defenseman",
+        "age": 26,
+        "from": "Toronto, ON",
+        "draft": "#49 Overall, 2017",
+        "role": "Top Pair Defenseman",
+        "role_description": "The Sharks' best all-around defenseman. Plays tough minutes against the other team's best players.",
+        "play_style": "Mobile, competitive, plays with an edge. Good skater who can move the puck and defend physically.",
+        "fun_fact": "Wore an 'A' as alternate captain. Fan favorite for his compete level.",
+        "soccer_comp": {"player": "William Saliba", "why": "Young defender who's become the defensive anchor"},
+        "nba_comp": {"player": "Herb Jones", "why": "Defensive specialist who guards the toughest assignments"},
+        "nfl_comp": {"player": "Sauce Gardner", "why": "Lockdown defender who takes on the best"},
+        "mlb_comp": {"player": "Matt Chapman", "why": "Elite defender at a premium position"}
+    },
+    "cody ceci": {
+        "number": 4,
+        "position": "Defenseman",
+        "age": 30,
+        "from": "Ottawa, ON",
+        "draft": "#15 Overall, 2012",
+        "role": "Top-4 Defenseman",
+        "role_description": "Veteran defenseman who provides stability on the blue line. Plays a steady, reliable game.",
+        "play_style": "Right-shot defenseman, good size, moves the puck efficiently. Reliable if not spectacular.",
+        "fun_fact": "Has played for 5 NHL teams. Son of former OHL coach.",
+        "soccer_comp": {"player": "Gary Cahill", "why": "Experienced, steady defender"},
+        "nba_comp": {"player": "Al Horford", "why": "Veteran presence, does his job consistently"},
+        "nfl_comp": {"player": "James Bradberry", "why": "Reliable veteran corner"},
+        "mlb_comp": {"player": "Paul DeJong", "why": "Veteran middle infielder providing depth"}
+    },
+    "jake walman": {
+        "number": 96,
+        "position": "Defenseman",
+        "age": 28,
+        "from": "Toronto, ON",
+        "draft": "#82 Overall, 2014",
+        "role": "Offensive Defenseman",
+        "role_description": "Puck-moving defenseman who adds offense from the blue line. Can quarterback a power play.",
+        "play_style": "Good skater with offensive instincts. Has a good shot from the point. Still developing his defensive consistency.",
+        "fun_fact": "Broke out with Detroit before being traded to San Jose.",
+        "soccer_comp": {"player": "Trent Alexander-Arnold", "why": "Attack-minded defender who creates offense"},
+        "nba_comp": {"player": "Draymond Green", "why": "Defender who can run the offense"},
+        "nfl_comp": {"player": "Micah Parsons", "why": "Dynamic defender with playmaking ability"},
+        "mlb_comp": {"player": "Gunnar Henderson", "why": "Defender with offensive pop"}
+    },
+    "mackenzie blackwood": {
+        "number": 29,
+        "position": "Goaltender",
+        "age": 27,
+        "from": "Thunder Bay, ON",
+        "draft": "#42 Overall, 2015",
+        "role": "Starting Goaltender",
+        "role_description": "The Sharks' number one netminder. A talented goalie who can steal games when he's on his game.",
+        "play_style": "Athletic, good size (6'4\"), tracks the puck well. Can be streaky but capable of elite performances.",
+        "fun_fact": "Acquired from New Jersey. Named after former NHL goalie Kirk McLean (his parents were fans).",
+        "soccer_comp": {"player": "David Raya", "why": "Athletic goalkeeper who can make spectacular saves"},
+        "nba_comp": {"player": "Brook Lopez", "why": "Solid presence protecting the paint"},
+        "nfl_comp": {"player": "Geno Smith", "why": "Veteran who's found a home and playing well"},
+        "mlb_comp": {"player": "Sonny Gray", "why": "Talented arm who can dominate when locked in"}
+    },
+    "vitek vanecek": {
+        "number": 41,
+        "position": "Goaltender",
+        "age": 28,
+        "from": "Havlickuv Brod, Czech Republic",
+        "draft": "#39 Overall, 2014",
+        "role": "Backup Goaltender",
+        "role_description": "Experienced backup who provides rest for Blackwood and can win games when called upon.",
+        "play_style": "Positionally sound, good athleticism. Has starting experience in the league.",
+        "fun_fact": "Has played for Washington and New Jersey before San Jose. Czech international.",
+        "soccer_comp": {"player": "Aaron Ramsdale", "why": "Quality backup pushing for playing time"},
+        "nba_comp": {"player": "Daniel Theis", "why": "Reliable backup center who can start if needed"},
+        "nfl_comp": {"player": "Cooper Rush", "why": "Quality backup who's proven he can win games"},
+        "mlb_comp": {"player": "Ross Stripling", "why": "Swing pitcher who can start or relieve"}
+    },
+    "timothy liljegren": {
+        "number": 37,
+        "position": "Defenseman",
+        "age": 25,
+        "from": "Kristianstad, Sweden",
+        "draft": "#17 Overall, 2017",
+        "role": "Depth Defenseman",
+        "role_description": "Skilled puck-moving defenseman. Former first-round pick still trying to reach his potential.",
+        "play_style": "Good skater, can move the puck. Working on defensive consistency and physicality.",
+        "fun_fact": "Traded from Toronto. Swedish national team member.",
+        "soccer_comp": {"player": "Josko Gvardiol", "why": "Skilled young defender with high pedigree"},
+        "nba_comp": {"player": "Patrick Williams", "why": "Former lottery pick developing his game"},
+        "nfl_comp": {"player": "Trevon Diggs", "why": "Talented but can be inconsistent"},
+        "mlb_comp": {"player": "Spencer Torkelson", "why": "High draft pick still finding his footing"}
+    },
+    "ty dellandrea": {
+        "number": 27,
+        "position": "Center",
+        "age": 24,
+        "from": "Toronto, ON",
+        "draft": "#13 Overall, 2018",
+        "role": "Bottom-Six Forward",
+        "role_description": "Energy center who brings compete level every night. Plays a responsible two-way game.",
+        "play_style": "Hard worker, good penalty killer, responsible defensively. Chips in some offense.",
+        "fun_fact": "Former first-round pick of Dallas. Captain of Canada's World Junior team.",
+        "soccer_comp": {"player": "Conor Gallagher", "why": "High-energy midfielder who never stops running"},
+        "nba_comp": {"player": "Alex Caruso", "why": "Hustle player who does the little things"},
+        "nfl_comp": {"player": "Rex Burkhead", "why": "Versatile player who does whatever's needed"},
+        "mlb_comp": {"player": "Nick Ahmed", "why": "Glue guy who plays solid defense"}
+    },
+    "luke kunin": {
+        "number": 11,
+        "position": "Right Wing",
+        "age": 27,
+        "from": "Chesterfield, MO",
+        "draft": "#15 Overall, 2016",
+        "role": "Bottom-Six Forward",
+        "role_description": "Physical forward who brings energy and can chip in offense. Good penalty killer.",
+        "play_style": "Plays with an edge, willing to go to the hard areas. Can score but primarily a grinder.",
+        "fun_fact": "American-born, played at University of Wisconsin. Former first-round pick.",
+        "soccer_comp": {"player": "Adam Lallana", "why": "Works hard, brings energy, occasional goals"},
+        "nba_comp": {"player": "P.J. Tucker", "why": "Hustle player who does the dirty work"},
+        "nfl_comp": {"player": "Taysom Hill", "why": "Versatile player who brings energy"},
+        "mlb_comp": {"player": "Kiké Hernandez", "why": "Utility player who fills in where needed"}
+    },
+    "carl grundstrom": {
+        "number": 91,
+        "position": "Left Wing",
+        "age": 27,
+        "from": "Stockholm, Sweden",
+        "draft": "#57 Overall, 2016",
+        "role": "Bottom-Six Forward",
+        "role_description": "Physical forward who brings sandpaper to the lineup. Plays a heavy game.",
+        "play_style": "Physical, hits everything that moves. Forechecks hard. Limited offensive upside but valuable role player.",
+        "fun_fact": "Originally drafted by Toronto, won a Calder Cup (AHL championship) with Ontario Reign.",
+        "soccer_comp": {"player": "James Milner", "why": "Does the dirty work, never complains"},
+        "nba_comp": {"player": "Patrick Beverley", "why": "Pest who opponents hate to play against"},
+        "nfl_comp": {"player": "Cordarrelle Patterson", "why": "Does multiple jobs, special teams ace"},
+        "mlb_comp": {"player": "Tommy Edman", "why": "Role player who does whatever's asked"}
+    },
+    "barclay goodrow": {
+        "number": 19,
+        "position": "Center/Wing",
+        "age": 31,
+        "from": "Toronto, ON",
+        "draft": "Undrafted",
+        "role": "Veteran Role Player",
+        "role_description": "Two-time Stanley Cup champion who brings winning experience. Versatile forward who can play any situation.",
+        "play_style": "Intelligent player, excellent penalty killer, does all the little things right. True professional.",
+        "fun_fact": "Won back-to-back Cups with Tampa Bay. Fan favorite who returned to San Jose where he started.",
+        "soccer_comp": {"player": "Olivier Giroud", "why": "Veteran winner who does the intangibles"},
+        "nba_comp": {"player": "Andre Iguodala", "why": "Championship DNA, knows how to win"},
+        "nfl_comp": {"player": "Julian Edelman", "why": "Clutch veteran with rings"},
+        "mlb_comp": {"player": "David Ross", "why": "Veteran presence with championship experience"}
+    }
+}
+
+# =============================================================================
+# STATS GLOSSARY - Hockey Statistics Explained with Analogies
+# =============================================================================
+
+STATS_GLOSSARY = {
+    "goals": {
+        "abbrev": "G",
+        "definition": "The number of times a player has put the puck in the net. The most straightforward stat in hockey.",
+        "good_number": "30+ goals in a season is excellent. 50+ is elite.",
+        "soccer": "Same as goals in soccer - the ultimate measure of a scorer.",
+        "nba": "Like points, but each goal is equally weighted (no 2s vs 3s).",
+        "nfl": "Like touchdowns - the most celebrated offensive achievement.",
+        "mlb": "Like home runs - the stat everyone notices."
+    },
+    "assists": {
+        "abbrev": "A",
+        "definition": "The pass(es) that led directly to a goal. Up to TWO assists are awarded per goal (primary and secondary).",
+        "good_number": "50+ assists is excellent for a playmaker.",
+        "soccer": "Same concept, but hockey gives two assists per goal instead of one.",
+        "nba": "Same concept - the pass before the score.",
+        "nfl": "Like getting credit for the pass AND the block that sprung a TD.",
+        "mlb": "Like RBI credits, but for the setup instead of the finish."
+    },
+    "points": {
+        "abbrev": "P / PTS",
+        "definition": "Goals + Assists combined. The primary measure of offensive production.",
+        "good_number": "70+ points is very good. 100+ is elite (point-per-game pace).",
+        "soccer": "Like 'goal contributions' (G+A) but with two assists possible per goal.",
+        "nba": "Different meaning - hockey points measure production, not scoring.",
+        "nfl": "Would be like combining TDs + TD passes for a QB.",
+        "mlb": "Like combining runs + RBIs into one number."
+    },
+    "plus_minus": {
+        "abbrev": "+/-",
+        "definition": "The goal differential when a player is on the ice at even strength. +1 if your team scores, -1 if they allow.",
+        "good_number": "+20 or better is excellent. Negative means more goals against.",
+        "soccer": "Like tracking goal difference only when a specific player is on the pitch.",
+        "nba": "NBA uses this exact same stat - hockey invented it!",
+        "nfl": "Like point differential when a specific player is on the field.",
+        "mlb": "No direct equivalent - baseball doesn't track this way."
+    },
+    "pim": {
+        "abbrev": "PIM",
+        "definition": "Penalty Infraction Minutes - total time spent in the penalty box. Can indicate physical play or discipline issues.",
+        "good_number": "Context matters. Enforcers have 100+, skilled players aim for under 30.",
+        "soccer": "Like counting yellow and red cards, but measured in minutes.",
+        "nba": "Like tracking personal fouls, but with actual time penalties.",
+        "nfl": "Like penalty yards, but assigned to individual players.",
+        "mlb": "Like HBP (hit by pitch) - sometimes it's strategic aggression."
+    },
+    "shots": {
+        "abbrev": "SOG / S",
+        "definition": "Shots on goal - shots that would go in if not stopped by the goalie. Doesn't count misses or blocked shots.",
+        "good_number": "200+ shots per season shows someone who shoots a lot.",
+        "soccer": "Same concept - shots that require a save.",
+        "nba": "Like field goal attempts - how often you're shooting.",
+        "nfl": "Like pass attempts - volume of offensive action.",
+        "mlb": "Like at-bats - opportunities to produce."
+    },
+    "shooting_percentage": {
+        "abbrev": "S% / SH%",
+        "definition": "Goals divided by shots. How often your shots go in.",
+        "good_number": "10-12% is average. 15%+ is excellent (or unsustainable). Under 8% is cold.",
+        "soccer": "Same as conversion rate - goals per shot on target.",
+        "nba": "Like field goal percentage - your efficiency at scoring.",
+        "nfl": "Like completion percentage - how often your attempts succeed.",
+        "mlb": "Like batting average - how often you get a hit when you try."
+    },
+    "toi": {
+        "abbrev": "TOI",
+        "definition": "Time on Ice - how many minutes a player plays per game. Shows coach's trust and player's stamina.",
+        "good_number": "Top forwards: 18-22 min. Top D: 22-27 min. Stars play more.",
+        "soccer": "Like tracking actual minutes played (not just appearances).",
+        "nba": "Same concept - minutes per game shows importance to team.",
+        "nfl": "Like snap counts - how much you're actually on the field.",
+        "mlb": "Like plate appearances - how much action you see."
+    },
+    "faceoff_percentage": {
+        "abbrev": "FO%",
+        "definition": "Percentage of faceoffs won. Only centers take faceoffs regularly.",
+        "good_number": "50% is break-even. 55%+ is excellent. Below 45% is poor.",
+        "soccer": "No equivalent - soccer doesn't have this type of set play.",
+        "nba": "Like tip-off win rate, but it happens 50+ times per game.",
+        "nfl": "Like a long snapper's accuracy - specialized skill.",
+        "mlb": "Like a catcher's framing rate - specialized but important."
+    },
+    "corsi": {
+        "abbrev": "CF / CF%",
+        "definition": "All shot attempts (goals, saves, misses, blocks) for vs against when a player is on ice. Measures puck possession.",
+        "good_number": "55%+ CF% means your team dominates possession with you on ice.",
+        "soccer": "Like expected goals (xG) - advanced metric for possession/chances.",
+        "nba": "Like tracking all field goal attempts for/against when on court.",
+        "nfl": "Like EPA (Expected Points Added) - advanced efficiency metric.",
+        "mlb": "Like OPS+ or wRC+ - advanced metric beyond basic stats."
+    },
+    "fenwick": {
+        "abbrev": "FF / FF%",
+        "definition": "Like Corsi but excludes blocked shots. Some prefer it as blocked shots can be strategy.",
+        "good_number": "Similar to Corsi - 55%+ is excellent.",
+        "soccer": "A variation on xG that excludes certain shot types.",
+        "nba": "Like Corsi but filtering out certain play types.",
+        "nfl": "Like a modified EPA - slightly different calculation.",
+        "mlb": "Like different versions of WAR - same concept, different calc."
+    },
+    "pdo": {
+        "abbrev": "PDO",
+        "definition": "Team shooting % + team save % when on ice. Measures luck. 1000 is average, tends to regress to mean.",
+        "good_number": "1000 is average. Much higher/lower usually regresses over time.",
+        "soccer": "Like tracking if you're 'overperforming' your xG - luck indicator.",
+        "nba": "Like looking at clutch shooting % - often regresses to mean.",
+        "nfl": "Like fumble recovery rate - tends to even out over time.",
+        "mlb": "Like BABIP - measures luck on balls in play."
+    },
+    "save_percentage": {
+        "abbrev": "SV%",
+        "definition": "For goalies - percentage of shots stopped. The primary goalie stat.",
+        "good_number": ".915+ is good. .920+ is excellent. .930+ is elite.",
+        "soccer": "Like save percentage for goalkeepers.",
+        "nba": "Like defensive field goal percentage allowed.",
+        "nfl": "Like passer rating allowed for a cornerback.",
+        "mlb": "Like ERA but inverted - lower ERA = higher save %."
+    },
+    "gaa": {
+        "abbrev": "GAA",
+        "definition": "Goals Against Average - average goals allowed per 60 minutes for goalies.",
+        "good_number": "Under 2.50 is good. Under 2.20 is excellent.",
+        "soccer": "Like goals conceded per 90 minutes.",
+        "nba": "Like defensive rating - points allowed per possession.",
+        "nfl": "Like points allowed per game for a defense.",
+        "mlb": "Exactly like ERA - runs/goals allowed per standard time period."
+    },
+    "wins": {
+        "abbrev": "W",
+        "definition": "For goalies - games won while playing. Goalie of record when team wins.",
+        "good_number": "30+ wins is excellent (but depends on team quality).",
+        "soccer": "Like clean sheets, but any win counts.",
+        "nba": "No individual win stat - team wins only.",
+        "nfl": "Like QB wins - credited to the goalie but very team-dependent.",
+        "mlb": "Like pitcher wins - individual credit for team achievement."
+    },
+    "shutouts": {
+        "abbrev": "SO",
+        "definition": "Games where the goalie allows zero goals for the entire game.",
+        "good_number": "5+ shutouts in a season is excellent.",
+        "soccer": "Same as clean sheets - no goals allowed.",
+        "nba": "No equivalent - impossible to hold a team scoreless.",
+        "nfl": "Same concept - shutout means zero points allowed.",
+        "mlb": "Like a complete game shutout for a pitcher."
+    },
+    "pp_points": {
+        "abbrev": "PPP / PPG / PPA",
+        "definition": "Points/Goals/Assists scored on the power play (when opponent is short-handed).",
+        "good_number": "20+ PPP shows a power play specialist.",
+        "soccer": "Like goals/assists from set pieces only.",
+        "nba": "Like free throw production - easier scoring chances.",
+        "nfl": "Like red zone touchdowns - scoring in advantageous situations.",
+        "mlb": "Like RBIs with runners in scoring position - key situations."
+    },
+    "sh_points": {
+        "abbrev": "SHP / SHG / SHA",
+        "definition": "Points/Goals/Assists while YOUR team is short-handed (killing a penalty).",
+        "good_number": "Any is impressive! 5+ SHP is rare and valuable.",
+        "soccer": "Like scoring while down a man - extremely difficult.",
+        "nba": "Like scoring while in foul trouble - against the odds.",
+        "nfl": "Like a pick-six - scoring when you're supposed to be defending.",
+        "mlb": "Like a pitcher getting an RBI - not their job but valuable."
+    },
+    "blocks": {
+        "abbrev": "BLK / BKS",
+        "definition": "Shots blocked by a skater (not goalie). Shows willingness to sacrifice body.",
+        "good_number": "100+ blocks per season shows a shot-blocking defender.",
+        "soccer": "Like blocked shots by outfield players.",
+        "nba": "Same stat - shots blocked (though usually by big men).",
+        "nfl": "Like batted passes - disrupting the opponent's attack.",
+        "mlb": "No equivalent - can't block anything in baseball."
+    },
+    "hits": {
+        "abbrev": "HIT",
+        "definition": "Legal body checks delivered. Shows physical play.",
+        "good_number": "200+ hits per season is very physical.",
+        "soccer": "Like successful tackles - winning physical battles.",
+        "nba": "Like screens set - physical plays that help the team.",
+        "nfl": "Like tackles - making contact to stop the opponent.",
+        "mlb": "No equivalent - not a contact sport."
+    },
+    "giveaways": {
+        "abbrev": "GV",
+        "definition": "Turnovers caused by your own mistake (bad pass, lost puck battle).",
+        "good_number": "Lower is better, but top players handle the puck more so may have more.",
+        "soccer": "Like losing possession through your own error.",
+        "nba": "Same as turnovers.",
+        "nfl": "Like fumbles or interceptions - giving the puck away.",
+        "mlb": "Like errors - mistakes that hurt your team."
+    },
+    "takeaways": {
+        "abbrev": "TK",
+        "definition": "Turnovers forced by stealing the puck from opponents.",
+        "good_number": "50+ takeaways shows good defensive reads.",
+        "soccer": "Like interceptions or winning the ball back.",
+        "nba": "Same as steals.",
+        "nfl": "Like forced fumbles or interceptions.",
+        "mlb": "Like a catcher throwing out a runner - proactive defense."
+    }
+}
+
+# =============================================================================
+# HOCKEY DICTIONARY - Comprehensive Term Definitions
+# =============================================================================
+
+HOCKEY_DICTIONARY = {
+    # Game Structure
+    "period": {
+        "definition": "One of three 20-minute segments of a hockey game. Unlike soccer halves or basketball quarters, hockey has 3 periods.",
+        "category": "game_structure"
+    },
+    "intermission": {
+        "definition": "The 18-minute break between periods. Used to resurface the ice with a Zamboni.",
+        "category": "game_structure"
+    },
+    "regulation": {
+        "definition": "The standard 60 minutes of play (3 periods). If tied after regulation, the game goes to overtime.",
+        "category": "game_structure"
+    },
+    "overtime": {
+        "definition": "Extra period(s) played if tied after regulation. Regular season: 5-minute 3-on-3. Playoffs: 20-minute 5-on-5 until someone scores.",
+        "category": "game_structure"
+    },
+    "shootout": {
+        "definition": "If still tied after overtime in regular season, teams alternate penalty shots. Best of 3, then sudden death.",
+        "category": "game_structure"
+    },
+
+    # Rink & Locations
+    "rink": {
+        "definition": "The ice surface where hockey is played. NHL rinks are 200 feet long by 85 feet wide.",
+        "category": "rink"
+    },
+    "crease": {
+        "definition": "The blue painted area directly in front of the goal. The goalie's protected zone.",
+        "category": "rink"
+    },
+    "blue_line": {
+        "definition": "The lines that divide the rink into three zones (defensive, neutral, offensive). Key for offside calls.",
+        "category": "rink"
+    },
+    "red_line": {
+        "definition": "The center line dividing the rink in half. Also called center ice.",
+        "category": "rink"
+    },
+    "faceoff_circle": {
+        "definition": "The circles where faceoffs take place. There are 9 total - 2 in each end zone, 4 in neutral zone, 1 at center.",
+        "category": "rink"
+    },
+    "slot": {
+        "definition": "The prime scoring area between the faceoff circles in front of the net. High-danger zone.",
+        "category": "rink"
+    },
+    "point": {
+        "definition": "The area just inside the blue line where defensemen position on offense. 'Point shot' comes from here.",
+        "category": "rink"
+    },
+    "boards": {
+        "definition": "The walls surrounding the ice. Players are frequently checked 'into the boards.'",
+        "category": "rink"
+    },
+    "glass": {
+        "definition": "The plexiglass panels above the boards that protect fans while allowing visibility.",
+        "category": "rink"
+    },
+    "corner": {
+        "definition": "The rounded areas where the boards meet behind the goals. Lots of puck battles happen here.",
+        "category": "rink"
+    },
+    "trapezoid": {
+        "definition": "The area behind the goal where goalies CAN play the puck. Outside it, they cannot (post-Brodeur rule).",
+        "category": "rink"
+    },
+
+    # Player Positions
+    "center": {
+        "definition": "The middle forward who takes faceoffs and plays in the middle of the ice. Often the most complete forward.",
+        "category": "positions"
+    },
+    "winger": {
+        "definition": "The forwards who play on the left or right side. Usually responsible for their side of the ice.",
+        "category": "positions"
+    },
+    "defenseman": {
+        "definition": "The two players who primarily defend and start plays from the back. Also called 'D-men' or 'blueliners.'",
+        "category": "positions"
+    },
+    "goaltender": {
+        "definition": "The player who guards the net. Also called goalie, netminder, or keeper. Only one on ice at a time.",
+        "category": "positions"
+    },
+    "forward": {
+        "definition": "Collective term for centers and wingers - the offensive players. Three forwards on ice normally.",
+        "category": "positions"
+    },
+
+    # Team Structure
+    "line": {
+        "definition": "A group of forwards who play together. Teams typically have 4 lines of 3 forwards each.",
+        "category": "team"
+    },
+    "first_line": {
+        "definition": "The top scoring line with the best offensive players. Gets the most ice time and key situations.",
+        "category": "team"
+    },
+    "fourth_line": {
+        "definition": "The checking/energy line. Usually physical players who forecheck hard and play limited minutes.",
+        "category": "team"
+    },
+    "pairing": {
+        "definition": "Two defensemen who play together. Teams have 3 defensive pairings.",
+        "category": "team"
+    },
+    "top_pairing": {
+        "definition": "The best two defensemen who play the most minutes and toughest matchups.",
+        "category": "team"
+    },
+    "healthy_scratch": {
+        "definition": "A player in the lineup but not playing that game. Teams dress 20 players but roster is 23.",
+        "category": "team"
+    },
+    "taxi_squad": {
+        "definition": "Reserve players who practice with the team but aren't on the active roster.",
+        "category": "team"
+    },
+
+    # Gameplay Actions
+    "faceoff": {
+        "definition": "How play begins - the ref drops the puck between two opposing centers who try to win possession.",
+        "category": "gameplay"
+    },
+    "line_change": {
+        "definition": "Substituting players during play or stoppages. Hockey has unlimited subs that happen constantly.",
+        "category": "gameplay"
+    },
+    "shift": {
+        "definition": "One stint on the ice before changing. Usually 30-60 seconds due to the sport's intensity.",
+        "category": "gameplay"
+    },
+    "forecheck": {
+        "definition": "Pressuring the opponent in their defensive zone to force turnovers. Aggressive offensive tactic.",
+        "category": "gameplay"
+    },
+    "backcheck": {
+        "definition": "Forwards skating back to help defend after losing the puck. Shows work ethic.",
+        "category": "gameplay"
+    },
+    "dump_and_chase": {
+        "definition": "Shooting the puck into the offensive zone and chasing it, rather than carrying it in.",
+        "category": "gameplay"
+    },
+    "cycling": {
+        "definition": "Moving the puck along the boards in the offensive zone to maintain possession and create chances.",
+        "category": "gameplay"
+    },
+    "zone_entry": {
+        "definition": "How you get the puck into the offensive zone - carry it, pass it, or dump it.",
+        "category": "gameplay"
+    },
+    "breakout": {
+        "definition": "The play to move the puck out of your defensive zone and start offense.",
+        "category": "gameplay"
+    },
+    "neutral_zone_trap": {
+        "definition": "A defensive system that clogs the neutral zone to prevent zone entries. Boring but effective.",
+        "category": "gameplay"
+    },
+
+    # Shots & Scoring
+    "slap_shot": {
+        "definition": "A powerful shot with a big wind-up. Can reach 100+ mph but takes time to execute.",
+        "category": "shots"
+    },
+    "wrist_shot": {
+        "definition": "A quick, accurate shot using wrist movement. Most common shot type.",
+        "category": "shots"
+    },
+    "snap_shot": {
+        "definition": "Between a slap shot and wrist shot - quicker than slap, harder than wrist.",
+        "category": "shots"
+    },
+    "backhand": {
+        "definition": "A shot or pass from the backhand side of the stick. Harder to control but deceptive.",
+        "category": "shots"
+    },
+    "one_timer": {
+        "definition": "Shooting directly from a pass without stopping the puck. Requires perfect timing.",
+        "category": "shots"
+    },
+    "tip_in": {
+        "definition": "Deflecting a shot with your stick to redirect it into the net.",
+        "category": "shots"
+    },
+    "rebound": {
+        "definition": "When the goalie stops a shot but can't control it, leaving the puck loose. Second chance opportunity.",
+        "category": "shots"
+    },
+    "screen": {
+        "definition": "Standing in front of the goalie to block their view of the shot. Legal if not in crease.",
+        "category": "shots"
+    },
+    "five_hole": {
+        "definition": "The space between the goalie's legs. One of the five 'holes' to shoot at.",
+        "category": "shots"
+    },
+    "top_shelf": {
+        "definition": "The upper part of the net, 'where grandma keeps the cookies.' Hard for goalies to reach.",
+        "category": "shots"
+    },
+    "bar_down": {
+        "definition": "A shot that hits the crossbar and goes down into the net. Considered a perfect shot.",
+        "category": "shots"
+    },
+
+    # Moves & Skills
+    "deke": {
+        "definition": "A fake or move to deceive the defender or goalie. Short for 'decoy.'",
+        "category": "skills"
+    },
+    "dangle": {
+        "definition": "Fancy stickhandling to beat defenders. 'He dangled through three guys.'",
+        "category": "skills"
+    },
+    "toe_drag": {
+        "definition": "Pulling the puck back with the toe of the stick blade. Classic move to create space.",
+        "category": "skills"
+    },
+    "sauce": {
+        "definition": "A pass that goes airborne (saucer-like) over sticks or players. Also called a saucer pass.",
+        "category": "skills"
+    },
+    "no_look_pass": {
+        "definition": "Passing without looking at your target to deceive defenders.",
+        "category": "skills"
+    },
+    "between_the_legs": {
+        "definition": "Either a pass, shot, or deke that goes through your own legs. Showtime move.",
+        "category": "skills"
+    },
+    "spin_o_rama": {
+        "definition": "A full 360° spin move while controlling the puck. Highlight reel material.",
+        "category": "skills"
+    },
+    "michigan": {
+        "definition": "The lacrosse-style goal where you scoop the puck on your blade and score from behind the net.",
+        "category": "skills"
+    },
+
+    # Checking & Physical Play
+    "body_check": {
+        "definition": "Using your body to legally hit an opponent who has the puck. Must not target head.",
+        "category": "physical"
+    },
+    "hip_check": {
+        "definition": "Lowering your body and hitting opponent with your hip. High risk, high reward.",
+        "category": "physical"
+    },
+    "open_ice_hit": {
+        "definition": "A body check in open ice rather than along the boards. Often the biggest hits.",
+        "category": "physical"
+    },
+    "finishing_your_check": {
+        "definition": "Completing your hit even after the player has passed the puck. Legal but annoying.",
+        "category": "physical"
+    },
+    "boarding": {
+        "definition": "An illegal hit that drives an opponent violently into the boards. 2-5 minute penalty.",
+        "category": "physical"
+    },
+    "charging": {
+        "definition": "Taking too many strides or jumping before delivering a check. Illegal.",
+        "category": "physical"
+    },
+    "fighting": {
+        "definition": "Dropping gloves and fighting an opponent. Results in 5-minute major penalty for both players.",
+        "category": "physical"
+    },
+    "enforcer": {
+        "definition": "A player whose role includes fighting and protecting teammates. Rare in modern NHL.",
+        "category": "physical"
+    },
+    "goon": {
+        "definition": "A player who primarily fights and plays physically. Sometimes derogatory term.",
+        "category": "physical"
+    },
+
+    # Penalties
+    "minor_penalty": {
+        "definition": "A 2-minute penalty for infractions like tripping, hooking, slashing. Team plays short-handed.",
+        "category": "penalties"
+    },
+    "major_penalty": {
+        "definition": "A 5-minute penalty for serious infractions like fighting or intent to injure.",
+        "category": "penalties"
+    },
+    "double_minor": {
+        "definition": "A 4-minute penalty, usually for high-sticking that draws blood.",
+        "category": "penalties"
+    },
+    "misconduct": {
+        "definition": "A 10-minute penalty where player sits but team doesn't play short-handed.",
+        "category": "penalties"
+    },
+    "game_misconduct": {
+        "definition": "Player is ejected from the game. Team isn't necessarily short-handed.",
+        "category": "penalties"
+    },
+    "match_penalty": {
+        "definition": "Ejection plus potential suspension review. For deliberate attempt to injure.",
+        "category": "penalties"
+    },
+    "tripping": {
+        "definition": "Using stick, arm, or leg to knock an opponent down. 2-minute minor.",
+        "category": "penalties"
+    },
+    "hooking": {
+        "definition": "Using the stick blade to impede an opponent. 2-minute minor.",
+        "category": "penalties"
+    },
+    "slashing": {
+        "definition": "Swinging your stick at an opponent. 2-minute minor, or more if injury.",
+        "category": "penalties"
+    },
+    "holding": {
+        "definition": "Grabbing an opponent with hands or stick. 2-minute minor.",
+        "category": "penalties"
+    },
+    "interference": {
+        "definition": "Impeding a player who doesn't have the puck. 2-minute minor.",
+        "category": "penalties"
+    },
+    "roughing": {
+        "definition": "Punching or rough play that doesn't rise to fighting. 2-minute minor.",
+        "category": "penalties"
+    },
+    "high_sticking": {
+        "definition": "Hitting an opponent with your stick above the shoulders. 2 or 4 minutes.",
+        "category": "penalties"
+    },
+    "cross_checking": {
+        "definition": "Hitting opponent with the shaft of your stick while both hands are on it.",
+        "category": "penalties"
+    },
+    "delay_of_game": {
+        "definition": "Various infractions that delay play, like shooting puck over glass from defensive zone.",
+        "category": "penalties"
+    },
+    "too_many_men": {
+        "definition": "Having more than 6 players on the ice. Bench minor penalty.",
+        "category": "penalties"
+    },
+    "embellishment": {
+        "definition": "Exaggerating contact to draw a penalty. Can result in offsetting minors.",
+        "category": "penalties"
+    },
+
+    # Special Teams
+    "power_play": {
+        "definition": "When your team has more players due to opponent's penalty. Usually 5-on-4.",
+        "category": "special_teams"
+    },
+    "penalty_kill": {
+        "definition": "Playing short-handed while a teammate serves a penalty. Defensive mode.",
+        "category": "special_teams"
+    },
+    "man_advantage": {
+        "definition": "Another term for power play - you have more men on the ice.",
+        "category": "special_teams"
+    },
+    "five_on_four": {
+        "definition": "Standard power play situation. Can also be 5-on-3 with two penalties.",
+        "category": "special_teams"
+    },
+    "four_on_four": {
+        "definition": "Both teams have a player in the box. More open ice, exciting hockey.",
+        "category": "special_teams"
+    },
+    "pp_unit": {
+        "definition": "The 5 players on the ice for power play. Teams have 2 units that rotate.",
+        "category": "special_teams"
+    },
+    "pk_unit": {
+        "definition": "The 4 players on ice during penalty kill. Usually defensive specialists.",
+        "category": "special_teams"
+    },
+    "box": {
+        "definition": "The penalty kill formation - 4 players form a box/diamond shape.",
+        "category": "special_teams"
+    },
+    "umbrella": {
+        "definition": "A power play formation with 3 players high and 2 low.",
+        "category": "special_teams"
+    },
+
+    # Rules & Situations
+    "offside": {
+        "definition": "When an attacking player enters the offensive zone before the puck. Play is stopped.",
+        "category": "rules"
+    },
+    "icing": {
+        "definition": "Shooting the puck from your side past the opponent's goal line without anyone touching it.",
+        "category": "rules"
+    },
+    "goalie_interference": {
+        "definition": "Illegal contact with the goalie that prevents them from making a save.",
+        "category": "rules"
+    },
+    "hand_pass": {
+        "definition": "Passing the puck with your hand is only legal in the defensive zone.",
+        "category": "rules"
+    },
+    "high_touch": {
+        "definition": "Directing the puck with a stick above the crossbar. Goal disallowed.",
+        "category": "rules"
+    },
+    "kicking": {
+        "definition": "You can't kick the puck into the net. Distinct kicking motion = no goal.",
+        "category": "rules"
+    },
+    "goalie_pulled": {
+        "definition": "Removing the goalie for an extra attacker. Done when trailing late in games.",
+        "category": "rules"
+    },
+    "delayed_penalty": {
+        "definition": "When a penalty is called but the non-offending team has the puck. Play continues until they lose it.",
+        "category": "rules"
+    },
+    "penalty_shot": {
+        "definition": "A free breakaway awarded when a scoring chance is illegally taken away.",
+        "category": "rules"
+    },
+
+    # Achievements
+    "hat_trick": {
+        "definition": "Scoring 3 goals in one game. Fans throw hats on the ice to celebrate.",
+        "category": "achievements"
+    },
+    "gordie_howe_hat_trick": {
+        "definition": "A goal, an assist, AND a fight in one game. Named after the legendary Red Wing.",
+        "category": "achievements"
+    },
+    "natural_hat_trick": {
+        "definition": "Three consecutive goals by the same player, no one else scoring in between.",
+        "category": "achievements"
+    },
+    "shutout": {
+        "definition": "When a goalie allows zero goals for the entire game.",
+        "category": "achievements"
+    },
+    "empty_netter": {
+        "definition": "A goal scored into an empty net after the opposing goalie is pulled.",
+        "category": "achievements"
+    },
+    "game_winning_goal": {
+        "definition": "The goal that gives your team one more than the opponent's final total.",
+        "category": "achievements"
+    },
+    "overtime_winner": {
+        "definition": "The goal that wins the game in overtime. Walk-off equivalent.",
+        "category": "achievements"
+    },
+    "first_nhl_goal": {
+        "definition": "A player's first career NHL goal. Teammates usually give them the puck.",
+        "category": "achievements"
+    },
+
+    # Goalie-Specific
+    "butterfly": {
+        "definition": "Goalie drops to knees with pads flared out to cover low shots. Modern standard style.",
+        "category": "goalie"
+    },
+    "glove_save": {
+        "definition": "Catching the puck with the catching glove (worn on non-stick hand).",
+        "category": "goalie"
+    },
+    "blocker": {
+        "definition": "The rectangular pad on the goalie's stick hand. Used to deflect shots.",
+        "category": "goalie"
+    },
+    "pad_save": {
+        "definition": "Stopping the puck with the leg pads. Most common save type.",
+        "category": "goalie"
+    },
+    "poke_check": {
+        "definition": "Goalie lunges forward to knock the puck away from a shooter.",
+        "category": "goalie"
+    },
+    "desperation_save": {
+        "definition": "An athletic, scrambling save when out of position. Often highlight-reel worthy.",
+        "category": "goalie"
+    },
+    "stacking_the_pads": {
+        "definition": "Sliding across with pads stacked on top of each other. Old school move.",
+        "category": "goalie"
+    },
+    "playing_the_puck": {
+        "definition": "When the goalie leaves the crease to pass or clear the puck. Risky but helpful.",
+        "category": "goalie"
+    },
+
+    # Slang & Culture
+    "biscuit": {
+        "definition": "Slang for the puck. 'Put the biscuit in the basket.'",
+        "category": "slang"
+    },
+    "barn": {
+        "definition": "Slang for the arena/rink. 'Nice barn you got here.'",
+        "category": "slang"
+    },
+    "beauty": {
+        "definition": "A great player or a great goal. 'What a beauty!'",
+        "category": "slang"
+    },
+    "celly": {
+        "definition": "Goal celebration. 'Sick celly, bro.'",
+        "category": "slang"
+    },
+    "clapper": {
+        "definition": "A slap shot. From the clapping sound of stick hitting ice.",
+        "category": "slang"
+    },
+    "snipe": {
+        "definition": "A perfectly placed shot, usually top corner. 'Absolute snipe.'",
+        "category": "slang"
+    },
+    "twig": {
+        "definition": "A hockey stick. 'Nice twig.'",
+        "category": "slang"
+    },
+    "bucket": {
+        "definition": "A helmet. 'Lost his bucket on that hit.'",
+        "category": "slang"
+    },
+    "sweater": {
+        "definition": "The hockey jersey. Traditional Canadian term.",
+        "category": "slang"
+    },
+    "chirping": {
+        "definition": "Trash talking opponents. 'He was chirping all game.'",
+        "category": "slang"
+    },
+    "wheel": {
+        "definition": "To skate fast. 'He can really wheel.'",
+        "category": "slang"
+    },
+    "pigeon": {
+        "definition": "A player who scores garbage goals or rides better players' coattails.",
+        "category": "slang"
+    },
+    "plug": {
+        "definition": "A bad player. AHL-caliber guy in the NHL.",
+        "category": "slang"
+    },
+    "rocket": {
+        "definition": "A very attractive person. 'His wife's a rocket.'",
+        "category": "slang"
+    },
+    "tendy": {
+        "definition": "Short for goaltender. 'Our tendy stood on his head.'",
+        "category": "slang"
+    },
+    "silky": {
+        "definition": "Smooth hands/skills. 'Silky mitts on that kid.'",
+        "category": "slang"
+    },
+    "lettuce": {
+        "definition": "Hair flowing out of the helmet. 'Nice lettuce, buddy.'",
+        "category": "slang"
+    },
+    "flow": {
+        "definition": "Same as lettuce - good hockey hair.",
+        "category": "slang"
+    }
+}
+
+# =============================================================================
 # HOCKEY CONCEPTS KNOWLEDGE BASE
 # =============================================================================
 
@@ -2225,6 +3266,279 @@ def admin_roster_status():
         'loaded': NHL_ROSTER_LOADED,
         'player_count': len(NHL_ROSTER_CACHE),
         'sample_players': [p['name'] for p in NHL_ROSTER_CACHE[:5]] if NHL_ROSTER_CACHE else []
+    })
+
+# =============================================================================
+# MEET THE SHARKS ROUTES
+# =============================================================================
+
+@app.route('/api/sharks')
+def get_sharks_roster():
+    """Get all Sharks players with basic info"""
+    players = []
+    for name, info in SHARKS_ROSTER.items():
+        players.append({
+            'name': name.title(),
+            'number': info['number'],
+            'position': info['position'],
+            'role': info['role'],
+            'age': info['age']
+        })
+    # Sort by jersey number
+    players.sort(key=lambda x: x['number'])
+    return jsonify({
+        'team': 'San Jose Sharks',
+        'players': players,
+        'count': len(players)
+    })
+
+@app.route('/api/sharks/<path:player>')
+def get_shark_player(player):
+    """Get detailed info for a specific Sharks player"""
+    player_lower = player.lower().strip()
+
+    # Try exact match first
+    if player_lower in SHARKS_ROSTER:
+        info = SHARKS_ROSTER[player_lower]
+        return jsonify({
+            'found': True,
+            'name': player_lower.title(),
+            'number': info['number'],
+            'position': info['position'],
+            'age': info['age'],
+            'from': info['from'],
+            'draft': info['draft'],
+            'role': info['role'],
+            'role_description': info['role_description'],
+            'play_style': info['play_style'],
+            'fun_fact': info['fun_fact'],
+            'comparisons': {
+                'soccer': info['soccer_comp'],
+                'nba': info['nba_comp'],
+                'nfl': info['nfl_comp'],
+                'mlb': info['mlb_comp']
+            }
+        })
+
+    # Try fuzzy match
+    from difflib import SequenceMatcher
+    best_match = None
+    best_score = 0
+
+    for name in SHARKS_ROSTER.keys():
+        score = SequenceMatcher(None, player_lower, name).ratio()
+        if score > best_score:
+            best_score = score
+            best_match = name
+
+    if best_match and best_score > 0.6:
+        info = SHARKS_ROSTER[best_match]
+        return jsonify({
+            'found': True,
+            'name': best_match.title(),
+            'number': info['number'],
+            'position': info['position'],
+            'age': info['age'],
+            'from': info['from'],
+            'draft': info['draft'],
+            'role': info['role'],
+            'role_description': info['role_description'],
+            'play_style': info['play_style'],
+            'fun_fact': info['fun_fact'],
+            'comparisons': {
+                'soccer': info['soccer_comp'],
+                'nba': info['nba_comp'],
+                'nfl': info['nfl_comp'],
+                'mlb': info['mlb_comp']
+            }
+        })
+
+    return jsonify({
+        'found': False,
+        'error': f"Player '{player}' not found in Sharks roster",
+        'available_players': [name.title() for name in SHARKS_ROSTER.keys()]
+    })
+
+# =============================================================================
+# STATS GLOSSARY ROUTES
+# =============================================================================
+
+@app.route('/api/stats')
+def get_stats_glossary():
+    """Get all stats with basic info"""
+    stats = []
+    for stat_name, info in STATS_GLOSSARY.items():
+        stats.append({
+            'name': stat_name.replace('_', ' ').title(),
+            'abbrev': info.get('abbrev', ''),
+            'short_def': info['definition'][:100] + '...' if len(info['definition']) > 100 else info['definition']
+        })
+    return jsonify({
+        'stats': stats,
+        'count': len(stats)
+    })
+
+@app.route('/api/stats/<path:stat>')
+def get_stat_detail(stat):
+    """Get detailed explanation for a specific stat"""
+    stat_lower = stat.lower().strip().replace(' ', '_').replace('-', '_')
+
+    # Handle common variations
+    stat_variations = {
+        'plus_minus': 'plus_minus',
+        'plus/minus': 'plus_minus',
+        '+/-': 'plus_minus',
+        'plusminus': 'plus_minus',
+        'save_percentage': 'save_percentage',
+        'save%': 'save_percentage',
+        'sv%': 'save_percentage',
+        'gaa': 'goals_against_average',
+        'goals_against': 'goals_against_average',
+        'pdo': 'pdo',
+        'toi': 'time_on_ice'
+    }
+
+    if stat_lower in stat_variations:
+        stat_lower = stat_variations[stat_lower]
+
+    if stat_lower in STATS_GLOSSARY:
+        info = STATS_GLOSSARY[stat_lower]
+        return jsonify({
+            'found': True,
+            'name': stat_lower.replace('_', ' ').title(),
+            'abbrev': info.get('abbrev', ''),
+            'definition': info['definition'],
+            'good_number': info.get('good_number', ''),
+            'analogies': {
+                'soccer': info.get('soccer', ''),
+                'nba': info.get('nba', ''),
+                'nfl': info.get('nfl', ''),
+                'mlb': info.get('mlb', '')
+            }
+        })
+
+    # Try fuzzy match
+    from difflib import SequenceMatcher
+    best_match = None
+    best_score = 0
+
+    for name in STATS_GLOSSARY.keys():
+        score = SequenceMatcher(None, stat_lower, name).ratio()
+        if score > best_score:
+            best_score = score
+            best_match = name
+
+    if best_match and best_score > 0.5:
+        info = STATS_GLOSSARY[best_match]
+        return jsonify({
+            'found': True,
+            'name': best_match.replace('_', ' ').title(),
+            'abbrev': info.get('abbrev', ''),
+            'definition': info['definition'],
+            'good_number': info.get('good_number', ''),
+            'analogies': {
+                'soccer': info.get('soccer', ''),
+                'nba': info.get('nba', ''),
+                'nfl': info.get('nfl', ''),
+                'mlb': info.get('mlb', '')
+            }
+        })
+
+    return jsonify({
+        'found': False,
+        'error': f"Stat '{stat}' not found",
+        'available_stats': [name.replace('_', ' ').title() for name in STATS_GLOSSARY.keys()]
+    })
+
+# =============================================================================
+# HOCKEY DICTIONARY ROUTES
+# =============================================================================
+
+@app.route('/api/dictionary')
+def get_dictionary():
+    """Get all dictionary terms grouped by category"""
+    by_category = {}
+
+    for term, info in HOCKEY_DICTIONARY.items():
+        category = info.get('category', 'general')
+        if category not in by_category:
+            by_category[category] = []
+        by_category[category].append({
+            'term': term.replace('_', ' ').title(),
+            'short_def': info['definition'][:80] + '...' if len(info['definition']) > 80 else info['definition']
+        })
+
+    # Sort terms within each category
+    for category in by_category:
+        by_category[category].sort(key=lambda x: x['term'])
+
+    return jsonify({
+        'categories': by_category,
+        'total_terms': len(HOCKEY_DICTIONARY)
+    })
+
+@app.route('/api/dictionary/<path:term>')
+def get_dictionary_term(term):
+    """Get definition for a specific term"""
+    term_lower = term.lower().strip().replace(' ', '_').replace('-', '_')
+
+    if term_lower in HOCKEY_DICTIONARY:
+        info = HOCKEY_DICTIONARY[term_lower]
+        has_analogies = 'soccer' in info
+
+        result = {
+            'found': True,
+            'term': term_lower.replace('_', ' ').title(),
+            'definition': info['definition'],
+            'category': info.get('category', 'general')
+        }
+
+        if has_analogies:
+            result['analogies'] = {
+                'soccer': info.get('soccer', {}),
+                'nba': info.get('nba', {}),
+                'nfl': info.get('nfl', {}),
+                'mlb': info.get('mlb', {})
+            }
+
+        return jsonify(result)
+
+    # Try fuzzy match
+    from difflib import SequenceMatcher
+    best_match = None
+    best_score = 0
+
+    for name in HOCKEY_DICTIONARY.keys():
+        score = SequenceMatcher(None, term_lower, name).ratio()
+        if score > best_score:
+            best_score = score
+            best_match = name
+
+    if best_match and best_score > 0.5:
+        info = HOCKEY_DICTIONARY[best_match]
+        has_analogies = 'soccer' in info
+
+        result = {
+            'found': True,
+            'term': best_match.replace('_', ' ').title(),
+            'definition': info['definition'],
+            'category': info.get('category', 'general')
+        }
+
+        if has_analogies:
+            result['analogies'] = {
+                'soccer': info.get('soccer', {}),
+                'nba': info.get('nba', {}),
+                'nfl': info.get('nfl', {}),
+                'mlb': info.get('mlb', {})
+            }
+
+        return jsonify(result)
+
+    return jsonify({
+        'found': False,
+        'error': f"Term '{term}' not found",
+        'suggestion': 'Try browsing by category at /api/dictionary'
     })
 
 def initialize_app():
