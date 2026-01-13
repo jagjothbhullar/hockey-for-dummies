@@ -1,0 +1,880 @@
+{
+  "last_updated": "2026-01-12 22:00",
+  "players": {
+    "8484801": {
+      "name": "Macklin Celebrini",
+      "position": "C",
+      "shot_speed": {
+        "value": 93.6,
+        "percentile": 96.0,
+        "league_avg": 82.9
+      },
+      "skating_speed": {
+        "value": 22.1,
+        "percentile": 50.6,
+        "league_avg": 22.0
+      },
+      "speed_bursts": {
+        "value": 117,
+        "percentile": 95.0,
+        "league_avg": 45.8
+      },
+      "distance_skated": {
+        "value": 159.9
+      },
+      "zone_time": {
+        "offensive": 44.4,
+        "offensive_percentile": 77.7,
+        "neutral": 18.1,
+        "defensive": 37.6
+      },
+      "shooting": {
+        "shots": 148,
+        "shots_percentile": 98.2,
+        "goals": 24,
+        "goals_percentile": 98.6,
+        "shooting_pct": 16.2
+      }
+    },
+    "8484994": {
+      "name": "Igor Chernyshov",
+      "position": "L",
+      "shot_speed": {
+        "value": 77.2,
+        "percentile": 13.2,
+        "league_avg": 82.9
+      },
+      "skating_speed": {
+        "value": 22.1,
+        "percentile": 49.5,
+        "league_avg": 22.0
+      },
+      "speed_bursts": {
+        "value": 34,
+        "percentile": 43.6,
+        "league_avg": 45.8
+      },
+      "distance_skated": {
+        "value": 31.5
+      },
+      "zone_time": {
+        "offensive": 43.1,
+        "offensive_percentile": 60.7,
+        "neutral": 19.5,
+        "defensive": 37.4
+      },
+      "shooting": {
+        "shots": 22,
+        "shots_percentile": 27.0,
+        "goals": 3,
+        "goals_percentile": 33.5,
+        "shooting_pct": 13.6
+      }
+    },
+    "8480848": {
+      "name": "Ty Dellandrea",
+      "position": "C",
+      "shot_speed": {
+        "value": 90.0,
+        "percentile": 88.3,
+        "league_avg": 82.9
+      },
+      "skating_speed": {
+        "value": 22.2,
+        "percentile": 56.2,
+        "league_avg": 22.0
+      },
+      "speed_bursts": {
+        "value": 81,
+        "percentile": 83.2,
+        "league_avg": 45.8
+      },
+      "distance_skated": {
+        "value": 94.9
+      },
+      "zone_time": {
+        "offensive": 35.1,
+        "offensive_percentile": 0.0,
+        "neutral": 16.3,
+        "defensive": 48.6
+      },
+      "shooting": {
+        "shots": 44,
+        "shots_percentile": 47.6,
+        "goals": 2,
+        "goals_percentile": 26.1,
+        "shooting_pct": 4.5
+      }
+    },
+    "8482667": {
+      "name": "William Eklund",
+      "position": "L",
+      "shot_speed": {
+        "value": 87.2,
+        "percentile": 72.0,
+        "league_avg": 82.9
+      },
+      "skating_speed": {
+        "value": 22.3,
+        "percentile": 58.5,
+        "league_avg": 22.0
+      },
+      "speed_bursts": {
+        "value": 57,
+        "percentile": 69.4,
+        "league_avg": 45.8
+      },
+      "distance_skated": {
+        "value": 129.2
+      },
+      "zone_time": {
+        "offensive": 46.4,
+        "offensive_percentile": 95.0,
+        "neutral": 17.2,
+        "defensive": 36.4
+      },
+      "shooting": {
+        "shots": 109,
+        "shots_percentile": 91.1,
+        "goals": 11,
+        "goals_percentile": 77.6,
+        "shooting_pct": 10.1
+      }
+    },
+    "8478874": {
+      "name": "Adam Gaudette",
+      "position": "R",
+      "shot_speed": {
+        "value": 84.8,
+        "percentile": 55.0,
+        "league_avg": 82.9
+      },
+      "skating_speed": {
+        "value": 22.0,
+        "percentile": 42.8,
+        "league_avg": 22.0
+      },
+      "speed_bursts": {
+        "value": 21,
+        "percentile": 32.2,
+        "league_avg": 45.8
+      },
+      "distance_skated": {
+        "value": 68.5
+      },
+      "zone_time": {
+        "offensive": 43.3,
+        "offensive_percentile": 63.1,
+        "neutral": 17.6,
+        "defensive": 39.2
+      },
+      "shooting": {
+        "shots": 58,
+        "shots_percentile": 59.2,
+        "goals": 10,
+        "goals_percentile": 73.2,
+        "shooting_pct": 17.2
+      }
+    },
+    "8476624": {
+      "name": "Barclay Goodrow",
+      "position": "C",
+      "shot_speed": {
+        "value": 78.8,
+        "percentile": 19.5,
+        "league_avg": 82.9
+      },
+      "skating_speed": {
+        "value": 22.2,
+        "percentile": 54.9,
+        "league_avg": 22.0
+      },
+      "speed_bursts": {
+        "value": 36,
+        "percentile": 46.9,
+        "league_avg": 45.8
+      },
+      "distance_skated": {
+        "value": 79.3
+      },
+      "zone_time": {
+        "offensive": 38.1,
+        "offensive_percentile": 10.3,
+        "neutral": 16.7,
+        "defensive": 45.2
+      },
+      "shooting": {
+        "shots": 39,
+        "shots_percentile": 42.8,
+        "goals": 3,
+        "goals_percentile": 33.5,
+        "shooting_pct": 7.7
+      }
+    },
+    "8484911": {
+      "name": "Collin Graf",
+      "position": "R",
+      "shot_speed": {
+        "value": 78.5,
+        "percentile": 17.7,
+        "league_avg": 82.9
+      },
+      "skating_speed": {
+        "value": 22.4,
+        "percentile": 62.3,
+        "league_avg": 22.0
+      },
+      "speed_bursts": {
+        "value": 67,
+        "percentile": 76.2,
+        "league_avg": 45.8
+      },
+      "distance_skated": {
+        "value": 109.4
+      },
+      "zone_time": {
+        "offensive": 36.7,
+        "offensive_percentile": 3.1,
+        "neutral": 17.2,
+        "defensive": 46.1
+      },
+      "shooting": {
+        "shots": 48,
+        "shots_percentile": 50.6,
+        "goals": 12,
+        "goals_percentile": 81.4,
+        "shooting_pct": 25.0
+      }
+    },
+    "8480798": {
+      "name": "Philipp Kurashev",
+      "position": "C",
+      "shot_speed": {
+        "value": 85.3,
+        "percentile": 59.0,
+        "league_avg": 82.9
+      },
+      "skating_speed": {
+        "value": 22.2,
+        "percentile": 54.0,
+        "league_avg": 22.0
+      },
+      "speed_bursts": {
+        "value": 41,
+        "percentile": 52.6,
+        "league_avg": 45.8
+      },
+      "distance_skated": {
+        "value": 82.9
+      },
+      "zone_time": {
+        "offensive": 41.0,
+        "offensive_percentile": 33.1,
+        "neutral": 17.7,
+        "defensive": 41.3
+      },
+      "shooting": {
+        "shots": 49,
+        "shots_percentile": 51.3,
+        "goals": 6,
+        "goals_percentile": 51.3,
+        "shooting_pct": 12.2
+      }
+    },
+    "8485402": {
+      "name": "Michael Misa",
+      "position": "C",
+      "shot_speed": {
+        "value": 76.8,
+        "percentile": 12.3,
+        "league_avg": 82.9
+      },
+      "skating_speed": {
+        "value": 21.9,
+        "percentile": 39.2,
+        "league_avg": 22.0
+      },
+      "speed_bursts": {
+        "value": 9,
+        "percentile": 18.1,
+        "league_avg": 45.8
+      },
+      "distance_skated": {
+        "value": 15.8
+      },
+      "zone_time": {
+        "offensive": 29.2,
+        "offensive_percentile": 0.0,
+        "neutral": 12.8,
+        "defensive": 58.0
+      },
+      "shooting": {
+        "shots": 13,
+        "shots_percentile": 20.0,
+        "goals": 1,
+        "goals_percentile": 15.7,
+        "shooting_pct": 7.7
+      }
+    },
+    "8482859": {
+      "name": "Zack Ostapchuk",
+      "position": "C",
+      "shot_speed": {
+        "value": 82.2,
+        "percentile": 35.4,
+        "league_avg": 82.9
+      },
+      "skating_speed": {
+        "value": 23.3,
+        "percentile": 94.1,
+        "league_avg": 22.0
+      },
+      "speed_bursts": {
+        "value": 52,
+        "percentile": 65.5,
+        "league_avg": 45.8
+      },
+      "distance_skated": {
+        "value": 37.3
+      },
+      "zone_time": {
+        "offensive": 41.2,
+        "offensive_percentile": 36.7,
+        "neutral": 17.8,
+        "defensive": 41.0
+      },
+      "shooting": {
+        "shots": 19,
+        "shots_percentile": 24.1,
+        "goals": 2,
+        "goals_percentile": 26.1,
+        "shooting_pct": 10.5
+      }
+    },
+    "8471817": {
+      "name": "Ryan Reaves",
+      "position": "R",
+      "shot_speed": {
+        "value": 78.3,
+        "percentile": 16.6,
+        "league_avg": 82.9
+      },
+      "skating_speed": {
+        "value": 21.5,
+        "percentile": 24.9,
+        "league_avg": 22.0
+      },
+      "speed_bursts": {
+        "value": 18,
+        "percentile": 28.6,
+        "league_avg": 45.8
+      },
+      "distance_skated": {
+        "value": 47.8
+      },
+      "zone_time": {
+        "offensive": 41.9,
+        "offensive_percentile": 46.0,
+        "neutral": 17.9,
+        "defensive": 40.2
+      },
+      "shooting": {
+        "shots": 21,
+        "shots_percentile": 26.3,
+        "goals": 3,
+        "goals_percentile": 33.5,
+        "shooting_pct": 14.3
+      }
+    },
+    "8483630": {
+      "name": "Pavol Regenda",
+      "position": "L",
+      "shot_speed": {
+        "value": 79.2,
+        "percentile": 20.4,
+        "league_avg": 82.9
+      },
+      "skating_speed": {
+        "value": 21.3,
+        "percentile": 18.8,
+        "league_avg": 22.0
+      },
+      "speed_bursts": {
+        "value": 14,
+        "percentile": 24.9,
+        "league_avg": 45.8
+      },
+      "distance_skated": {
+        "value": 16.7
+      },
+      "zone_time": {
+        "offensive": 43.0,
+        "offensive_percentile": 59.5,
+        "neutral": 17.7,
+        "defensive": 39.3
+      },
+      "shooting": {
+        "shots": 22,
+        "shots_percentile": 27.0,
+        "goals": 6,
+        "goals_percentile": 51.3,
+        "shooting_pct": 27.3
+      }
+    },
+    "8475784": {
+      "name": "Jeff Skinner",
+      "position": "L",
+      "shot_speed": {
+        "value": 86.3,
+        "percentile": 64.8,
+        "league_avg": 82.9
+      },
+      "skating_speed": {
+        "value": 22.0,
+        "percentile": 43.8,
+        "league_avg": 22.0
+      },
+      "speed_bursts": {
+        "value": 17,
+        "percentile": 27.4,
+        "league_avg": 45.8
+      },
+      "distance_skated": {
+        "value": 62.8
+      },
+      "zone_time": {
+        "offensive": 41.8,
+        "offensive_percentile": 45.1,
+        "neutral": 18.0,
+        "defensive": 40.2
+      },
+      "shooting": {
+        "shots": 56,
+        "shots_percentile": 57.8,
+        "goals": 6,
+        "goals_percentile": 51.3,
+        "shooting_pct": 10.7
+      }
+    },
+    "8484227": {
+      "name": "Will Smith",
+      "position": "C",
+      "shot_speed": {
+        "value": 90.3,
+        "percentile": 89.0,
+        "league_avg": 82.9
+      },
+      "skating_speed": {
+        "value": 22.1,
+        "percentile": 47.9,
+        "league_avg": 22.0
+      },
+      "speed_bursts": {
+        "value": 56,
+        "percentile": 67.8,
+        "league_avg": 45.8
+      },
+      "distance_skated": {
+        "value": 92.8
+      },
+      "zone_time": {
+        "offensive": 43.6,
+        "offensive_percentile": 68.3,
+        "neutral": 18.1,
+        "defensive": 38.4
+      },
+      "shooting": {
+        "shots": 80,
+        "shots_percentile": 76.4,
+        "goals": 12,
+        "goals_percentile": 81.4,
+        "shooting_pct": 15.0
+      }
+    },
+    "8475726": {
+      "name": "Tyler Toffoli",
+      "position": "C",
+      "shot_speed": {
+        "value": 89.2,
+        "percentile": 84.7,
+        "league_avg": 82.9
+      },
+      "skating_speed": {
+        "value": 21.1,
+        "percentile": 14.8,
+        "league_avg": 22.0
+      },
+      "speed_bursts": {
+        "value": 24,
+        "percentile": 34.4,
+        "league_avg": 45.8
+      },
+      "distance_skated": {
+        "value": 103.7
+      },
+      "zone_time": {
+        "offensive": 45.1,
+        "offensive_percentile": 85.9,
+        "neutral": 17.7,
+        "defensive": 37.1
+      },
+      "shooting": {
+        "shots": 108,
+        "shots_percentile": 90.9,
+        "goals": 13,
+        "goals_percentile": 84.3,
+        "shooting_pct": 12.0
+      }
+    },
+    "8477505": {
+      "name": "Alexander Wennberg",
+      "position": "C",
+      "shot_speed": {
+        "value": 82.0,
+        "percentile": 34.3,
+        "league_avg": 82.9
+      },
+      "skating_speed": {
+        "value": 23.1,
+        "percentile": 90.9,
+        "league_avg": 22.0
+      },
+      "speed_bursts": {
+        "value": 66,
+        "percentile": 75.3,
+        "league_avg": 45.8
+      },
+      "distance_skated": {
+        "value": 132.1
+      },
+      "zone_time": {
+        "offensive": 43.8,
+        "offensive_percentile": 71.7,
+        "neutral": 16.7,
+        "defensive": 39.5
+      },
+      "shooting": {
+        "shots": 55,
+        "shots_percentile": 56.5,
+        "goals": 10,
+        "goals_percentile": 73.2,
+        "shooting_pct": 18.2
+      }
+    },
+    "8479576": {
+      "name": "Vincent Desharnais",
+      "position": "D",
+      "shot_speed": {
+        "value": 80.7,
+        "percentile": 11.3,
+        "league_avg": 88.8
+      },
+      "skating_speed": {
+        "value": 22.2,
+        "percentile": 74.4,
+        "league_avg": 21.5
+      },
+      "speed_bursts": {
+        "value": 7,
+        "percentile": 30.5,
+        "league_avg": 19.8
+      },
+      "distance_skated": {
+        "value": 43.0
+      },
+      "zone_time": {
+        "offensive": 37.0,
+        "offensive_percentile": 0.0,
+        "neutral": 16.4,
+        "defensive": 46.6
+      },
+      "shooting": {
+        "shots": 12,
+        "shots_percentile": 22.8,
+        "goals": 0,
+        "goals_percentile": 0.0,
+        "shooting_pct": 0.0
+      }
+    },
+    "8484806": {
+      "name": "Sam Dickinson",
+      "position": "D",
+      "shot_speed": {
+        "value": 87.2,
+        "percentile": 32.4,
+        "league_avg": 88.8
+      },
+      "skating_speed": {
+        "value": 22.3,
+        "percentile": 80.0,
+        "league_avg": 21.5
+      },
+      "speed_bursts": {
+        "value": 30,
+        "percentile": 80.0,
+        "league_avg": 19.8
+      },
+      "distance_skated": {
+        "value": 80.1
+      },
+      "zone_time": {
+        "offensive": 40.6,
+        "offensive_percentile": 36.0,
+        "neutral": 18.8,
+        "defensive": 40.6
+      },
+      "shooting": {
+        "shots": 31,
+        "shots_percentile": 46.0,
+        "goals": 1,
+        "goals_percentile": 33.0,
+        "shooting_pct": 3.2
+      }
+    },
+    "8479983": {
+      "name": "Mario Ferraro",
+      "position": "D",
+      "shot_speed": {
+        "value": 95.3,
+        "percentile": 85.2,
+        "league_avg": 88.8
+      },
+      "skating_speed": {
+        "value": 21.4,
+        "percentile": 39.0,
+        "league_avg": 21.5
+      },
+      "speed_bursts": {
+        "value": 21,
+        "percentile": 63.9,
+        "league_avg": 19.8
+      },
+      "distance_skated": {
+        "value": 125.6
+      },
+      "zone_time": {
+        "offensive": 37.3,
+        "offensive_percentile": 1.3,
+        "neutral": 16.4,
+        "defensive": 46.3
+      },
+      "shooting": {
+        "shots": 51,
+        "shots_percentile": 70.5,
+        "goals": 3,
+        "goals_percentile": 65.6,
+        "shooting_pct": 5.9
+      }
+    },
+    "8482861": {
+      "name": "Vincent Iorio",
+      "position": "D",
+      "shot_speed": {
+        "value": 87.8,
+        "percentile": 35.9,
+        "league_avg": 88.8
+      },
+      "skating_speed": {
+        "value": 20.0,
+        "percentile": 6.3,
+        "league_avg": 21.5
+      },
+      "speed_bursts": {
+        "value": 1,
+        "percentile": 5.6,
+        "league_avg": 19.8
+      },
+      "distance_skated": {
+        "value": 46.4
+      },
+      "zone_time": {
+        "offensive": 41.4,
+        "offensive_percentile": 47.1,
+        "neutral": 17.2,
+        "defensive": 41.4
+      },
+      "shooting": {
+        "shots": 8,
+        "shots_percentile": 15.8,
+        "goals": 0,
+        "goals_percentile": 0.0,
+        "shooting_pct": 0.0
+      }
+    },
+    "8475906": {
+      "name": "John Klingberg",
+      "position": "D",
+      "shot_speed": {
+        "value": 92.8,
+        "percentile": 70.4,
+        "league_avg": 88.8
+      },
+      "skating_speed": {
+        "value": 20.7,
+        "percentile": 16.1,
+        "league_avg": 21.5
+      },
+      "speed_bursts": {
+        "value": 6,
+        "percentile": 26.3,
+        "league_avg": 19.8
+      },
+      "distance_skated": {
+        "value": 104.4
+      },
+      "zone_time": {
+        "offensive": 44.8,
+        "offensive_percentile": 88.0,
+        "neutral": 18.0,
+        "defensive": 37.2
+      },
+      "shooting": {
+        "shots": 49,
+        "shots_percentile": 68.4,
+        "goals": 9,
+        "goals_percentile": 96.1,
+        "shooting_pct": 18.4
+      }
+    },
+    "8475181": {
+      "name": "Nick Leddy",
+      "position": "D",
+      "shot_speed": {
+        "value": 84.3,
+        "percentile": 20.4,
+        "league_avg": 88.8
+      },
+      "skating_speed": {
+        "value": 21.7,
+        "percentile": 54.4,
+        "league_avg": 21.5
+      },
+      "speed_bursts": {
+        "value": 10,
+        "percentile": 39.0,
+        "league_avg": 19.8
+      },
+      "distance_skated": {
+        "value": 42.0
+      },
+      "zone_time": {
+        "offensive": 39.6,
+        "offensive_percentile": 19.1,
+        "neutral": 18.1,
+        "defensive": 42.2
+      },
+      "shooting": {
+        "shots": 6,
+        "shots_percentile": 14.0,
+        "goals": 0,
+        "goals_percentile": 0.0,
+        "shooting_pct": 0.0
+      }
+    },
+    "8480043": {
+      "name": "Timothy Liljegren",
+      "position": "D",
+      "shot_speed": {
+        "value": 90.3,
+        "percentile": 54.6,
+        "league_avg": 88.8
+      },
+      "skating_speed": {
+        "value": 21.9,
+        "percentile": 64.9,
+        "league_avg": 21.5
+      },
+      "speed_bursts": {
+        "value": 35,
+        "percentile": 85.6,
+        "league_avg": 19.8
+      },
+      "distance_skated": {
+        "value": 91.3
+      },
+      "zone_time": {
+        "offensive": 38.1,
+        "offensive_percentile": 5.8,
+        "neutral": 17.7,
+        "defensive": 44.2
+      },
+      "shooting": {
+        "shots": 20,
+        "shots_percentile": 33.7,
+        "goals": 0,
+        "goals_percentile": 0.0,
+        "shooting_pct": 0.0
+      }
+    },
+    "8482166": {
+      "name": "Shakir Mukhamadullin",
+      "position": "D",
+      "shot_speed": {
+        "value": 87.6,
+        "percentile": 34.9,
+        "league_avg": 88.8
+      },
+      "skating_speed": {
+        "value": 21.0,
+        "percentile": 25.6,
+        "league_avg": 21.5
+      },
+      "speed_bursts": {
+        "value": 12,
+        "percentile": 44.2,
+        "league_avg": 19.8
+      },
+      "distance_skated": {
+        "value": 54.5
+      },
+      "zone_time": {
+        "offensive": 39.8,
+        "offensive_percentile": 23.1,
+        "neutral": 17.4,
+        "defensive": 42.8
+      },
+      "shooting": {
+        "shots": 18,
+        "shots_percentile": 31.2,
+        "goals": 2,
+        "goals_percentile": 51.9,
+        "shooting_pct": 11.1
+      }
+    },
+    "8475200": {
+      "name": "Dmitry Orlov",
+      "position": "D",
+      "shot_speed": {
+        "value": 88.0,
+        "percentile": 36.6,
+        "league_avg": 88.8
+      },
+      "skating_speed": {
+        "value": 21.2,
+        "percentile": 31.9,
+        "league_avg": 21.5
+      },
+      "speed_bursts": {
+        "value": 9,
+        "percentile": 36.5,
+        "league_avg": 19.8
+      },
+      "distance_skated": {
+        "value": 134.0
+      },
+      "zone_time": {
+        "offensive": 43.5,
+        "offensive_percentile": 79.1,
+        "neutral": 17.8,
+        "defensive": 38.7
+      },
+      "shooting": {
+        "shots": 46,
+        "shots_percentile": 63.9,
+        "goals": 1,
+        "goals_percentile": 33.0,
+        "shooting_pct": 2.2
+      }
+    }
+  }
+}

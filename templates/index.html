@@ -1373,6 +1373,87 @@
                     }
                 }
 
+                // Build EDGE stats HTML (NHL tracking data)
+                let edgeHtml = '';
+                if (data.edge) {
+                    const e = data.edge;
+
+                    // Helper to get percentile color
+                    const pctColor = (pct) => {
+                        if (pct >= 90) return '#00ff87';
+                        if (pct >= 70) return '#00d4ff';
+                        if (pct >= 50) return '#7eb8da';
+                        return '#ff6b6b';
+                    };
+
+                    // Helper to get percentile label
+                    const pctLabel = (pct) => {
+                        if (pct >= 95) return 'Elite';
+                        if (pct >= 80) return 'Excellent';
+                        if (pct >= 60) return 'Above Avg';
+                        if (pct >= 40) return 'Average';
+                        return 'Below Avg';
+                    };
+
+                    let edgeStats = [];
+
+                    if (e.shot_speed) {
+                        edgeStats.push(`
+                            <div style="text-align:center;">
+                                <div style="font-size:1.4rem;font-weight:bold;color:${pctColor(e.shot_speed.percentile)};">${e.shot_speed.value}</div>
+                                <div style="font-size:0.7rem;color:#7eb8da;">Shot Speed (mph)</div>
+                                <div style="font-size:0.65rem;color:${pctColor(e.shot_speed.percentile)};">${pctLabel(e.shot_speed.percentile)} (${Math.round(e.shot_speed.percentile)}%)</div>
+                            </div>
+                        `);
+                    }
+
+                    if (e.skating_speed) {
+                        edgeStats.push(`
+                            <div style="text-align:center;">
+                                <div style="font-size:1.4rem;font-weight:bold;color:${pctColor(e.skating_speed.percentile)};">${e.skating_speed.value}</div>
+                                <div style="font-size:0.7rem;color:#7eb8da;">Top Speed (mph)</div>
+                                <div style="font-size:0.65rem;color:${pctColor(e.skating_speed.percentile)};">${pctLabel(e.skating_speed.percentile)} (${Math.round(e.skating_speed.percentile)}%)</div>
+                            </div>
+                        `);
+                    }
+
+                    if (e.speed_bursts) {
+                        edgeStats.push(`
+                            <div style="text-align:center;">
+                                <div style="font-size:1.4rem;font-weight:bold;color:${pctColor(e.speed_bursts.percentile)};">${e.speed_bursts.value}</div>
+                                <div style="font-size:0.7rem;color:#7eb8da;">Speed Bursts</div>
+                                <div style="font-size:0.65rem;color:${pctColor(e.speed_bursts.percentile)};">${pctLabel(e.speed_bursts.percentile)} (${Math.round(e.speed_bursts.percentile)}%)</div>
+                            </div>
+                        `);
+                    }
+
+                    if (edgeStats.length > 0) {
+                        edgeHtml = `
+                            <div style="background:linear-gradient(135deg,rgba(255,107,107,0.15),rgba(255,107,107,0.05));border:1px solid rgba(255,107,107,0.3);border-radius:12px;padding:15px;margin-bottom:15px;">
+                                <h4 style="color:#ff6b6b;font-size:0.8rem;margin-bottom:12px;">⚡ NHL EDGE TRACKING</h4>
+                                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+                                    ${edgeStats.join('')}
+                                </div>
+                                ${e.zone_time ? `
+                                    <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,107,107,0.2);">
+                                        <div style="font-size:0.7rem;color:#7eb8da;margin-bottom:6px;">Zone Time Distribution</div>
+                                        <div style="display:flex;height:8px;border-radius:4px;overflow:hidden;">
+                                            <div style="width:${e.zone_time.offensive}%;background:#00ff87;" title="Offensive ${e.zone_time.offensive}%"></div>
+                                            <div style="width:${e.zone_time.neutral}%;background:#7eb8da;" title="Neutral ${e.zone_time.neutral}%"></div>
+                                            <div style="width:${e.zone_time.defensive}%;background:#ff6b6b;" title="Defensive ${e.zone_time.defensive}%"></div>
+                                        </div>
+                                        <div style="display:flex;justify-content:space-between;font-size:0.6rem;color:#7eb8da;margin-top:4px;">
+                                            <span>Off ${e.zone_time.offensive}%</span>
+                                            <span>Neu ${e.zone_time.neutral}%</span>
+                                            <span>Def ${e.zone_time.defensive}%</span>
+                                        </div>
+                                    </div>
+                                ` : ''}
+                            </div>
+                        `;
+                    }
+                }
+
                 // Headshot
                 const headshotHtml = data.headshot
                     ? `<img src="${data.headshot}" alt="${data.name}" style="width:80px;height:80px;border-radius:12px;object-fit:cover;flex-shrink:0;" onerror="this.style.display='none'">`
@@ -1405,6 +1486,7 @@
 
                     ${statsHtml}
                     ${careerHtml}
+                    ${edgeHtml}
 
                     ${data.draft ? `<p style="color:#c0d6e8;font-size:0.85rem;margin-bottom:10px;">🎯 <strong>Draft:</strong> ${data.draft}</p>` : ''}
 

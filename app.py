@@ -18,6 +18,28 @@ NHL_API_BASE = "https://api-web.nhle.com/v1"
 # Path to cached roster file
 import os
 ROSTER_FILE = os.path.join(os.path.dirname(__file__), 'nhl_rosters.json')
+EDGE_DATA_FILE = os.path.join(os.path.dirname(__file__), 'sharks_edge_data.json')
+
+# =============================================================================
+# NHL EDGE DATA - Load from JSON file for instant stats
+# =============================================================================
+
+SHARKS_EDGE_DATA = {}
+
+def load_edge_data():
+    """Load EDGE data from JSON file"""
+    global SHARKS_EDGE_DATA
+    try:
+        import json
+        with open(EDGE_DATA_FILE, 'r') as f:
+            data = json.load(f)
+            SHARKS_EDGE_DATA = data.get('players', {})
+            print(f"Loaded EDGE data for {len(SHARKS_EDGE_DATA)} players")
+    except Exception as e:
+        print(f"Could not load EDGE data: {e}")
+
+# Load EDGE data on startup
+load_edge_data()
 
 # =============================================================================
 # NHL ROSTER CACHE - Load from JSON file for instant startup
@@ -4064,6 +4086,11 @@ def get_shark_player(player):
             response['play_style'] = ''
             response['fun_fact'] = ''
             response['comparisons'] = {}
+
+        # Add EDGE data if available
+        player_id_str = str(matched_player['id'])
+        if player_id_str in SHARKS_EDGE_DATA:
+            response['edge'] = SHARKS_EDGE_DATA[player_id_str]
 
         return jsonify(response)
 
