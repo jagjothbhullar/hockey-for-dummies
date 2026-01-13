@@ -3287,7 +3287,7 @@ def fetch_player_details(player_id):
     return None
 
 def search_nhl_player(query):
-    """Search for an NHL player using the cached roster data"""
+    """Search for an NHL player using the cached roster data - prioritizes full name matches"""
     global NHL_ROSTER_CACHE, NHL_ROSTER_LOADED
 
     # Load cache if not already loaded
@@ -3295,27 +3295,46 @@ def search_nhl_player(query):
         load_all_nhl_rosters()
 
     query = query.lower().strip()
-    matches = []
+    query_parts = query.split()
+    scored_matches = []
 
-    # Search the cache - much faster than 32 API calls!
+    # Search the cache with scoring system
     for player in NHL_ROSTER_CACHE:
         player_name = player.get('name', '').lower()
         first_name = player.get('first_name', '').lower()
         last_name = player.get('last_name', '').lower()
+        score = 0
 
-        # Check various matching strategies
-        if query in player_name:
-            matches.append(player)
-        elif query == last_name:  # Exact last name match
-            matches.append(player)
-        elif query == first_name:  # Exact first name match
-            matches.append(player)
-        elif similarity_score(query, player_name) > 0.7:
-            matches.append(player)
-        elif similarity_score(query, last_name) > 0.8:
-            matches.append(player)
+        # Exact full name match - highest priority
+        if query == player_name:
+            score = 100
+        # Query has multiple words (likely first + last name)
+        elif len(query_parts) >= 2:
+            # Check if both parts match
+            first_match = query_parts[0] in first_name or first_name.startswith(query_parts[0])
+            last_match = query_parts[-1] in last_name or last_name.startswith(query_parts[-1])
+            if first_match and last_match:
+                score = 95
+            elif query in player_name:
+                score = 90
+        # Single word query - require exact last name or very close match
+        elif len(query_parts) == 1:
+            if query == last_name:  # Exact last name match
+                score = 85
+            elif query == first_name and len(query) >= 4:  # Exact first name (4+ chars)
+                score = 50  # Lower priority - might be many matches
+            elif similarity_score(query, last_name) > 0.9:  # Very close last name
+                score = 75
+            elif similarity_score(query, player_name) > 0.85:  # Very close full name
+                score = 70
+            # Don't match partial first names to avoid "connor" matching many players
 
-    return matches
+        if score > 0:
+            scored_matches.append((score, player))
+
+    # Sort by score descending and return players
+    scored_matches.sort(key=lambda x: (-x[0], x[1].get('name', '')))
+    return [m[1] for m in scored_matches]
 
 def determine_player_archetype(player_info):
     """Determine the best archetype for a player based on their stats and position"""
