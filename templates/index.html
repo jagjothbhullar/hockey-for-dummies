@@ -1036,11 +1036,11 @@
         }
 
         /* Haptic feedback animation for clickable items */
-        .term-chip, .stat-card {
+        .term-chip, .stat-card, .roster-player {
             transition: all 0.15s ease;
         }
 
-        .term-chip:active, .stat-card:active {
+        .term-chip:active, .stat-card:active, .roster-player:active {
             transform: scale(0.95);
         }
 
@@ -1048,9 +1048,19 @@
             animation: hapticPulse 0.3s ease;
         }
 
+        .roster-player.clicked {
+            animation: hapticPulseShark 0.3s ease;
+        }
+
         @keyframes hapticPulse {
             0% { transform: scale(1); }
             50% { transform: scale(0.92); background: rgba(0, 212, 255, 0.4); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes hapticPulseShark {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.92); background: rgba(0, 109, 117, 0.6); }
             100% { transform: scale(1); }
         }
 
@@ -1261,7 +1271,7 @@
                         : `<div class="roster-number">#${player.number}</div>`;
 
                     html += `
-                        <div class="roster-player" onclick="loadSharkPlayer('${player.name.toLowerCase()}')">
+                        <div class="roster-player" onclick="loadSharkPlayer('${player.name.toLowerCase()}', this)">
                             ${headshotHtml}
                             <div class="roster-name">${player.name}</div>
                             <div class="roster-position">#${player.number} | ${player.position}</div>
@@ -1277,16 +1287,18 @@
             }
         }
 
-        async function loadSharkPlayer(playerName) {
-            resultContainer.classList.add('show');
-            resultContainer.innerHTML = '<div class="loading"><div class="loading-puck"></div><p>Loading player stats...</p></div>';
+        async function loadSharkPlayer(playerName, clickedElement) {
+            // Add haptic feedback
+            if (clickedElement) {
+                clickedElement.classList.add('clicked');
+                setTimeout(() => clickedElement.classList.remove('clicked'), 300);
+            }
 
             try {
                 const response = await fetch(`/api/sharks/${encodeURIComponent(playerName)}`);
                 const data = await response.json();
 
                 if (!data.found) {
-                    resultContainer.innerHTML = '<div class="error-message">Player not found</div>';
                     return;
                 }
 
@@ -1301,7 +1313,7 @@
                         const comp = data.comparisons[sport];
                         if (comp && comp.player) {
                             comparisonsHtml += `
-                                <div class="comparison-card">
+                                <div class="comparison-card" style="margin-bottom:10px;">
                                     <div class="comparison-header">
                                         <span class="comparison-sport-icon">${sportIcons[sport]}</span>
                                         <div class="comparison-player">
@@ -1322,28 +1334,28 @@
                     const s = data.stats;
                     if (data.position === 'Goalie') {
                         statsHtml = `
-                            <div class="shark-section" style="background:rgba(0,212,255,0.1);">
-                                <h4>📊 2024-25 Season Stats</h4>
-                                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:15px;text-align:center;margin-top:10px;">
-                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.games}</div><div style="font-size:0.75rem;color:#7eb8da;">Games</div></div>
-                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.wins}-${s.losses}</div><div style="font-size:0.75rem;color:#7eb8da;">W-L</div></div>
-                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.gaa}</div><div style="font-size:0.75rem;color:#7eb8da;">GAA</div></div>
-                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.save_pct}%</div><div style="font-size:0.75rem;color:#7eb8da;">SV%</div></div>
-                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.shutouts}</div><div style="font-size:0.75rem;color:#7eb8da;">SO</div></div>
+                            <div style="background:rgba(0,109,117,0.2);border-radius:12px;padding:15px;margin-bottom:15px;">
+                                <h4 style="color:#00d4ff;font-size:0.8rem;margin-bottom:10px;">📊 2024-25 SEASON</h4>
+                                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;">
+                                    <div><div style="font-size:1.3rem;color:#00d4ff;font-weight:bold;">${s.games}</div><div style="font-size:0.7rem;color:#7eb8da;">GP</div></div>
+                                    <div><div style="font-size:1.3rem;color:#00d4ff;font-weight:bold;">${s.wins}-${s.losses}</div><div style="font-size:0.7rem;color:#7eb8da;">W-L</div></div>
+                                    <div><div style="font-size:1.3rem;color:#00d4ff;font-weight:bold;">${s.gaa}</div><div style="font-size:0.7rem;color:#7eb8da;">GAA</div></div>
+                                    <div><div style="font-size:1.3rem;color:#00d4ff;font-weight:bold;">${s.save_pct}%</div><div style="font-size:0.7rem;color:#7eb8da;">SV%</div></div>
+                                    <div><div style="font-size:1.3rem;color:#00d4ff;font-weight:bold;">${s.shutouts}</div><div style="font-size:0.7rem;color:#7eb8da;">SO</div></div>
                                 </div>
                             </div>
                         `;
                     } else {
                         statsHtml = `
-                            <div class="shark-section" style="background:rgba(0,212,255,0.1);">
-                                <h4>📊 2024-25 Season Stats</h4>
-                                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:15px;text-align:center;margin-top:10px;">
-                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.games}</div><div style="font-size:0.75rem;color:#7eb8da;">Games</div></div>
-                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.goals}</div><div style="font-size:0.75rem;color:#7eb8da;">Goals</div></div>
-                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.assists}</div><div style="font-size:0.75rem;color:#7eb8da;">Assists</div></div>
-                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.points}</div><div style="font-size:0.75rem;color:#7eb8da;">Points</div></div>
-                                    <div><div style="font-size:1.5rem;color:${s.plus_minus >= 0 ? '#00ff87' : '#ff6b6b'};font-weight:bold;">${s.plus_minus >= 0 ? '+' : ''}${s.plus_minus}</div><div style="font-size:0.75rem;color:#7eb8da;">+/-</div></div>
-                                    <div><div style="font-size:1.5rem;color:#00d4ff;font-weight:bold;">${s.pim}</div><div style="font-size:0.75rem;color:#7eb8da;">PIM</div></div>
+                            <div style="background:rgba(0,109,117,0.2);border-radius:12px;padding:15px;margin-bottom:15px;">
+                                <h4 style="color:#00d4ff;font-size:0.8rem;margin-bottom:10px;">📊 2024-25 SEASON</h4>
+                                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;">
+                                    <div><div style="font-size:1.3rem;color:#00d4ff;font-weight:bold;">${s.games}</div><div style="font-size:0.7rem;color:#7eb8da;">GP</div></div>
+                                    <div><div style="font-size:1.3rem;color:#00d4ff;font-weight:bold;">${s.goals}</div><div style="font-size:0.7rem;color:#7eb8da;">G</div></div>
+                                    <div><div style="font-size:1.3rem;color:#00d4ff;font-weight:bold;">${s.assists}</div><div style="font-size:0.7rem;color:#7eb8da;">A</div></div>
+                                    <div><div style="font-size:1.3rem;color:#00d4ff;font-weight:bold;">${s.points}</div><div style="font-size:0.7rem;color:#7eb8da;">PTS</div></div>
+                                    <div><div style="font-size:1.3rem;color:${s.plus_minus >= 0 ? '#00ff87' : '#ff6b6b'};font-weight:bold;">${s.plus_minus >= 0 ? '+' : ''}${s.plus_minus}</div><div style="font-size:0.7rem;color:#7eb8da;">+/-</div></div>
+                                    <div><div style="font-size:1.3rem;color:#00d4ff;font-weight:bold;">${s.pim}</div><div style="font-size:0.7rem;color:#7eb8da;">PIM</div></div>
                                 </div>
                             </div>
                         `;
@@ -1355,99 +1367,78 @@
                 if (data.career_stats) {
                     const c = data.career_stats;
                     if (data.position === 'Goalie') {
-                        careerHtml = `
-                            <div class="shark-section" style="background:rgba(255,255,255,0.05);">
-                                <h4>📈 Career Stats</h4>
-                                <p style="font-size:0.9rem;">${c.games} GP | ${c.wins} W | ${c.gaa} GAA | ${c.save_pct}% SV%</p>
-                            </div>
-                        `;
+                        careerHtml = `<p style="color:#7eb8da;font-size:0.85rem;margin-bottom:15px;">📈 Career: ${c.games} GP | ${c.wins} W | ${c.gaa} GAA | ${c.save_pct}% SV%</p>`;
                     } else {
-                        careerHtml = `
-                            <div class="shark-section" style="background:rgba(255,255,255,0.05);">
-                                <h4>📈 Career Stats</h4>
-                                <p style="font-size:0.9rem;">${c.games} GP | ${c.goals} G | ${c.assists} A | ${c.points} PTS</p>
-                            </div>
-                        `;
+                        careerHtml = `<p style="color:#7eb8da;font-size:0.85rem;margin-bottom:15px;">📈 Career: ${c.games} GP | ${c.goals} G | ${c.assists} A | ${c.points} PTS</p>`;
                     }
                 }
 
-                // Headshot or jersey number
-                const headerVisual = data.headshot
-                    ? `<img src="${data.headshot}" alt="${data.name}" style="width:100px;height:100px;border-radius:15px;object-fit:cover;" onerror="this.outerHTML='<div class=\\'shark-jersey\\'>${data.number}</div>'">`
-                    : `<div class="shark-jersey">${data.number}</div>`;
+                // Headshot
+                const headshotHtml = data.headshot
+                    ? `<img src="${data.headshot}" alt="${data.name}" style="width:80px;height:80px;border-radius:12px;object-fit:cover;flex-shrink:0;" onerror="this.style.display='none'">`
+                    : '';
 
                 // Bio info
                 const bioInfo = [];
                 if (data.age) bioInfo.push(`Age ${data.age}`);
                 if (data.height) bioInfo.push(data.height);
                 if (data.weight) bioInfo.push(data.weight);
-                if (data.shoots) bioInfo.push(`Shoots ${data.shoots}`);
 
                 const birthplace = data.birthplace || data.from || '';
 
-                resultContainer.innerHTML = `
-                    <button class="back-btn" onclick="backToRoster()">← Back to Roster</button>
-                    <div class="shark-detail">
-                        <div class="shark-detail-header">
-                            ${headerVisual}
-                            <div class="shark-info">
-                                <h2>#${data.number} ${data.name}</h2>
-                                <div class="shark-tags">
-                                    <span class="shark-tag">${data.position}</span>
-                                    ${bioInfo.map(b => `<span class="shark-tag">${b}</span>`).join('')}
-                                    <span class="shark-tag shark-role-badge">${data.role || 'Roster Player'}</span>
-                                </div>
-                                ${birthplace ? `<p style="color:#7eb8da;font-size:0.85rem;margin-top:8px;">📍 ${birthplace}</p>` : ''}
+                showFlashcard(`
+                    <div style="display:flex;gap:15px;align-items:flex-start;margin-bottom:15px;">
+                        ${headshotHtml}
+                        <div>
+                            <h2 style="color:#006d75;margin:0;">#${data.number} ${data.name}</h2>
+                            <div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">
+                                <span style="background:rgba(0,109,117,0.3);padding:3px 10px;border-radius:10px;font-size:0.8rem;color:#00d4ff;">${data.position}</span>
+                                ${bioInfo.map(b => `<span style="background:rgba(255,255,255,0.1);padding:3px 10px;border-radius:10px;font-size:0.8rem;color:#7eb8da;">${b}</span>`).join('')}
                             </div>
+                            ${birthplace ? `<p style="color:#7eb8da;font-size:0.8rem;margin-top:6px;">📍 ${birthplace}</p>` : ''}
                         </div>
-
-                        ${statsHtml}
-                        ${careerHtml}
-
-                        ${data.draft ? `
-                            <div class="shark-section">
-                                <h4>🎯 Draft</h4>
-                                <p>${data.draft}</p>
-                            </div>
-                        ` : ''}
-
-                        ${data.role_description ? `
-                            <div class="shark-section">
-                                <h4>🦈 Role on the Team</h4>
-                                <p>${data.role_description}</p>
-                            </div>
-                        ` : ''}
-
-                        ${data.play_style ? `
-                            <div class="shark-section">
-                                <h4>🏒 Playing Style</h4>
-                                <p>${data.play_style}</p>
-                            </div>
-                        ` : ''}
-
-                        ${comparisonsHtml ? `
-                            <h3 style="color:#7eb8da;margin:20px 0 15px;font-size:0.9rem;text-transform:uppercase;letter-spacing:1px;">
-                                Player Comparisons
-                            </h3>
-                            ${comparisonsHtml}
-                        ` : ''}
-
-                        ${data.fun_fact ? `
-                            <div class="fun-fact">
-                                <span class="fun-fact-icon">💡</span>
-                                <span class="fun-fact-text">${data.fun_fact}</span>
-                            </div>
-                        ` : ''}
                     </div>
-                `;
-            } catch (error) {
-                resultContainer.innerHTML = '<div class="error-message">Failed to load player</div>';
-            }
-        }
 
-        function backToRoster() {
-            resultContainer.classList.remove('show');
-            resultContainer.innerHTML = '';
+                    <div style="background:linear-gradient(135deg,rgba(0,109,117,0.3),rgba(0,109,117,0.1));padding:8px 15px;border-radius:10px;margin-bottom:15px;">
+                        <span style="color:#fff;font-weight:bold;">${data.role || 'Roster Player'}</span>
+                    </div>
+
+                    ${statsHtml}
+                    ${careerHtml}
+
+                    ${data.draft ? `<p style="color:#c0d6e8;font-size:0.85rem;margin-bottom:10px;">🎯 <strong>Draft:</strong> ${data.draft}</p>` : ''}
+
+                    ${data.role_description ? `
+                        <div class="flashcard-section">
+                            <h4>Role on Team</h4>
+                            <p>${data.role_description}</p>
+                        </div>
+                    ` : ''}
+
+                    ${data.play_style ? `
+                        <div class="flashcard-section">
+                            <h4>Playing Style</h4>
+                            <p>${data.play_style}</p>
+                        </div>
+                    ` : ''}
+
+                    ${comparisonsHtml ? `
+                        <div class="flashcard-section">
+                            <h4>Player Comparisons</h4>
+                            ${comparisonsHtml}
+                        </div>
+                    ` : ''}
+
+                    ${data.fun_fact ? `
+                        <div class="fun-fact" style="margin-top:15px;">
+                            <span class="fun-fact-icon">💡</span>
+                            <span class="fun-fact-text">${data.fun_fact}</span>
+                        </div>
+                    ` : ''}
+                `);
+            } catch (error) {
+                console.error('Failed to load player', error);
+            }
         }
 
         // ==================== INTERACTIVE RINK ====================
