@@ -4155,6 +4155,97 @@ def get_shark_player(player):
         'error': f"Player '{player}' not found in Sharks roster"
     })
 
+@app.route('/api/sharks/schedule')
+def get_sharks_schedule():
+    """Get upcoming Sharks games from NHL API"""
+    from datetime import datetime, timedelta
+
+    try:
+        # Get current month and next month schedules
+        today = datetime.now()
+        current_month = today.strftime('%Y-%m')
+        next_month = (today.replace(day=1) + timedelta(days=32)).strftime('%Y-%m')
+
+        all_games = []
+
+        for month in [current_month, next_month]:
+            url = f"https://api-web.nhle.com/v1/club-schedule/SJS/month/{month}"
+            resp = requests.get(url, timeout=10)
+            if resp.status_code == 200:
+                data = resp.json()
+                all_games.extend(data.get('games', []))
+
+        # Filter to upcoming games only and format
+        upcoming = []
+        today_str = today.strftime('%Y-%m-%d')
+
+        for game in all_games:
+            game_date = game.get('gameDate', '')
+            if game_date >= today_str:
+                # Determine if home or away
+                home_team = game.get('homeTeam', {})
+                away_team = game.get('awayTeam', {})
+                is_home = home_team.get('commonName', {}).get('default', '') == 'Sharks'
+
+                opponent = away_team if is_home else home_team
+                opponent_name = opponent.get('commonName', {}).get('default', '')
+                opponent_abbrev = opponent.get('abbrev', '')
+
+                # Get team logo
+                opponent_logo = f"https://assets.nhle.com/logos/nhl/svg/{opponent_abbrev}_dark.svg"
+
+                # Parse time
+                start_utc = game.get('startTimeUTC', '')
+                try:
+                    game_dt = datetime.strptime(start_utc, '%Y-%m-%dT%H:%M:%SZ')
+                    # Convert to PT (Sharks home timezone) - rough conversion
+                    game_dt_pt = game_dt - timedelta(hours=8)
+                    time_str = game_dt_pt.strftime('%I:%M %p').lstrip('0')
+                except:
+                    time_str = 'TBD'
+
+                # Format date nicely
+                try:
+                    date_obj = datetime.strptime(game_date, '%Y-%m-%d')
+                    date_formatted = date_obj.strftime('%a, %b %d')
+                except:
+                    date_formatted = game_date
+
+                # TV broadcast
+                broadcasts = game.get('tvBroadcasts', [])
+                tv = ', '.join([b.get('network', '') for b in broadcasts[:2]]) if broadcasts else ''
+
+                upcoming.append({
+                    'date': game_date,
+                    'date_formatted': date_formatted,
+                    'time': time_str,
+                    'opponent': opponent_name,
+                    'opponent_abbrev': opponent_abbrev,
+                    'opponent_logo': opponent_logo,
+                    'is_home': is_home,
+                    'venue': game.get('venue', {}).get('default', ''),
+                    'tv': tv,
+                    'game_state': game.get('gameState', '')
+                })
+
+        # Sort by date and limit to next 15 games
+        upcoming.sort(key=lambda x: x['date'])
+        upcoming = upcoming[:15]
+
+        return jsonify({
+            'team': 'San Jose Sharks',
+            'games': upcoming,
+            'count': len(upcoming)
+        })
+
+    except Exception as e:
+        print(f"Error fetching schedule: {e}")
+        return jsonify({
+            'team': 'San Jose Sharks',
+            'games': [],
+            'error': str(e)
+        })
+
 # =============================================================================
 # STATS GLOSSARY ROUTES
 # =============================================================================

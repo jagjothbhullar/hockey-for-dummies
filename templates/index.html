@@ -1030,6 +1030,129 @@
             border-radius: 3px;
         }
 
+        /* Schedule Styles */
+        .schedule-container {
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .schedule-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .schedule-game {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: rgba(0, 109, 117, 0.15);
+            border-radius: 12px;
+            border-left: 4px solid #006d75;
+            transition: all 0.2s;
+        }
+
+        .schedule-game:hover {
+            background: rgba(0, 109, 117, 0.25);
+            transform: translateX(5px);
+        }
+
+        .schedule-game.away {
+            border-left-color: #3a6ea5;
+            background: rgba(58, 110, 165, 0.15);
+        }
+
+        .schedule-game.away:hover {
+            background: rgba(58, 110, 165, 0.25);
+        }
+
+        .schedule-date {
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .schedule-day {
+            font-weight: bold;
+            color: #00d4ff;
+            font-size: 0.95rem;
+        }
+
+        .schedule-time {
+            font-size: 0.8rem;
+            color: #7eb8da;
+        }
+
+        .schedule-matchup {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+        }
+
+        .schedule-logo {
+            width: 40px;
+            height: 40px;
+            object-fit: contain;
+        }
+
+        .schedule-details {
+            flex: 1;
+        }
+
+        .schedule-opponent {
+            color: #fff;
+            font-size: 1rem;
+        }
+
+        .schedule-venue {
+            color: #7eb8da;
+            font-size: 0.8rem;
+        }
+
+        .schedule-info {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .schedule-home-away {
+            padding: 3px 10px;
+            border-radius: 10px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .schedule-home-away.home {
+            background: rgba(0, 109, 117, 0.5);
+            color: #00ff87;
+        }
+
+        .schedule-home-away.away {
+            background: rgba(58, 110, 165, 0.5);
+            color: #7eb8da;
+        }
+
+        .schedule-tv {
+            font-size: 0.75rem;
+            color: #7eb8da;
+        }
+
+        @media (max-width: 600px) {
+            .schedule-game {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+            .schedule-date {
+                min-width: unset;
+            }
+            .schedule-info {
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        }
+
         /* Flashcard Modal Styles */
         .flashcard-overlay {
             position: fixed;
@@ -1189,6 +1312,10 @@
                 <button class="browse-btn" data-tab="dictionary">
                     <span class="browse-icon">📖</span>
                     <span class="browse-label">Hockey Dictionary</span>
+                </button>
+                <button class="browse-btn sharks" data-tab="schedule">
+                    <span class="browse-icon">📅</span>
+                    <span class="browse-label">Sharks Schedule</span>
                 </button>
             </div>
 
@@ -1361,6 +1488,8 @@
                 loadStatsGlossary();
             } else if (currentTab === 'dictionary') {
                 loadDictionary();
+            } else if (currentTab === 'schedule') {
+                loadSchedule();
             }
         }
 
@@ -2090,6 +2219,72 @@
                 `);
             } catch (error) {
                 console.error('Failed to load term', error);
+            }
+        }
+
+        // ==================== SHARKS SCHEDULE ====================
+        async function loadSchedule() {
+            browseSection.innerHTML = `
+                <div class="result-card">
+                    <h2 style="color:#006d75;margin-bottom:5px;">📅 Sharks Schedule</h2>
+                    <p style="color:#7eb8da;margin-bottom:20px;">Upcoming San Jose Sharks games</p>
+                    <div style="text-align:center;padding:30px;color:#7eb8da;">Loading schedule...</div>
+                </div>
+            `;
+
+            try {
+                const response = await fetch('/api/sharks/schedule');
+                const data = await response.json();
+
+                if (data.games.length === 0) {
+                    browseSection.innerHTML = `
+                        <div class="result-card">
+                            <h2 style="color:#006d75;margin-bottom:5px;">📅 Sharks Schedule</h2>
+                            <p style="color:#7eb8da;">No upcoming games found</p>
+                        </div>
+                    `;
+                    return;
+                }
+
+                let gamesHtml = data.games.map(game => `
+                    <div class="schedule-game ${game.is_home ? 'home' : 'away'}">
+                        <div class="schedule-date">
+                            <div class="schedule-day">${game.date_formatted}</div>
+                            <div class="schedule-time">${game.time} PT</div>
+                        </div>
+                        <div class="schedule-matchup">
+                            <img src="${game.opponent_logo}" alt="${game.opponent}" class="schedule-logo" onerror="this.style.display='none'">
+                            <div class="schedule-details">
+                                <div class="schedule-opponent">
+                                    ${game.is_home ? 'vs' : '@'} <strong>${game.opponent}</strong>
+                                </div>
+                                <div class="schedule-venue">${game.venue}</div>
+                            </div>
+                        </div>
+                        <div class="schedule-info">
+                            <span class="schedule-home-away ${game.is_home ? 'home' : 'away'}">${game.is_home ? 'HOME' : 'AWAY'}</span>
+                            ${game.tv ? `<span class="schedule-tv">📺 ${game.tv}</span>` : ''}
+                        </div>
+                    </div>
+                `).join('');
+
+                browseSection.innerHTML = `
+                    <div class="result-card schedule-container">
+                        <h2 style="color:#006d75;margin-bottom:5px;">📅 Sharks Schedule</h2>
+                        <p style="color:#7eb8da;margin-bottom:20px;">Next ${data.count} games</p>
+                        <div class="schedule-list">
+                            ${gamesHtml}
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                console.error('Failed to load schedule', error);
+                browseSection.innerHTML = `
+                    <div class="result-card">
+                        <h2 style="color:#006d75;">📅 Sharks Schedule</h2>
+                        <p style="color:#ff6b6b;">Failed to load schedule. Please try again.</p>
+                    </div>
+                `;
             }
         }
 
