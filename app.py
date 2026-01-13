@@ -1876,5 +1876,15 @@ def search_nhl_api(query):
         'players': [{'name': m['name'], 'team': m['team'], 'position': m['position']} for m in matches[:10]]
     })
 
+def initialize_app():
+    """Pre-load NHL rosters at startup so searches are instant"""
+    print("Initializing Hockey For Dummies...")
+    load_all_nhl_rosters()
+    print("Ready to go!")
+
+# Load rosters when app starts (happens during deployment on Render)
+with app.app_context():
+    initialize_app()
+
 if __name__ == '__main__':
     app.run(debug=True, port=5051)
