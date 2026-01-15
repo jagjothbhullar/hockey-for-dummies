@@ -235,6 +235,7 @@
             flex-wrap: wrap;
             gap: 8px;
             margin-bottom: 20px;
+            justify-content: flex-start;
         }
 
         /* Main content area */
@@ -258,27 +259,27 @@
             overflow: hidden;
         }
 
-        /* Blue line accent on left */
+        /* Blue line accent on bottom for horizontal tabs */
         .browse-btn::before {
             content: '';
             position: absolute;
             left: 0;
-            top: 0;
+            right: 0;
             bottom: 0;
-            width: 3px;
+            height: 3px;
             background: #0066cc;
-            transform: scaleY(0);
+            transform: scaleX(0);
             transition: transform 0.3s ease;
         }
 
         .browse-btn:hover {
             background: rgba(0, 109, 117, 0.3);
             border-color: rgba(0, 180, 190, 0.6);
-            transform: translateX(5px);
+            transform: translateY(-2px);
         }
 
         .browse-btn:hover::before {
-            transform: scaleY(1);
+            transform: scaleX(1);
         }
 
         .browse-btn.active {
@@ -289,7 +290,7 @@
         }
 
         .browse-btn.active::before {
-            transform: scaleY(1);
+            transform: scaleX(1);
             background: #00b4be;
         }
 
