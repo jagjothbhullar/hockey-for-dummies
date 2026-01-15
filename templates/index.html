@@ -1663,8 +1663,8 @@
             <!-- Left sidebar with browse buttons -->
             <div class="browse-sidebar">
                 <button class="browse-btn home active" data-tab="dictionary">
-                    <span class="browse-icon">🏠</span>
-                    <span class="browse-label">Home</span>
+                    <span class="browse-icon">🎴</span>
+                    <span class="browse-label">Hockey Flash Cards</span>
                 </button>
                 <button class="browse-btn" data-tab="players">
                     <span class="browse-icon">🏒</span>
@@ -1866,12 +1866,12 @@
                             <div class="category-section" data-category="${category}">
                                 <div class="category-header">
                                     <span class="category-icon">${categoryIcons[category] || '🏒'}</span>
-                                    <span class="category-title">${category.replace(/_/g, ' ')}</span>
+                                    <span class="category-title">${formatCategory(category)}</span>
                                     <span style="color:#5a7a9a;font-size:0.85rem;">(${data.categories[category].length})</span>
                                 </div>
                                 <div class="terms-grid">
                                     ${data.categories[category].map(t =>
-                                        `<span class="term-chip" onclick="searchTerm('${t.term}')">${t.term}</span>`
+                                        `<span class="term-chip" onclick="loadTermDetail('${t.term.toLowerCase().replace(/ /g, '_')}', this)">${t.term}</span>`
                                     ).join('')}
                                 </div>
                             </div>
@@ -1886,11 +1886,11 @@
                             <div class="category-section" data-category="${category}">
                                 <div class="category-header">
                                     <span class="category-icon">${categoryIcons[category] || '🏒'}</span>
-                                    <span class="category-title">${category.replace(/_/g, ' ')}</span>
+                                    <span class="category-title">${formatCategory(category)}</span>
                                 </div>
                                 <div class="terms-grid">
                                     ${data.categories[category].map(t =>
-                                        `<span class="term-chip" onclick="searchTerm('${t.term}')">${t.term}</span>`
+                                        `<span class="term-chip" onclick="loadTermDetail('${t.term.toLowerCase().replace(/ /g, '_')}', this)">${t.term}</span>`
                                     ).join('')}
                                 </div>
                             </div>
@@ -1904,6 +1904,13 @@
                 console.error('Failed to load dictionary terms', error);
                 quickPicksContainer.innerHTML = '<div style="color:#ff6b6b;">Failed to load terms</div>';
             }
+        }
+
+        // Format category name: "first_line" -> "First Line"
+        function formatCategory(category) {
+            return category
+                .replace(/_/g, ' ')
+                .replace(/\b\w/g, char => char.toUpperCase());
         }
 
         function searchTerm(term) {
@@ -2544,7 +2551,7 @@
                         <div class="category-section" data-category="${category}">
                             <div class="category-header">
                                 <span class="category-icon">${categoryIcons[category] || '🏒'}</span>
-                                <span class="category-title">${category.replace(/_/g, ' ')}</span>
+                                <span class="category-title">${formatCategory(category)}</span>
                                 <span style="color:#5a7a9a;font-size:0.85rem;">(${data.categories[category].length})</span>
                             </div>
                             <div class="terms-grid">
@@ -2564,7 +2571,7 @@
                         <div class="category-section" data-category="${category}">
                             <div class="category-header">
                                 <span class="category-icon">${categoryIcons[category] || '🏒'}</span>
-                                <span class="category-title">${category.replace(/_/g, ' ')}</span>
+                                <span class="category-title">${formatCategory(category)}</span>
                             </div>
                             <div class="terms-grid">
                                 ${data.categories[category].map(t =>
@@ -2637,7 +2644,7 @@
                 }
 
                 showFlashcard(`
-                    <h2>📖 ${data.term}<span class="term-category-badge">${data.category.replace(/_/g, ' ')}</span></h2>
+                    <h2>📖 ${data.term}<span class="term-category-badge">${formatCategory(data.category)}</span></h2>
 
                     <div class="flashcard-section">
                         <h4>Definition</h4>
