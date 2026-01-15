@@ -1999,6 +1999,481 @@ HOCKEY_CONCEPTS = {
             "key_difference": "MLB brawls clear benches and cause chaos. Hockey fights are 1-on-1 with referees watching."
         },
         "diagram": "fighting.svg"
+    },
+
+    "slap shot": {
+        "definition": "The hardest shot in hockey where the player winds up and strikes the puck with maximum force. Can reach speeds over 100 mph.",
+        "category": "shots",
+        "soccer": {
+            "analogy": "Powerful Free Kick",
+            "explanation": "Like when a player winds up for a powerful free kick from distance - maximum power, dramatic windup, crowd holds their breath.",
+            "key_difference": "Soccer balls max out around 80 mph. Hockey pucks can exceed 100 mph."
+        },
+        "nba": {
+            "analogy": "Tomahawk Dunk",
+            "explanation": "The most powerful, emphatic move in the sport. When someone winds up for a slap shot, it's like watching someone load up for a poster dunk.",
+            "key_difference": "Dunks are close range. Slap shots can score from far away with sheer power."
+        },
+        "nfl": {
+            "analogy": "Hail Mary Bomb",
+            "explanation": "Maximum effort, maximum distance, dramatic windup. The slap shot is hockey's version of airing it out.",
+            "key_difference": "Hail Marys are desperation. Slap shots from the point are a normal offensive strategy."
+        },
+        "mlb": {
+            "analogy": "Full-Count Power Swing",
+            "explanation": "Loading up and swinging for the fences. The slap shot is hockey's home run swing - all power, high risk, high reward.",
+            "key_difference": "Batters swing at moving pitches. Hockey players hit a stationary puck with a huge windup."
+        }
+    },
+
+    "breakaway": {
+        "definition": "When an offensive player gets behind all defenders and has a clear path to the goalie one-on-one. A prime scoring chance.",
+        "category": "gameplay",
+        "soccer": {
+            "analogy": "Through Ball Behind Defense",
+            "explanation": "Like when a striker gets played through on goal with just the keeper to beat. Heart-stopping for both teams.",
+            "key_difference": "Soccer keepers can come out far. Hockey goalies mostly stay in their crease."
+        },
+        "nba": {
+            "analogy": "Fast Break Dunk",
+            "explanation": "Wide open lane to the basket with no one between you and the rim. Pure speed and finishing ability on display.",
+            "key_difference": "Basketball breakaways are near-guaranteed. Hockey breakaways convert maybe 30-35% of the time."
+        },
+        "nfl": {
+            "analogy": "Receiver Beats Coverage Deep",
+            "explanation": "Like when a receiver gets behind the secondary with no safety help - if the pass is accurate, it's likely a touchdown.",
+            "key_difference": "NFL needs a perfect pass. Hockey player controls the puck themselves."
+        },
+        "mlb": {
+            "analogy": "Runner on Third, Shallow Fly Ball",
+            "explanation": "A situation where the defense is helpless - if executed right, you're going to score.",
+            "key_difference": "Baseball requires waiting for the catch. Hockey is pure individual skill vs. goalie."
+        }
+    },
+
+    "one timer": {
+        "definition": "Shooting the puck immediately off a pass without stopping it first. Requires perfect timing between passer and shooter.",
+        "category": "shots",
+        "soccer": {
+            "analogy": "First-Time Volley",
+            "explanation": "Like hitting a cross first-time without trapping it. The ball comes in, you redirect it goalward in one motion. Pure technique.",
+            "key_difference": "Soccer volleys are rare and difficult. Hockey one-timers are a standard offensive weapon."
+        },
+        "nba": {
+            "analogy": "Catch-and-Shoot Three",
+            "explanation": "Receiving the pass and immediately launching - no dribble, no hesitation. All about rhythm and timing with your teammate.",
+            "key_difference": "Basketball shooters are stationary. Hockey one-timers often happen while moving."
+        },
+        "nfl": {
+            "analogy": "Quick Slant in Rhythm",
+            "explanation": "Like a receiver catching a slant and immediately turning upfield - the timing between QB and receiver has to be perfect.",
+            "key_difference": "NFL is catch then run. Hockey is catch and shoot simultaneously."
+        },
+        "mlb": {
+            "analogy": "Hitting on the First Pitch",
+            "explanation": "Jumping on the first offering with full commitment. No time to think - pure reaction and preparation.",
+            "key_difference": "Batters react to pitches. Hockey players know exactly when the pass is coming."
+        }
+    },
+
+    "deke": {
+        "definition": "A fake or feint move to deceive a goalie or defender. Short for 'decoy.'",
+        "category": "skills",
+        "soccer": {
+            "analogy": "Stepover or Body Feint",
+            "explanation": "Like a winger doing stepovers to freeze a defender. Shoulder drops, head fakes, anything to make them commit the wrong way.",
+            "key_difference": "Soccer dekes beat field players. Hockey dekes are often goalie-specific."
+        },
+        "nba": {
+            "analogy": "Crossover or Pump Fake",
+            "explanation": "Any move designed to get the defender leaning the wrong way. Iverson's crossover, Jordan's pump fake - hockey has its own library of moves.",
+            "key_difference": "Basketball dekes create space. Hockey dekes create shooting lanes."
+        },
+        "nfl": {
+            "analogy": "Juke Move",
+            "explanation": "Like a running back making a defender miss in the open field. Quick movements to freeze the opponent.",
+            "key_difference": "NFL jukes avoid tackles. Hockey dekes create scoring chances."
+        },
+        "mlb": {
+            "analogy": "Pitcher's Pickoff Move",
+            "explanation": "Freezing the runner with deceptive movement. Making them commit to the wrong read.",
+            "key_difference": "Baseball dekes are defensive. Hockey dekes are offensive weapons."
+        }
+    },
+
+    "center": {
+        "definition": "The middle forward position. Takes faceoffs, plays both offense and defense, and is often the primary playmaker.",
+        "category": "positions",
+        "soccer": {
+            "analogy": "Central Midfielder (Box-to-Box)",
+            "explanation": "Works both ends of the ice like a box-to-box midfielder. Takes draws (like winning aerial duels), creates offense, and tracks back defensively.",
+            "key_difference": "Hockey centers take faceoffs - a unique skill with no soccer equivalent."
+        },
+        "nba": {
+            "analogy": "Point Guard",
+            "explanation": "The primary playmaker who controls tempo and distributes the puck. Often the smartest player on the ice, like a floor general.",
+            "key_difference": "Hockey centers also need to be strong at faceoffs - like if point guards had jump balls every possession."
+        },
+        "nfl": {
+            "analogy": "Quarterback (of the forwards)",
+            "explanation": "The forward who thinks the game and makes plays happen. Commands the offensive zone like a QB reads defenses.",
+            "key_difference": "Centers play both ways and take faceoffs. QBs only play offense."
+        },
+        "mlb": {
+            "analogy": "Catcher",
+            "explanation": "Involved in every play, sees the whole ice, and often directs teammates. A thinking position that requires hockey IQ.",
+            "key_difference": "Centers are offensive stars. Catchers are primarily defensive."
+        }
+    },
+
+    "winger": {
+        "definition": "Forwards who play on the left or right side. Often either snipers (pure goal scorers) or grinders (physical, forechecking players).",
+        "category": "positions",
+        "soccer": {
+            "analogy": "Winger/Wide Forward",
+            "explanation": "Exact same concept! Plays on the flanks, stretches the defense, and looks to cut inside or cross (pass) to teammates.",
+            "key_difference": "Hockey wingers can be physical 'power forwards' - less common in soccer."
+        },
+        "nba": {
+            "analogy": "Shooting Guard or Small Forward",
+            "explanation": "The wing scorers. Left wingers are like left-handed shooters who play to their strong side for one-timers.",
+            "key_difference": "Hockey wingers are defined by which side they play. NBA wings are more fluid."
+        },
+        "nfl": {
+            "analogy": "Wide Receiver",
+            "explanation": "The guys on the outside looking to make big plays. Some are speedsters (snipers), others are physical possession receivers (grinders).",
+            "key_difference": "Hockey wingers play defense too. WRs are offense-only."
+        },
+        "mlb": {
+            "analogy": "Corner Outfielders",
+            "explanation": "Playing the flanks, covering lots of ground on their side. Left fielder = left winger, right fielder = right winger.",
+            "key_difference": "Baseball outfielders are defensive. Hockey wingers are primarily offensive."
+        }
+    },
+
+    "defenseman": {
+        "definition": "Players who primarily defend their own zone but also start the offense. Usually two defensemen play together as a 'pairing.'",
+        "category": "positions",
+        "soccer": {
+            "analogy": "Center Back",
+            "explanation": "The last line of defense before the goalkeeper. Modern defensemen push up to join attacks, like ball-playing CBs.",
+            "key_difference": "Hockey D-men take slap shots from the blue line - imagine center backs being primary shooters!"
+        },
+        "nba": {
+            "analogy": "Power Forward/Center",
+            "explanation": "Protects the paint (crease), boxes out for rebounds (clears rebounds), and can start the fast break with outlets.",
+            "key_difference": "Hockey defensemen regularly lead offensive rushes and take point shots."
+        },
+        "nfl": {
+            "analogy": "Linebacker + Offensive Lineman",
+            "explanation": "Defends against the rush AND helps spring the offense. A hybrid role that requires both skills.",
+            "key_difference": "Hockey D-men literally join the attack. NFL defenders don't score touchdowns (usually)."
+        },
+        "mlb": {
+            "analogy": "Shortstop/Second Baseman",
+            "explanation": "Up the middle defense, turning double plays (quick transitions), with some offensive contribution.",
+            "key_difference": "Hockey defensemen often lead the rush. Middle infielders rarely drive in runs."
+        }
+    },
+
+    "goaltender": {
+        "definition": "The last line of defense. Wears special equipment and uses a different stick. The only player who can freeze the puck.",
+        "category": "positions",
+        "soccer": {
+            "analogy": "Goalkeeper",
+            "explanation": "Almost identical! Guards the net, only player with special privileges (can use hands/freeze puck), wears different gear.",
+            "key_difference": "Hockey goalies face way more shots - 25-40 per game vs soccer's 3-5 on target."
+        },
+        "nba": {
+            "analogy": "Rim Protector",
+            "explanation": "The last line of defense protecting the most valuable real estate. A great goalie, like a great rim protector, changes everything.",
+            "key_difference": "Goalies can single-handedly win games. NBA rim protectors need help."
+        },
+        "nfl": {
+            "analogy": "Shutdown Corner + Safety Combined",
+            "explanation": "The most important defensive player. A great goalie can steal games like a shutdown corner picks off a game-winning pass.",
+            "key_difference": "Goalies face every offensive play. NFL DBs can be avoided."
+        },
+        "mlb": {
+            "analogy": "Ace Pitcher",
+            "explanation": "The one player who can dominate a game single-handedly. A hot goalie is like a pitcher throwing a no-hitter.",
+            "key_difference": "Pitchers are offense. Goalies are defense. But both control game outcomes."
+        }
+    },
+
+    "hooking": {
+        "definition": "A penalty for using your stick to impede an opponent. Like tripping, but with the stick blade against the body.",
+        "category": "penalties",
+        "soccer": {
+            "analogy": "Shirt Pulling/Holding",
+            "explanation": "Like grabbing a jersey to slow someone down. Using your stick to hook someone is the hockey equivalent of a tactical foul.",
+            "key_difference": "Soccer holding might just be a foul. Hockey hooking is always a 2-minute penalty."
+        },
+        "nba": {
+            "analogy": "Reaching Foul",
+            "explanation": "Like reaching in and grabbing a ball-handler's arm. Impeding progress with an illegal physical action.",
+            "key_difference": "NBA fouls add up to foul out. Hockey penalties are immediate 2-minute power plays."
+        },
+        "nfl": {
+            "analogy": "Holding (Defensive)",
+            "explanation": "Grabbing a receiver who's trying to get open. Using an illegal technique to prevent separation.",
+            "key_difference": "NFL holding is 5 yards and replay down. Hockey hooking is 2 minutes a man down."
+        },
+        "mlb": {
+            "analogy": "Catcher Interference",
+            "explanation": "Impeding the batter with illegal contact. Using equipment (the stick) to unfairly affect the play.",
+            "key_difference": "Baseball interference is rare. Hooking calls happen multiple times per game."
+        }
+    },
+
+    "tripping": {
+        "definition": "A penalty for using your stick, body, or skate to knock an opponent's feet out from under them.",
+        "category": "penalties",
+        "soccer": {
+            "analogy": "Tripping Foul",
+            "explanation": "Exact same thing! Taking out someone's legs with a clumsy or intentional challenge.",
+            "key_difference": "Soccer trips can be yellow or red cards. Hockey trips are always 2 minutes."
+        },
+        "nba": {
+            "analogy": "Flagrant Foul (Leg Contact)",
+            "explanation": "Taking out someone's legs is dangerous in any sport. The NHL penalizes it to protect players skating at high speed.",
+            "key_difference": "NBA leg trips are rare and flagrant. Hockey trips happen more often due to sticks."
+        },
+        "nfl": {
+            "analogy": "Chop Block/Low Hit",
+            "explanation": "Going for the legs is illegal and dangerous. The tripping call protects players from dangerous low contact.",
+            "key_difference": "NFL low hits are 15 yards. Hockey trips are 2-minute penalties."
+        },
+        "mlb": {
+            "analogy": "Blocking the Plate (Illegal)",
+            "explanation": "Impeding a runner illegally. The rules protect players from dangerous contact.",
+            "key_difference": "Baseball rarely has tripping. Hockey players trip frequently with sticks."
+        }
+    },
+
+    "high sticking": {
+        "definition": "A penalty for hitting an opponent with your stick above shoulder height. Can be a double-minor if it draws blood.",
+        "category": "penalties",
+        "soccer": {
+            "analogy": "High Boot/Dangerous Play",
+            "explanation": "Like raising your foot dangerously high near an opponent's head. It's about protecting players from elevated contact.",
+            "key_difference": "Soccer high boots are usually just fouls. Hockey high sticks that draw blood are 4 minutes."
+        },
+        "nba": {
+            "analogy": "Flagrant Elbow",
+            "explanation": "Contact above the shoulders is always extra dangerous. Like throwing an elbow at head level.",
+            "key_difference": "NBA elbows can be ejections. Hockey high sticks are 2 or 4 minute penalties."
+        },
+        "nfl": {
+            "analogy": "Helmet-to-Helmet Hit",
+            "explanation": "Contact to the head area is taken very seriously. High sticking protects players from facial/head injuries.",
+            "key_difference": "NFL head contact can be 15 yards + ejection. Hockey is 2-4 minutes."
+        },
+        "mlb": {
+            "analogy": "Bat Slip Near Fielder",
+            "explanation": "Dangerous situations with equipment near someone's head. The rules protect against serious injury.",
+            "key_difference": "Baseball bat slips are accidents. Hockey high sticks can be intentional."
+        }
+    },
+
+    "interference": {
+        "definition": "A penalty for impeding an opponent who doesn't have the puck. You can only hit the puck carrier.",
+        "category": "penalties",
+        "soccer": {
+            "analogy": "Obstruction Off the Ball",
+            "explanation": "Like blocking a runner's path when they're making an off-ball run. You can't impede someone without the puck/ball.",
+            "key_difference": "Soccer obstruction is rarely called. Hockey interference is strictly enforced."
+        },
+        "nba": {
+            "analogy": "Moving Screen",
+            "explanation": "Like an illegal screen where you hit someone who doesn't have the ball. You can't just take out players away from the action.",
+            "key_difference": "NBA screens are sometimes borderline. Hockey interference is clear-cut - no puck, no hit."
+        },
+        "nfl": {
+            "analogy": "Pass Interference",
+            "explanation": "Impeding a player's ability to make a play when they don't have the ball yet. Protecting off-ball players.",
+            "key_difference": "NFL PI involves potential receivers. Hockey interference can be anywhere on the ice."
+        },
+        "mlb": {
+            "analogy": "Runner Interference",
+            "explanation": "Getting in the way of a fielder trying to make a play. You can't impede someone just because you want to.",
+            "key_difference": "Baseball interference is rare. Hockey interference happens frequently."
+        }
+    },
+
+    "shutout": {
+        "definition": "When a goalie doesn't allow any goals in a game. A badge of honor for goaltenders.",
+        "category": "achievements",
+        "soccer": {
+            "analogy": "Clean Sheet",
+            "explanation": "Exact same concept! A goalkeeper keeping a clean sheet is celebrated just like a hockey shutout.",
+            "key_difference": "Soccer clean sheets happen more often (lower scoring). Hockey shutouts are rarer and more impressive."
+        },
+        "nba": {
+            "analogy": "Holding Team Under 80",
+            "explanation": "There's no true equivalent, but a dominant defensive performance that suffocates the opponent. Like holding a team to their lowest score.",
+            "key_difference": "NBA teams always score. Hockey goalies can literally allow zero."
+        },
+        "nfl": {
+            "analogy": "Defensive Shutout",
+            "explanation": "When a defense holds the opponent scoreless. A rare and celebrated achievement.",
+            "key_difference": "NFL shutouts involve the whole defense. Hockey shutouts are primarily the goalie's achievement."
+        },
+        "mlb": {
+            "analogy": "Complete Game Shutout",
+            "explanation": "A pitcher going all 9 innings without allowing a run. Individual dominance that decides the game.",
+            "key_difference": "Pitchers do this alone. Goalies have a team in front of them but still get sole credit."
+        }
+    },
+
+    "first line": {
+        "definition": "A team's best forward line - usually the top center and two best wingers. They get the most ice time and play crucial moments.",
+        "category": "team",
+        "soccer": {
+            "analogy": "Starting XI Front Three",
+            "explanation": "Your best attacking players who start and play the most minutes. The guys you expect to score goals.",
+            "key_difference": "Soccer players play the whole game. Hockey lines rotate every 45-60 seconds."
+        },
+        "nba": {
+            "analogy": "Starting Backcourt + Star Forward",
+            "explanation": "Your three best perimeter players who close games. The guys who get the ball when you need a bucket.",
+            "key_difference": "NBA stars play 35+ minutes. Hockey first-liners play 18-22 minutes in short shifts."
+        },
+        "nfl": {
+            "analogy": "Starting Offense Skill Players",
+            "explanation": "Your QB, RB1, and WR1 - the guys who touch the ball the most and make the biggest plays.",
+            "key_difference": "NHL first lines play both ends of the ice. NFL is one-way."
+        },
+        "mlb": {
+            "analogy": "Top of the Order (1-3)",
+            "explanation": "Your best hitters who bat first and get the most at-bats. Expected to drive the offense.",
+            "key_difference": "Batting order is fixed. Hockey lines can be shuffled mid-game."
+        }
+    },
+
+    "fourth line": {
+        "definition": "A team's checking line - physical players focused on defense, energy, and wearing down opponents. Less skilled but crucial role players.",
+        "category": "team",
+        "soccer": {
+            "analogy": "Defensive Midfielders/Rotation Players",
+            "explanation": "The guys who do the dirty work - win tackles, break up plays, let the stars shine. Unsung heroes.",
+            "key_difference": "Soccer subs have limited roles. Hockey fourth lines play every game."
+        },
+        "nba": {
+            "analogy": "Bench Energy Guys",
+            "explanation": "The hustle players who play hard-nosed defense, set screens, and bring energy. Not the scorers, but essential.",
+            "key_difference": "NBA bench guys play sporadic minutes. Fourth lines get regular shifts."
+        },
+        "nfl": {
+            "analogy": "Special Teams Aces",
+            "explanation": "The guys who thrive on effort plays - kickoff coverage, gunners. Physical, tough, maybe limited skill but huge heart.",
+            "key_difference": "NFL special teamers are specialists. Fourth liners play regular hockey shifts."
+        },
+        "mlb": {
+            "analogy": "Bottom of the Order (7-9)",
+            "explanation": "Less offense expected, but they contribute defense and occasional clutch moments. Every team needs them.",
+            "key_difference": "Baseball's bottom batters are just weaker. Hockey fourth lines have a specific physical role."
+        }
+    },
+
+    "forecheck": {
+        "definition": "Pressuring the opponent in their defensive zone to force turnovers and create offense. Aggressive puck pursuit.",
+        "category": "gameplay",
+        "soccer": {
+            "analogy": "High Press",
+            "explanation": "Like Klopp's Liverpool or Guardiola's press - pressuring the opponent high up the pitch to win the ball back quickly.",
+            "key_difference": "Hockey forechecking involves physical contact. Soccer pressing is about positioning."
+        },
+        "nba": {
+            "analogy": "Full Court Press",
+            "explanation": "Not letting the opponent bring the ball up easily. Getting in their face and forcing mistakes in the backcourt.",
+            "key_difference": "Basketball press is rare. Hockey forechecking is constant."
+        },
+        "nfl": {
+            "analogy": "Blitzing",
+            "explanation": "Sending pressure to disrupt the play before it develops. Attacking instead of sitting back.",
+            "key_difference": "NFL blitzes are occasional. Hockey teams forecheck on almost every play."
+        },
+        "mlb": {
+            "analogy": "Infield In",
+            "explanation": "Playing aggressively positioned to cut off runs. Taking risks to apply pressure.",
+            "key_difference": "Baseball positioning is static. Hockey forechecking is active pursuit."
+        }
+    },
+
+    "backcheck": {
+        "definition": "Forwards skating back quickly to help on defense after losing the puck. Work ethic and defensive responsibility.",
+        "category": "gameplay",
+        "soccer": {
+            "analogy": "Tracking Back",
+            "explanation": "Like when wingers sprint back to help their fullback. Defensive responsibility from attacking players.",
+            "key_difference": "Soccer tracking back is expected. Hockey backchecking separates good players from great ones."
+        },
+        "nba": {
+            "analogy": "Getting Back in Transition",
+            "explanation": "Sprinting back to stop the fast break instead of complaining about a call. Hustle over ego.",
+            "key_difference": "NBA transition D is team-wide. Hockey backchecking is individual effort."
+        },
+        "nfl": {
+            "analogy": "QB Chasing Down Interception",
+            "explanation": "Like when a QB hustles to make a tackle after a turnover. Going the extra mile when the play goes against you.",
+            "key_difference": "NFL pursuit is rare for offensive players. Hockey requires it constantly."
+        },
+        "mlb": {
+            "analogy": "Pitcher Covering First",
+            "explanation": "Doing the hustle play that's not your primary job. Effort and awareness beyond your main role.",
+            "key_difference": "Baseball covering first is occasional. Hockey backchecking is every shift."
+        }
+    },
+
+    "slot": {
+        "definition": "The high-danger scoring area directly in front of the net. Goals from the slot have the highest conversion rate.",
+        "category": "rink",
+        "soccer": {
+            "analogy": "The Box/Penalty Area",
+            "explanation": "The prime scoring zone where most goals are scored. Getting the ball into this area is the primary offensive goal.",
+            "key_difference": "Soccer's box is for fouls too. The hockey slot is purely about shooting lanes."
+        },
+        "nba": {
+            "analogy": "The Paint/Key",
+            "explanation": "The high-percentage scoring area close to the basket. Teams fight to get shots from this zone.",
+            "key_difference": "Basketball paint shots are contested. Hockey slot shots are often screened one-timers."
+        },
+        "nfl": {
+            "analogy": "Red Zone",
+            "explanation": "The area where scoring chances are highest. Offensive efficiency in the slot/red zone wins games.",
+            "key_difference": "NFL red zone is about territory. Hockey slot is about shot quality."
+        },
+        "mlb": {
+            "analogy": "Middle-Middle Pitch Location",
+            "explanation": "The spot hitters crush. Pitchers avoid the middle of the zone like goalies protect the slot.",
+            "key_difference": "Baseball is pitcher vs batter. Hockey slot is about getting open looks."
+        }
+    },
+
+    "penalty shot": {
+        "definition": "A free shot on goal with no defenders, awarded for certain infractions (like being fouled on a breakaway). Just the shooter vs the goalie.",
+        "category": "rules",
+        "soccer": {
+            "analogy": "Penalty Kick",
+            "explanation": "Almost identical! A free shot from a designated spot with just the keeper to beat. High pressure, high drama.",
+            "key_difference": "Soccer PKs are from a spot. Hockey penalty shots are taken in motion, skating toward the goal."
+        },
+        "nba": {
+            "analogy": "Technical Free Throw",
+            "explanation": "A free shot awarded for an infraction, but with much higher stakes and pressure. One shot, it counts.",
+            "key_difference": "Free throws happen constantly. Penalty shots are rare and dramatic."
+        },
+        "nfl": {
+            "analogy": "Untimed Down from the 1",
+            "explanation": "A free play to try to score. The defense committed a penalty, now you get an uncontested chance.",
+            "key_difference": "NFL still has the line to beat. Hockey is one player vs one goalie."
+        },
+        "mlb": {
+            "analogy": "Intentional Walk Leading to Score",
+            "explanation": "A situation created by the opposing team's infraction that gives you a prime scoring opportunity.",
+            "key_difference": "Baseball walks aren't exciting. Penalty shots are peak drama."
+        }
     }
 }
 
