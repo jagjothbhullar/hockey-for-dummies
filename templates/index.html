@@ -1542,6 +1542,17 @@
             margin-bottom: 20px;
         }
 
+        .flashcard-section.fun-fact-section {
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 8px;
+            padding: 12px 15px;
+        }
+
+        .flashcard-section.fun-fact-section h4 {
+            color: #ffd700;
+        }
+
         .flashcard-section h4 {
             color: #7eb8da;
             font-size: 0.85rem;
@@ -2647,9 +2658,16 @@
                         <p>${data.definition}</p>
                     </div>
 
+                    ${data.fun_fact ? `
+                        <div class="flashcard-section fun-fact-section">
+                            <h4>💡 Did You Know?</h4>
+                            <p>${data.fun_fact}</p>
+                        </div>
+                    ` : ''}
+
                     ${analogiesHtml ? `
                         <div class="flashcard-section">
-                            <h4>Sports Analogies</h4>
+                            <h4>🏆 Sports Analogies</h4>
                             ${analogiesHtml}
                         </div>
                     ` : ''}

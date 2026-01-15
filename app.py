@@ -4445,7 +4445,8 @@ def get_dictionary_term(term):
             'found': True,
             'term': term_lower.replace('_', ' ').title(),
             'definition': info['definition'],
-            'category': info.get('category', 'general')
+            'category': info.get('category', 'general'),
+            'fun_fact': info.get('fun_fact', None)
         }
 
         if has_analogies:
