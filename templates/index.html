@@ -229,18 +229,18 @@
             font-size: 1.2rem;
         }
 
-        /* Top navigation tabs */
-        .browse-tabs {
+        /* Main layout with sidebar */
+        .main-layout {
             display: flex;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin-bottom: 20px;
-            justify-content: flex-start;
+            gap: 20px;
+            margin-bottom: 25px;
         }
 
-        /* Main content area */
-        .main-layout {
-            margin-bottom: 25px;
+        .browse-sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            min-width: 170px;
         }
 
         .browse-btn {
@@ -259,27 +259,27 @@
             overflow: hidden;
         }
 
-        /* Blue line accent on bottom for horizontal tabs */
+        /* Blue line accent on left */
         .browse-btn::before {
             content: '';
             position: absolute;
             left: 0;
-            right: 0;
+            top: 0;
             bottom: 0;
-            height: 3px;
+            width: 3px;
             background: #0066cc;
-            transform: scaleX(0);
+            transform: scaleY(0);
             transition: transform 0.3s ease;
         }
 
         .browse-btn:hover {
             background: rgba(0, 109, 117, 0.3);
             border-color: rgba(0, 180, 190, 0.6);
-            transform: translateY(-2px);
+            transform: translateX(5px);
         }
 
         .browse-btn:hover::before {
-            transform: scaleX(1);
+            transform: scaleY(1);
         }
 
         .browse-btn.active {
@@ -290,7 +290,7 @@
         }
 
         .browse-btn.active::before {
-            transform: scaleX(1);
+            transform: scaleY(1);
             background: #00b4be;
         }
 
@@ -319,8 +319,13 @@
 
         /* Responsive: stack on mobile */
         @media (max-width: 700px) {
-            .browse-tabs {
-                justify-content: center;
+            .main-layout {
+                flex-direction: column;
+            }
+            .browse-sidebar {
+                flex-direction: row;
+                flex-wrap: wrap;
+                min-width: unset;
             }
             .browse-btn {
                 flex: 1;
@@ -1665,32 +1670,32 @@
             </div>
         </header>
 
-        <!-- Top navigation tabs -->
-        <div class="browse-tabs">
-            <button class="browse-btn home active" data-tab="dictionary">
-                <span class="browse-icon">🎴</span>
-                <span class="browse-label">Hockey Flash Cards</span>
-            </button>
-            <button class="browse-btn sharks" data-tab="sharks">
-                <span class="browse-icon">🦈</span>
-                <span class="browse-label">Meet the Sharks</span>
-            </button>
-            <button class="browse-btn" data-tab="rink">
-                <span class="browse-icon">🧊</span>
-                <span class="browse-label">The Rink</span>
-            </button>
-            <button class="browse-btn" data-tab="stats">
-                <span class="browse-icon">📊</span>
-                <span class="browse-label">Stats Explained</span>
-            </button>
-            <button class="browse-btn sharks" data-tab="schedule">
-                <span class="browse-icon">📅</span>
-                <span class="browse-label">Sharks Schedule</span>
-            </button>
-        </div>
-
-        <!-- Main content area -->
         <div class="main-layout">
+            <!-- Left sidebar with browse buttons -->
+            <div class="browse-sidebar">
+                <button class="browse-btn home active" data-tab="dictionary">
+                    <span class="browse-icon">🎴</span>
+                    <span class="browse-label">Hockey Flash Cards</span>
+                </button>
+                <button class="browse-btn sharks" data-tab="sharks">
+                    <span class="browse-icon">🦈</span>
+                    <span class="browse-label">Meet the Sharks</span>
+                </button>
+                <button class="browse-btn" data-tab="rink">
+                    <span class="browse-icon">🧊</span>
+                    <span class="browse-label">The Rink</span>
+                </button>
+                <button class="browse-btn" data-tab="stats">
+                    <span class="browse-icon">📊</span>
+                    <span class="browse-label">Stats Explained</span>
+                </button>
+                <button class="browse-btn sharks" data-tab="schedule">
+                    <span class="browse-icon">📅</span>
+                    <span class="browse-label">Sharks Schedule</span>
+                </button>
+            </div>
+
+            <!-- Right side with main content -->
             <div class="search-side">
                 <div class="search-container">
                     <div id="search-section">
