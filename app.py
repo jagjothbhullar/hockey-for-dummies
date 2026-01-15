@@ -2474,6 +2474,456 @@ HOCKEY_CONCEPTS = {
             "explanation": "A situation created by the opposing team's infraction that gives you a prime scoring opportunity.",
             "key_difference": "Baseball walks aren't exciting. Penalty shots are peak drama."
         }
+    },
+
+    "period": {
+        "definition": "One of three 20-minute segments of a hockey game. Unlike soccer halves or basketball quarters, hockey has 3 periods.",
+        "category": "game_structure",
+        "soccer": {
+            "analogy": "Half (but there are 3)",
+            "explanation": "Like halves in soccer, but hockey has three 20-minute periods. The ice gets resurfaced between each period.",
+            "key_difference": "Soccer has 2 halves of 45 min. Hockey has 3 periods of 20 min."
+        },
+        "nba": {
+            "analogy": "Quarter (but only 3)",
+            "explanation": "Similar to quarters, but hockey only has 3 periods. Each is 20 minutes of actual play time (clock stops).",
+            "key_difference": "NBA has 4 quarters of 12 min. Hockey has 3 periods of 20 min."
+        },
+        "nfl": {
+            "analogy": "Quarter (but only 3)",
+            "explanation": "Like NFL quarters but there are only 3. Each period is 20 minutes with the clock stopping for whistles.",
+            "key_difference": "NFL has 4 quarters of 15 min. Hockey has 3 periods of 20 min."
+        },
+        "mlb": {
+            "analogy": "Innings (but only 3)",
+            "explanation": "Like condensed innings - 3 segments of play with breaks in between for ice resurfacing.",
+            "key_difference": "Baseball has 9 innings of variable length. Hockey has 3 fixed 20-min periods."
+        }
+    },
+
+    "shootout": {
+        "definition": "If still tied after overtime in regular season, teams alternate penalty shots. Best of 3, then sudden death.",
+        "category": "game_structure",
+        "soccer": {
+            "analogy": "Penalty Shootout",
+            "explanation": "Exactly the same concept! Teams alternate penalty shots to decide the winner when regulation and OT don't settle it.",
+            "key_difference": "Soccer shootouts are 5 shots each. Hockey is 3 shots each, then sudden death."
+        },
+        "nba": {
+            "analogy": "Free Throw Contest (hypothetical)",
+            "explanation": "If basketball had a tiebreaker where players alternated free throws - pure individual skill deciding team outcome.",
+            "key_difference": "NBA doesn't have shootouts. Games go to multiple OT periods."
+        },
+        "nfl": {
+            "analogy": "Field Goal Contest (hypothetical)",
+            "explanation": "Imagine if tied NFL games were decided by kickers alternating field goals - high pressure individual moments.",
+            "key_difference": "NFL doesn't have shootouts. They use overtime rules."
+        },
+        "mlb": {
+            "analogy": "Home Run Derby Tiebreaker",
+            "explanation": "A skills competition to decide the outcome. Individual matchups determining the team's fate.",
+            "key_difference": "Baseball uses extra innings. Shootouts are unique to hockey and soccer."
+        }
+    },
+
+    "blue line": {
+        "definition": "The lines that divide the rink into three zones. Key for offside calls - the puck must enter the attacking zone before players.",
+        "category": "rink",
+        "soccer": {
+            "analogy": "Halfway Line + Offside Line",
+            "explanation": "Like a fixed offside line. In hockey, you can't enter the attacking zone before the puck - the blue line is that boundary.",
+            "key_difference": "Soccer offside depends on defender position. Hockey blue line is fixed."
+        },
+        "nba": {
+            "analogy": "Half Court Line",
+            "explanation": "Like the half court line for backcourt violations, but there are two - creating three zones.",
+            "key_difference": "NBA has one line. Hockey has two blue lines creating three zones."
+        },
+        "nfl": {
+            "analogy": "Line of Scrimmage",
+            "explanation": "A fixed line that determines legal positioning. Cross it too early and it's a penalty (offside).",
+            "key_difference": "NFL line moves every play. Hockey blue lines are permanent."
+        },
+        "mlb": {
+            "analogy": "Base Paths",
+            "explanation": "Defined boundaries that determine where runners can legally be. Blue lines define zone boundaries.",
+            "key_difference": "Base paths are for runners. Blue lines control puck and player positioning."
+        }
+    },
+
+    "boards": {
+        "definition": "The walls surrounding the ice. Players are frequently checked into the boards and puck battles happen along them.",
+        "category": "rink",
+        "soccer": {
+            "analogy": "Touchline (if it was a wall)",
+            "explanation": "Imagine if the touchline was a wall you could play the ball off of - that's the boards. They keep the puck in play.",
+            "key_difference": "Soccer ball goes out of bounds. Hockey puck stays in play off the boards."
+        },
+        "nba": {
+            "analogy": "Out of Bounds (but playable)",
+            "explanation": "If the sideline was a wall you could bank passes off and fight for loose balls against. The boards create unique plays.",
+            "key_difference": "Basketball goes out of bounds. Hockey boards keep play alive."
+        },
+        "nfl": {
+            "analogy": "Sideline (if you could tackle into it)",
+            "explanation": "Like if receivers could be legally hit into a wall along the sideline. Boards create physical battles.",
+            "key_difference": "NFL sideline ends play. Hockey boards are part of the play."
+        },
+        "mlb": {
+            "analogy": "Outfield Wall",
+            "explanation": "A barrier that keeps the ball in play and creates unique plays. Pucks carom off boards like balls off walls.",
+            "key_difference": "Baseball walls are far away. Hockey boards are always in play."
+        }
+    },
+
+    "wrist shot": {
+        "definition": "A quick, accurate shot using wrist movement. The most common shot type - less power than a slap shot but quicker release.",
+        "category": "shots",
+        "soccer": {
+            "analogy": "Placed Shot / Finesse Shot",
+            "explanation": "Like a striker placing the ball in the corner rather than blasting it. Accuracy and quick release over raw power.",
+            "key_difference": "Soccer shots use the foot. Hockey wrist shots use stick flex and wrist snap."
+        },
+        "nba": {
+            "analogy": "Pull-up Jumper",
+            "explanation": "Quick release, accuracy over power. The go-to scoring move for most players - reliable and efficient.",
+            "key_difference": "Basketball shots arc up. Hockey wrist shots stay low and accurate."
+        },
+        "nfl": {
+            "analogy": "Quick Slant Pass",
+            "explanation": "Quick release, accurate, gets the job done. Not the flashiest but the most reliable option.",
+            "key_difference": "NFL passes go to receivers. Hockey shots go at the net."
+        },
+        "mlb": {
+            "analogy": "Line Drive Single",
+            "explanation": "Not swinging for the fences, but making solid contact. Efficient, effective, fundamental.",
+            "key_difference": "Baseball hits react off pitches. Hockey shots are self-initiated."
+        }
+    },
+
+    "snap shot": {
+        "definition": "Between a slap shot and wrist shot - quicker than a slap shot, harder than a wrist shot. A quick, powerful release.",
+        "category": "shots",
+        "soccer": {
+            "analogy": "Half-Volley",
+            "explanation": "A quick, powerful strike without a full wind-up. Catches goalkeepers off guard with speed and timing.",
+            "key_difference": "Soccer half-volleys are opportunistic. Hockey snap shots are intentional."
+        },
+        "nba": {
+            "analogy": "Catch-and-Shoot Three",
+            "explanation": "Quick release with good power. No time to set up fully, but still gets it off with force.",
+            "key_difference": "Basketball shooters are stationary. Hockey players are often moving."
+        },
+        "nfl": {
+            "analogy": "Quick Out Route",
+            "explanation": "Fast, efficient, no wasted motion. Gets the ball out quickly with enough zip to be effective.",
+            "key_difference": "NFL passes are to teammates. Hockey snap shots are at the goal."
+        },
+        "mlb": {
+            "analogy": "Quick Swing on Fastball",
+            "explanation": "Reacting quickly with a compact swing. Not a full hack, but enough to drive the ball.",
+            "key_difference": "Baseball reacts to pitches. Hockey snap shots are proactive."
+        }
+    },
+
+    "five hole": {
+        "definition": "The space between the goalie's legs. One of the five 'holes' to shoot at (glove, blocker, two top corners, and five hole).",
+        "category": "shots",
+        "soccer": {
+            "analogy": "Nutmeg the Keeper",
+            "explanation": "Shooting through the goalkeeper's legs - embarrassing for them, satisfying for you. A classic way to score.",
+            "key_difference": "Soccer nutmegs are rare and often accidental. Hockey five-hole goals are intentional."
+        },
+        "nba": {
+            "analogy": "Through the Legs Dribble",
+            "explanation": "Going where they least expect - between the legs. Embarrassing for the defender when it works.",
+            "key_difference": "Basketball through-the-legs is dribbling. Hockey five-hole is shooting."
+        },
+        "nfl": {
+            "analogy": "Up the Middle Run",
+            "explanation": "Going right through the center when they're not expecting it. Finding the gap in the defense.",
+            "key_difference": "NFL runs between linemen. Hockey shoots between goalie's legs."
+        },
+        "mlb": {
+            "analogy": "Through the Wickets",
+            "explanation": "Ball going through the fielder's legs - finding the gap where it's least expected.",
+            "key_difference": "Baseball through the legs is an error. Hockey five-hole is intentional."
+        }
+    },
+
+    "top shelf": {
+        "definition": "The upper corners of the net. 'Where grandma keeps the cookies' - hard for goalies to reach and a beautiful goal.",
+        "category": "shots",
+        "soccer": {
+            "analogy": "Top Bins",
+            "explanation": "Exactly the same! The upper corners where goalkeepers can't reach. 'Top bins' in soccer = 'top shelf' in hockey.",
+            "key_difference": "Same concept, different slang. Both are the hardest spots to defend."
+        },
+        "nba": {
+            "analogy": "High Off the Glass",
+            "explanation": "Using the high part of the backboard - elevated, skillful, hard to defend.",
+            "key_difference": "Basketball uses the backboard. Hockey aims for open net corners."
+        },
+        "nfl": {
+            "analogy": "Back Corner of End Zone",
+            "explanation": "The perfect throw to the back corner where only your receiver can get it. Precision placement.",
+            "key_difference": "NFL aims at receivers. Hockey aims at net corners."
+        },
+        "mlb": {
+            "analogy": "Upper Deck Home Run",
+            "explanation": "Going high and far - elevated, impressive, crowd goes wild.",
+            "key_difference": "Baseball measures distance. Hockey measures precision."
+        }
+    },
+
+    "dangle": {
+        "definition": "Fancy stickhandling to beat defenders. 'He dangled through three guys' means he used sick moves to get past them.",
+        "category": "skills",
+        "soccer": {
+            "analogy": "Dribbling Past Defenders",
+            "explanation": "Like Messi weaving through defenders with close control. Using quick hands to embarrass opponents.",
+            "key_difference": "Soccer uses feet. Hockey uses stick - arguably allows even fancier moves."
+        },
+        "nba": {
+            "analogy": "Ankle-Breaker Crossover",
+            "explanation": "Making defenders look silly with handles. 'He dangled him' = 'He broke his ankles.'",
+            "key_difference": "Basketball is body movement. Hockey is stick movement."
+        },
+        "nfl": {
+            "analogy": "Juke Move",
+            "explanation": "Making a defender miss with skill. Highlight reel material that gets replayed.",
+            "key_difference": "NFL jukes avoid tackles. Hockey dangles create scoring chances."
+        },
+        "mlb": {
+            "analogy": "No Real Equivalent",
+            "explanation": "Baseball doesn't have one-on-one skill moves. Dangles are hockey's equivalent of basketball handles.",
+            "key_difference": "Baseball is turn-based. Hockey dangles happen in continuous play."
+        }
+    },
+
+    "sauce": {
+        "definition": "A saucer pass - a pass that goes airborne over sticks or players and lands flat. A beautiful, skilled pass.",
+        "category": "skills",
+        "soccer": {
+            "analogy": "Chipped Through Ball",
+            "explanation": "A lofted pass over defenders that lands perfectly for your teammate. Requires touch and vision.",
+            "key_difference": "Soccer chips cover more distance. Hockey sauce is shorter and more precise."
+        },
+        "nba": {
+            "analogy": "Lob Pass",
+            "explanation": "An elevated pass over the defense. Requires perfect touch and timing with your teammate.",
+            "key_difference": "Basketball lobs are often for dunks. Hockey sauce sets up shots."
+        },
+        "nfl": {
+            "analogy": "Touch Pass Over Linebacker",
+            "explanation": "A perfectly arced throw over the defender that drops into the receiver's hands.",
+            "key_difference": "NFL passes are longer. Hockey sauce is a short, precise flip."
+        },
+        "mlb": {
+            "analogy": "Soft Toss to First",
+            "explanation": "A touch throw that arrives perfectly catchable. Finesse over power.",
+            "key_difference": "Baseball tosses are routine. Hockey sauce is an art form."
+        }
+    },
+
+    "body check": {
+        "definition": "Using your body to legally hit an opponent who has the puck. A core part of hockey's physical play.",
+        "category": "physical",
+        "soccer": {
+            "analogy": "Shoulder Charge (but harder)",
+            "explanation": "Like a legal shoulder challenge, but way more intense. You can fully hit someone with your body in hockey.",
+            "key_difference": "Soccer limits contact. Hockey body checks are full hits."
+        },
+        "nba": {
+            "analogy": "Hard Foul (but legal)",
+            "explanation": "Contact that would be a flagrant in basketball is just 'finishing your check' in hockey.",
+            "key_difference": "NBA penalizes hard contact. Hockey encourages it."
+        },
+        "nfl": {
+            "analogy": "Open Field Tackle",
+            "explanation": "Very similar! A legal hit to separate the player from their momentum. Hockey keeps going after though.",
+            "key_difference": "NFL tackles end the play. Hockey checks happen mid-play."
+        },
+        "mlb": {
+            "analogy": "Home Plate Collision (Old Rules)",
+            "explanation": "The physicality that baseball used to allow. Legal collisions that are just part of the game.",
+            "key_difference": "Baseball removed collisions. Hockey embraces them."
+        }
+    },
+
+    "boarding": {
+        "definition": "An illegal hit that drives an opponent violently into the boards from behind or when they're defenseless. 2-5 minute penalty.",
+        "category": "penalties",
+        "soccer": {
+            "analogy": "Dangerous Tackle from Behind",
+            "explanation": "Like a reckless challenge from behind that endangers the opponent. The rules protect defenseless players.",
+            "key_difference": "Soccer tackles target the ball. Hockey boarding targets the player dangerously."
+        },
+        "nba": {
+            "analogy": "Flagrant 2 Foul",
+            "explanation": "Unnecessary and excessive contact. The league protects players from dangerous plays.",
+            "key_difference": "NBA flagrant 2 = ejection. Hockey boarding = 2-5 minutes."
+        },
+        "nfl": {
+            "analogy": "Unnecessary Roughness",
+            "explanation": "A dangerous hit on a defenseless player. Rules exist to prevent injuries from reckless play.",
+            "key_difference": "NFL is 15 yards. Hockey is 2-5 minute penalty."
+        },
+        "mlb": {
+            "analogy": "No Real Equivalent",
+            "explanation": "Baseball doesn't have player-on-player contact like this. Boarding is a hockey-specific dangerous play.",
+            "key_difference": "Baseball is non-contact. Hockey polices dangerous contact."
+        }
+    },
+
+    "minor penalty": {
+        "definition": "A 2-minute penalty for infractions like tripping, hooking, or slashing. Team plays short-handed (4 vs 5).",
+        "category": "penalties",
+        "soccer": {
+            "analogy": "Yellow Card + Temporary Sending Off",
+            "explanation": "Like a yellow card that also makes your team play down a man for 2 minutes. Sin bin rules in some leagues.",
+            "key_difference": "Soccer yellows don't reduce team size. Hockey minors create power plays."
+        },
+        "nba": {
+            "analogy": "Personal Foul with Bonus",
+            "explanation": "Like a foul when the opponent is in the bonus - they get an advantage, but it's not catastrophic.",
+            "key_difference": "NBA fouls give free throws. Hockey penalties create man-advantages."
+        },
+        "nfl": {
+            "analogy": "5-Yard Penalty",
+            "explanation": "A minor infraction with a set consequence. Hurts your team but isn't devastating.",
+            "key_difference": "NFL penalties are yards. Hockey penalties are time short-handed."
+        },
+        "mlb": {
+            "analogy": "Hit Batter / Balk",
+            "explanation": "A violation that gives the opponent an advantage (free base), but not game-changing on its own.",
+            "key_difference": "Baseball violations are single events. Hockey penalties last 2 minutes."
+        }
+    },
+
+    "major penalty": {
+        "definition": "A 5-minute penalty for serious infractions like fighting or intent to injure. Team is short-handed the full 5 minutes even if scored on.",
+        "category": "penalties",
+        "soccer": {
+            "analogy": "Red Card (Temporary)",
+            "explanation": "Like a red card but only for 5 minutes. Serious punishment that can swing games.",
+            "key_difference": "Soccer reds are permanent. Hockey majors are 5 minutes (still brutal)."
+        },
+        "nba": {
+            "analogy": "Flagrant 2 Foul",
+            "explanation": "A serious violation that severely punishes your team. Often for dangerous or unsportsmanlike conduct.",
+            "key_difference": "NBA flagrant 2 = ejection + free throws. Hockey major = 5 min short-handed."
+        },
+        "nfl": {
+            "analogy": "15-Yard Penalty + Ejection Risk",
+            "explanation": "A serious infraction with major consequences. Can completely change the momentum of a game.",
+            "key_difference": "NFL is yardage. Hockey is 5 full minutes playing 4-on-5."
+        },
+        "mlb": {
+            "analogy": "Ejection",
+            "explanation": "A serious violation that removes the player and hurts the team significantly.",
+            "key_difference": "Baseball ejections don't reduce roster mid-game like hockey penalties do."
+        }
+    },
+
+    "rebound": {
+        "definition": "When the goalie stops a shot but can't control it, leaving the puck loose. Second chance scoring opportunities.",
+        "category": "shots",
+        "soccer": {
+            "analogy": "Parried Save",
+            "explanation": "When the keeper makes a save but can't hold onto it. Attackers crash for the second ball.",
+            "key_difference": "Soccer rebounds are rare. Hockey rebounds happen on almost every save."
+        },
+        "nba": {
+            "analogy": "Offensive Rebound",
+            "explanation": "Exactly the same concept! The ball/puck comes off and there's a scramble for possession.",
+            "key_difference": "Basketball rebounds go up. Hockey rebounds go low."
+        },
+        "nfl": {
+            "analogy": "Deflected Pass",
+            "explanation": "A tipped ball that's still live and up for grabs. Quick reactions determine possession.",
+            "key_difference": "NFL deflections are usually incomplete. Hockey rebounds are scoring chances."
+        },
+        "mlb": {
+            "analogy": "Ball Off the Pitcher's Glove",
+            "explanation": "A deflection that creates chaos and opportunity. Players scramble to make a play.",
+            "key_difference": "Baseball deflections are defensive plays. Hockey rebounds are offensive opportunities."
+        }
+    },
+
+    "screen": {
+        "definition": "Standing in front of the goalie to block their view of the shot. Legal if you're not in the crease.",
+        "category": "shots",
+        "soccer": {
+            "analogy": "Blocking Keeper's View on Free Kick",
+            "explanation": "Standing in front of the goalkeeper so they can't see the shot coming. A wall of players creating confusion.",
+            "key_difference": "Soccer screens are on set pieces. Hockey screens happen in regular play."
+        },
+        "nba": {
+            "analogy": "Setting a Screen / Pick",
+            "explanation": "Using your body to create an advantage. Just like a pick-and-roll, but you're screening the goalie.",
+            "key_difference": "Basketball screens free up shooters. Hockey screens blind goalies."
+        },
+        "nfl": {
+            "analogy": "Blocking the Punter's Vision",
+            "explanation": "Getting in someone's line of sight to disrupt their play. Legal positioning for an advantage.",
+            "key_difference": "NFL doesn't really have this. Hockey screens are a constant tactic."
+        },
+        "mlb": {
+            "analogy": "Catcher Blocking Umpire's View",
+            "explanation": "Being in a position that affects someone's ability to see the play. Strategic positioning.",
+            "key_difference": "Baseball views are about calls. Hockey screens are about goals."
+        }
+    },
+
+    "shift": {
+        "definition": "One stint on the ice before changing. Usually 30-60 seconds due to the sport's intensity. Players change constantly.",
+        "category": "gameplay",
+        "soccer": {
+            "analogy": "No Real Equivalent",
+            "explanation": "Soccer players stay on all game. Hockey is so intense that players can only go 45-60 seconds before needing rest.",
+            "key_difference": "Soccer has rare substitutions. Hockey changes happen every minute."
+        },
+        "nba": {
+            "analogy": "Stint Between Timeouts",
+            "explanation": "Like the minutes a player plays before resting, but way shorter. NHL shifts are under a minute.",
+            "key_difference": "NBA players play 4-8 minute stints. Hockey shifts are 45-60 seconds."
+        },
+        "nfl": {
+            "analogy": "Series of Plays",
+            "explanation": "Like staying on for a series, then rotating. Fresh players are crucial to maintain intensity.",
+            "key_difference": "NFL rotates between plays. Hockey rotates during live play."
+        },
+        "mlb": {
+            "analogy": "Pitching Rotation (Mini Version)",
+            "explanation": "The idea of fresh arms/legs being crucial. Players need rest to maintain peak performance.",
+            "key_difference": "Baseball rotation is days. Hockey rotation is minutes/seconds."
+        }
+    },
+
+    "dump and chase": {
+        "definition": "Shooting the puck into the offensive zone and chasing it, rather than carrying it in. A simple but effective tactic.",
+        "category": "gameplay",
+        "soccer": {
+            "analogy": "Long Ball Tactics",
+            "explanation": "Like hoofing the ball up field and having your strikers chase. Not pretty, but creates pressure.",
+            "key_difference": "Soccer long balls can go out. Hockey dump-ins stay in play off the boards."
+        },
+        "nba": {
+            "analogy": "Throw it Up to the Big Man",
+            "explanation": "Not finesse, just get it in there and let the players battle for it. Physical, direct approach.",
+            "key_difference": "Basketball is 5v5 battling. Hockey dump-ins are puck retrieval races."
+        },
+        "nfl": {
+            "analogy": "Hail Mary / Jump Ball",
+            "explanation": "Throwing it up and letting your players compete for it. Sometimes you just need to create a scrum.",
+            "key_difference": "NFL jump balls are desperation. Hockey dump-ins are regular strategy."
+        },
+        "mlb": {
+            "analogy": "Bunt and Run",
+            "explanation": "A simple play to create offense - not fancy, but effective at moving things forward.",
+            "key_difference": "Baseball bunts are strategic. Hockey dumps are about gaining zone time."
+        }
     }
 }
 
