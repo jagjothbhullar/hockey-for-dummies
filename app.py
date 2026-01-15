@@ -4436,6 +4436,29 @@ def get_dictionary():
 def get_dictionary_term(term):
     """Get definition for a specific term"""
     term_lower = term.lower().strip().replace(' ', '_').replace('-', '_')
+    term_with_space = term.lower().strip().replace('_', ' ')
+
+    # Check HOCKEY_CONCEPTS first (has detailed analogies)
+    if term_with_space in HOCKEY_CONCEPTS:
+        info = HOCKEY_CONCEPTS[term_with_space]
+        result = {
+            'found': True,
+            'term': term_with_space.title(),
+            'definition': info['definition'],
+            'category': info.get('category', 'gameplay'),
+            'fun_fact': info.get('fun_fact', None)
+        }
+
+        # Add analogies if present
+        if 'soccer' in info:
+            result['analogies'] = {
+                'soccer': info.get('soccer', {}),
+                'nba': info.get('nba', {}),
+                'nfl': info.get('nfl', {}),
+                'mlb': info.get('mlb', {})
+            }
+
+        return jsonify(result)
 
     if term_lower in HOCKEY_DICTIONARY:
         info = HOCKEY_DICTIONARY[term_lower]
