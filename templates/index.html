@@ -1469,6 +1469,50 @@
             }
         }
 
+        /* Venue Map Styles */
+        .venue-maps {
+            display: grid;
+            gap: 25px;
+        }
+
+        .venue-map-section {
+            background: rgba(0, 109, 117, 0.1);
+            border: 1px solid rgba(0, 180, 190, 0.2);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .venue-map-img {
+            width: 100%;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 2px solid rgba(0, 180, 190, 0.3);
+        }
+
+        .venue-map-img:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 25px rgba(0, 180, 190, 0.3);
+        }
+
+        .venue-attribution {
+            margin-top: 25px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(0, 180, 190, 0.2);
+            text-align: center;
+            color: #7eb8da;
+            font-size: 0.85rem;
+        }
+
+        .venue-attribution a {
+            color: #00b4be;
+            text-decoration: none;
+        }
+
+        .venue-attribution a:hover {
+            text-decoration: underline;
+        }
+
         /* Flashcard Modal Styles */
         .flashcard-overlay {
             position: fixed;
@@ -1682,6 +1726,10 @@
                     <span class="browse-icon">📅</span>
                     <span class="browse-label">Sharks Schedule</span>
                 </button>
+                <button class="browse-btn sharks" data-tab="venue">
+                    <span class="browse-icon">🗺️</span>
+                    <span class="browse-label">Venue Map</span>
+                </button>
             </div>
 
             <!-- Right side with main content -->
@@ -1818,6 +1866,8 @@
                 loadStatsGlossary();
             } else if (currentTab === 'schedule') {
                 loadSchedule();
+            } else if (currentTab === 'venue') {
+                loadVenueMap();
             }
         }
 
@@ -2723,6 +2773,68 @@
                     </div>
                 `;
             }
+        }
+
+        // ==================== VENUE MAP ====================
+        function loadVenueMap() {
+            browseSection.innerHTML = `
+                <div class="result-card">
+                    <h2 style="color:#006d75;margin-bottom:5px;">🗺️ SAP Center Venue Maps</h2>
+                    <p style="color:#7eb8da;margin-bottom:20px;">Navigate the Shark Tank like a pro</p>
+
+                    <div class="venue-maps">
+                        <div class="venue-map-section">
+                            <h3 style="color:#00b4be;margin-bottom:15px;font-size:1.2rem;">🦈 Arena Seating Map</h3>
+                            <p style="color:#7eb8da;margin-bottom:10px;font-size:0.9rem;">Full arena layout for San Jose Sharks home games</p>
+                            <img src="https://www.sapcenter.com/assets/img/SAPC_2023_ArenaMap-3-7f8b9f4283.png"
+                                 alt="SAP Center Sharks Seating Map"
+                                 class="venue-map-img"
+                                 onclick="showFullImage(this.src, 'SAP Center Arena Seating Map')">
+                        </div>
+
+                        <div class="venue-map-section">
+                            <h3 style="color:#00b4be;margin-bottom:15px;font-size:1.2rem;">🍔 Food & Beverage - Main Concourse</h3>
+                            <p style="color:#7eb8da;margin-bottom:10px;font-size:0.9rem;">23+ food vendors across the main concourse</p>
+                            <img src="https://www.sapcenter.com/assets/img/SAP_2024-25_F%26B_Concourse%20(2)-compressed-compressed.png"
+                                 alt="SAP Center Food & Beverage Map"
+                                 class="venue-map-img"
+                                 onclick="showFullImage(this.src, 'Main Concourse Food & Beverage')">
+                        </div>
+
+                        <div class="venue-map-section">
+                            <h3 style="color:#00b4be;margin-bottom:15px;font-size:1.2rem;">🍷 Food & Beverage - Club Level</h3>
+                            <p style="color:#7eb8da;margin-bottom:10px;font-size:0.9rem;">North and South Club dining and bar locations</p>
+                            <img src="https://www.sapcenter.com/assets/img/SAP_2024-25_FB_Club-20f2d88b49.png"
+                                 alt="SAP Center Club Level Map"
+                                 class="venue-map-img"
+                                 onclick="showFullImage(this.src, 'Club Level Food & Beverage')">
+                        </div>
+
+                        <div class="venue-map-section">
+                            <h3 style="color:#00b4be;margin-bottom:15px;font-size:1.2rem;">🛍️ Merchandise Locations</h3>
+                            <p style="color:#7eb8da;margin-bottom:10px;font-size:0.9rem;">Find Sharks gear throughout the arena</p>
+                            <img src="https://www.sapcenter.com/assets/img/SAP_2023-24_Merch-Map-0e6bb924f5.jpg"
+                                 alt="SAP Center Merchandise Map"
+                                 class="venue-map-img"
+                                 onclick="showFullImage(this.src, 'Merchandise Locations')">
+                        </div>
+                    </div>
+
+                    <div class="venue-attribution">
+                        <p>Maps courtesy of <a href="https://www.sapcenter.com/plan-your-visit/venue-map" target="_blank">SAP Center</a> • Home of the San Jose Sharks</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function showFullImage(src, title) {
+            showFlashcard(\`
+                <h2 style="font-size:1.2rem;margin-bottom:15px;">🗺️ \${title}</h2>
+                <img src="\${src}" alt="\${title}" style="width:100%;border-radius:8px;">
+                <p style="text-align:center;margin-top:10px;color:#7eb8da;font-size:0.85rem;">
+                    Image courtesy of <a href="https://www.sapcenter.com/plan-your-visit/venue-map" target="_blank" style="color:#00b4be;">SAP Center</a>
+                </p>
+            \`);
         }
 
         // ==================== FLASHCARD MODAL ====================
