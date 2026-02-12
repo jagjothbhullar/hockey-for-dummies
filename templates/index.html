@@ -1824,7 +1824,7 @@
                     <h2 style="text-align:center;color:#e8f4f8;margin-bottom:8px;font-size:1.5rem;">Welcome to Hockey for Dummies</h2>
                     <p style="text-align:center;color:#7eb8da;margin-bottom:24px;font-size:1rem;">Click a zone on the rink to start learning!</p>
 
-                    <svg viewBox="0 0 700 440" class="home-rink-svg" xmlns="http://www.w3.org/2000/svg">
+                    <svg viewBox="0 0 700 450" class="home-rink-svg" xmlns="http://www.w3.org/2000/svg">
                         <!-- Rink outline -->
                         <rect x="10" y="40" width="680" height="360" rx="100" ry="100"
                               fill="#d4e9f7" stroke="#446688" stroke-width="3"/>
@@ -1836,11 +1836,11 @@
                         <!-- Center circle -->
                         <circle cx="350" cy="220" r="50" fill="none" stroke="#cc3333" stroke-width="2" opacity="0.4"/>
 
-                        <!-- SCOREBOARD / SCHEDULE - above rink -->
-                        <g class="home-zone" onclick="switchToTab('schedule')" style="cursor:pointer">
-                            <rect x="240" y="0" width="220" height="42" rx="8" ry="8" fill="#1a3a5c" stroke="#4a90c2" stroke-width="1.5" opacity="0.95"/>
-                            <text x="350" y="17" text-anchor="middle" fill="#ffd700" font-size="16" font-weight="bold" class="home-zone-icon">📅</text>
-                            <text x="350" y="34" text-anchor="middle" fill="#e8f4f8" font-size="11" font-weight="bold" class="home-zone-label">SHARKS SCHEDULE</text>
+                        <!-- SCOREBOARD / SHARKS - above rink -->
+                        <g class="home-zone" onclick="switchToTab('sharks')" style="cursor:pointer">
+                            <rect x="240" y="0" width="220" height="42" rx="8" ry="8" fill="#006d75" stroke="#00b4be" stroke-width="1.5" opacity="0.95"/>
+                            <text x="350" y="17" text-anchor="middle" fill="#ffd700" font-size="16" font-weight="bold" class="home-zone-icon">🦈</text>
+                            <text x="350" y="34" text-anchor="middle" fill="#e8f4f8" font-size="11" font-weight="bold" class="home-zone-label">MEET THE SHARKS</text>
                         </g>
 
                         <!-- DEFENSIVE ZONE - left (Dictionary) -->
@@ -1867,23 +1867,37 @@
                             <text x="585" y="238" text-anchor="middle" fill="#ffcdd2" font-size="10" class="home-zone-sublabel">Learn by playing</text>
                         </g>
 
-                        <!-- BENCH AREA - top (Sharks) -->
-                        <g class="home-zone" onclick="switchToTab('sharks')" style="cursor:pointer">
+                        <!-- BENCH AREA - top left (Rink) -->
+                        <g class="home-zone" onclick="switchToTab('rink')" style="cursor:pointer">
                             <rect x="130" y="48" width="140" height="55" rx="10" ry="10" fill="#006d75" opacity="0.6"/>
-                            <text x="200" y="72" text-anchor="middle" fill="white" font-size="22" class="home-zone-icon">🦈</text>
-                            <text x="200" y="94" text-anchor="middle" fill="white" font-size="12" font-weight="bold" class="home-zone-label">SHARKS</text>
+                            <text x="200" y="72" text-anchor="middle" fill="white" font-size="22" class="home-zone-icon">🧊</text>
+                            <text x="200" y="94" text-anchor="middle" fill="white" font-size="12" font-weight="bold" class="home-zone-label">THE RINK</text>
                         </g>
 
-                        <!-- BENCH AREA - top right (Rink) -->
-                        <g class="home-zone" onclick="switchToTab('rink')" style="cursor:pointer">
-                            <rect x="430" y="48" width="140" height="55" rx="10" ry="10" fill="#006d75" opacity="0.6"/>
-                            <text x="500" y="72" text-anchor="middle" fill="white" font-size="22" class="home-zone-icon">🧊</text>
-                            <text x="500" y="94" text-anchor="middle" fill="white" font-size="12" font-weight="bold" class="home-zone-label">THE RINK</text>
-                        </g>
+                        <!-- BENCH AREA - top right (placeholder for symmetry) -->
+                        <rect x="430" y="48" width="140" height="55" rx="10" ry="10" fill="#006d75" opacity="0.15"/>
 
                         <!-- Goal creases -->
                         <rect x="20" y="190" width="14" height="60" rx="4" fill="#cc3333" opacity="0.3"/>
                         <rect x="666" y="190" width="14" height="60" rx="4" fill="#cc3333" opacity="0.3"/>
+
+                        <!-- SCHEDULE - bottom of rink -->
+                        <g class="home-zone" onclick="switchToTab('schedule')" style="cursor:pointer">
+                            <rect x="240" y="402" width="220" height="38" rx="8" ry="8" fill="#1a3a5c" stroke="#4a90c2" stroke-width="1.5" opacity="0.95"/>
+                            <text x="310" y="426" text-anchor="middle" fill="#ffd700" font-size="14" class="home-zone-icon">📅</text>
+                            <text x="390" y="426" text-anchor="middle" fill="#e8f4f8" font-size="11" font-weight="bold" class="home-zone-label">SCHEDULE</text>
+                        </g>
+
+                        <!-- Animated shark fin sliding across ice -->
+                        <g class="rink-shark-anim">
+                            <text font-size="28" y="330" opacity="0.6" class="home-zone-icon">🦈</text>
+                            <animateMotion dur="8s" repeatCount="indefinite" path="M-30,0 C100,-40 250,40 400,-20 C500,10 600,-30 730,0" />
+                        </g>
+
+                        <!-- Animated puck sliding -->
+                        <circle r="6" fill="#111" stroke="#444" stroke-width="1.5" opacity="0.5">
+                            <animateMotion dur="5s" repeatCount="indefinite" begin="2s" path="M700,180 C550,200 400,160 250,200 C100,230 50,190 -30,200" />
+                        </circle>
                     </svg>
 
                     <div style="text-align:center;margin-top:20px;">
@@ -2740,6 +2754,14 @@
                             <button class="mg-topic" data-mg="assist">🤝 Assists</button>
                             <button class="mg-topic" data-mg="crease">🔵 Crease</button>
                         </div>
+                        <div style="width:100%;padding:10px 20px 15px;">
+                            <div style="color:#ea7200;font-weight:700;font-size:20px;margin-bottom:6px;" id="mgTitle">❄️ Icing</div>
+                            <div style="color:#7eb8da;font-size:14px;line-height:1.6;margin-bottom:12px;" id="mgDesc">Icing occurs when a player shoots the puck from behind the center red line, across the opponent's goal line, without it being touched.</div>
+                            <div style="background:rgba(0,0,0,0.3);border-radius:8px;padding:12px;margin-bottom:12px;" id="mgDetails">
+                                <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Key Points</div>
+                                <ul id="mgDetailsList" style="list-style:none;padding:0;font-size:13px;color:#7eb8da;"></ul>
+                            </div>
+                        </div>
                         <div style="width:100%;padding:0 20px;">
                             <div style="position:relative;border-radius:25px;overflow:hidden;box-shadow:0 0 0 4px #5C3317,0 0 20px rgba(0,109,117,0.3);">
                                 <canvas id="mgCanvas" width="800" height="500" style="display:block;width:100%;height:auto;"></canvas>
@@ -2749,14 +2771,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div style="width:100%;padding:15px 20px 20px;">
-                            <div style="color:#ea7200;font-weight:700;font-size:20px;margin-bottom:6px;" id="mgTitle">❄️ Icing</div>
-                            <div style="color:#7eb8da;font-size:14px;line-height:1.6;margin-bottom:12px;" id="mgDesc">Icing occurs when a player shoots the puck from behind the center red line, across the opponent's goal line, without it being touched.</div>
-                            <div style="background:rgba(0,0,0,0.3);border-radius:8px;padding:12px;" id="mgDetails">
-                                <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Key Points</div>
-                                <ul id="mgDetailsList" style="list-style:none;padding:0;font-size:13px;color:#7eb8da;"></ul>
-                            </div>
-                            <div style="display:flex;gap:8px;margin-top:12px;align-items:center;">
+                        <div style="width:100%;padding:12px 20px 20px;">
+                            <div style="display:flex;gap:8px;align-items:center;">
                                 <button id="mgReplay" style="background:linear-gradient(135deg,#ea7200,#ff8c1a);border:none;border-radius:20px;padding:8px 20px;color:#fff;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">🔄 Replay</button>
                                 <button id="mgPause" style="background:linear-gradient(135deg,#006d75,#004851);border:2px solid #00909a;border-radius:20px;padding:8px 20px;color:#fff;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">⏸️ Pause</button>
                                 <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
