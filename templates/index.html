@@ -1689,6 +1689,10 @@
                     <span class="browse-icon">📊</span>
                     <span class="browse-label">Stats Explained</span>
                 </button>
+                <button class="browse-btn" data-tab="minigames">
+                    <span class="browse-icon">🎮</span>
+                    <span class="browse-label">Mini Games</span>
+                </button>
                 <button class="browse-btn sharks" data-tab="schedule">
                     <span class="browse-icon">📅</span>
                     <span class="browse-label">Sharks Schedule</span>
@@ -1827,6 +1831,8 @@
                 loadRink();
             } else if (currentTab === 'stats') {
                 loadStatsGlossary();
+            } else if (currentTab === 'minigames') {
+                loadMiniGames();
             } else if (currentTab === 'schedule') {
                 loadSchedule();
             }
@@ -2678,6 +2684,429 @@
         }
 
         // ==================== SHARKS SCHEDULE ====================
+        function loadMiniGames() {
+            browseSection.innerHTML = `
+                <div class="result-card" style="padding:0;overflow:hidden;">
+                    <div style="padding:20px 20px 10px;">
+                        <h2 style="color:#006d75;margin-bottom:5px;">🎮 Hockey 101 Mini Games</h2>
+                        <p style="color:#7eb8da;margin-bottom:10px;">Click any topic to see an animated explanation on the ice!</p>
+                    </div>
+                    <div style="display:flex;gap:0;flex-wrap:wrap;" id="mg-layout">
+                        <div id="mg-sidebar" style="width:100%;display:flex;flex-wrap:wrap;gap:6px;padding:0 20px 15px;">
+                            <div style="width:100%;font-size:11px;font-weight:700;color:#ea7200;text-transform:uppercase;letter-spacing:1.5px;margin-bottom:2px;">⚖️ Rules</div>
+                            <button class="mg-topic active" data-mg="icing">❄️ Icing</button>
+                            <button class="mg-topic" data-mg="offside">🚫 Offside</button>
+                            <button class="mg-topic" data-mg="penalty">⏱️ Penalties</button>
+                            <div style="width:100%;font-size:11px;font-weight:700;color:#ea7200;text-transform:uppercase;letter-spacing:1.5px;margin:8px 0 2px;">⚡ Special Teams</div>
+                            <button class="mg-topic" data-mg="powerplay">💪 Power Play</button>
+                            <button class="mg-topic" data-mg="penaltykill">🛡️ Penalty Kill</button>
+                            <button class="mg-topic" data-mg="emptynet">🥅 Empty Net</button>
+                            <div style="width:100%;font-size:11px;font-weight:700;color:#ea7200;text-transform:uppercase;letter-spacing:1.5px;margin:8px 0 2px;">🏒 Gameplay</div>
+                            <button class="mg-topic" data-mg="faceoff">⭕ Face-Off</button>
+                            <button class="mg-topic" data-mg="linechange">🔄 Line Change</button>
+                            <button class="mg-topic" data-mg="zones">📍 Zones</button>
+                            <div style="width:100%;font-size:11px;font-weight:700;color:#ea7200;text-transform:uppercase;letter-spacing:1.5px;margin:8px 0 2px;">🎯 Scoring</div>
+                            <button class="mg-topic" data-mg="goal">🚨 Goal</button>
+                            <button class="mg-topic" data-mg="assist">🤝 Assists</button>
+                            <button class="mg-topic" data-mg="crease">🔵 Crease</button>
+                        </div>
+                        <div style="width:100%;padding:0 20px;">
+                            <div style="position:relative;border-radius:25px;overflow:hidden;box-shadow:0 0 0 4px #5C3317,0 0 20px rgba(0,109,117,0.3);">
+                                <canvas id="mgCanvas" width="800" height="500" style="display:block;width:100%;height:auto;"></canvas>
+                                <div id="mgStatus" style="position:absolute;top:10px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.8);padding:6px 16px;border-radius:15px;font-size:12px;font-weight:600;color:#fff;display:flex;align-items:center;gap:8px;z-index:10;">
+                                    <span style="width:8px;height:8px;border-radius:50%;background:#00ff00;animation:mgPulse 1s infinite;"></span>
+                                    <span id="mgStatusText">Playing: Icing</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="width:100%;padding:15px 20px 20px;">
+                            <div style="color:#ea7200;font-weight:700;font-size:20px;margin-bottom:6px;" id="mgTitle">❄️ Icing</div>
+                            <div style="color:#7eb8da;font-size:14px;line-height:1.6;margin-bottom:12px;" id="mgDesc">Icing occurs when a player shoots the puck from behind the center red line, across the opponent's goal line, without it being touched.</div>
+                            <div style="background:rgba(0,0,0,0.3);border-radius:8px;padding:12px;" id="mgDetails">
+                                <div style="font-size:12px;font-weight:700;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Key Points</div>
+                                <ul id="mgDetailsList" style="list-style:none;padding:0;font-size:13px;color:#7eb8da;"></ul>
+                            </div>
+                            <div style="display:flex;gap:8px;margin-top:12px;align-items:center;">
+                                <button id="mgReplay" style="background:linear-gradient(135deg,#ea7200,#ff8c1a);border:none;border-radius:20px;padding:8px 20px;color:#fff;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">🔄 Replay</button>
+                                <button id="mgPause" style="background:linear-gradient(135deg,#006d75,#004851);border:2px solid #00909a;border-radius:20px;padding:8px 20px;color:#fff;font-family:inherit;font-size:13px;font-weight:600;cursor:pointer;">⏸️ Pause</button>
+                                <div style="margin-left:auto;display:flex;align-items:center;gap:8px;">
+                                    <span style="font-size:12px;color:#7eb8da;">Speed:</span>
+                                    <input type="range" id="mgSpeed" min="0.5" max="2" step="0.25" value="1" style="width:80px;accent-color:#ea7200;">
+                                    <span id="mgSpeedVal" style="font-size:12px;color:#fff;">1x</span>
+                                </div>
+                            </div>
+                            <div style="display:flex;gap:15px;margin-top:12px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.1);flex-wrap:wrap;">
+                                <span style="font-size:12px;color:#7eb8da;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#006d75;display:inline-block;"></span>Sharks</span>
+                                <span style="font-size:12px;color:#7eb8da;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#111;display:inline-block;"></span>Opponents</span>
+                                <span style="font-size:12px;color:#7eb8da;display:flex;align-items:center;gap:6px;"><span style="width:14px;height:14px;border-radius:50%;background:#1a1a1a;border:2px solid #00ff00;display:inline-block;"></span>Puck</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            // Inject mini game styles
+            if (!document.getElementById('mg-styles')) {
+                const style = document.createElement('style');
+                style.id = 'mg-styles';
+                style.textContent = `
+                    @keyframes mgPulse { 0%,100%{opacity:1} 50%{opacity:0.5} }
+                    .mg-topic {
+                        background: linear-gradient(135deg, rgba(0,72,81,0.6), rgba(0,109,117,0.4));
+                        border: 2px solid transparent;
+                        border-radius: 8px;
+                        padding: 6px 12px;
+                        color: #fff;
+                        font-family: inherit;
+                        font-size: 13px;
+                        font-weight: 600;
+                        cursor: pointer;
+                        transition: all 0.2s;
+                    }
+                    .mg-topic:hover { border-color: #00909a; }
+                    .mg-topic.active { border-color: #ea7200; background: linear-gradient(135deg, rgba(234,114,0,0.2), rgba(0,109,117,0.4)); }
+                    #mgDetailsList li { padding: 4px 0 4px 20px; position: relative; }
+                    #mgDetailsList li::before { content: "🏒"; position: absolute; left: 0; font-size: 11px; }
+                `;
+                document.head.appendChild(style);
+            }
+
+            // === Mini Game Engine ===
+            const mgCanvas = document.getElementById('mgCanvas');
+            const mgCtx = mgCanvas.getContext('2d');
+            const TEAL = '#006D75', TEAL_DARK = '#004851', ORANGE = '#EA7200';
+
+            let mgTopic = 'icing', mgFrame = 0, mgPaused = false, mgSpeedVal = 1, mgAnimId = null, mgState = {};
+
+            const mgTopics = {
+                icing: {
+                    title: "Icing", icon: "❄️",
+                    desc: "Icing occurs when a player shoots the puck from behind the center red line, across the opponent's goal line, without it being touched. This results in a stoppage of play and a face-off in the offending team's defensive zone.",
+                    details: ["Puck must cross center line AND goal line","Cannot occur during a power play","Face-off goes to the offending team's zone","Offending team cannot change lines after icing","Helps prevent teams from just dumping the puck"],
+                    dur: 240,
+                    setup: () => ({ players:[{x:150,y:250,team:'home'},{x:650,y:250,team:'away'}], puck:{x:150,y:250}, goalie:{x:730,y:250,team:'away'} }),
+                    animate: (s,f) => {
+                        if(f<60) s.annotations=[{x:150,y:180,text:"Player shoots from defensive zone"}];
+                        else if(f<180){ const t=(f-60)/120; s.puck.x=150+t*600; s.puck.y=250+Math.sin(t*Math.PI)*-30; s.players[1].x=650-t*100;
+                            if(f===100) s.annotations=[{x:400,y:180,text:"Puck crosses center red line"}];
+                            if(f===150) s.annotations=[{x:650,y:180,text:"Puck crosses goal line untouched"}];
+                        } else { s.puck.x=750; s.showIcing=true; s.annotations=[{x:400,y:100,text:"🚨 ICING! Face-off in defensive zone"}]; }
+                        return s;
+                    }
+                },
+                offside: {
+                    title: "Offside", icon: "🚫",
+                    desc: "A player is offside if they enter the offensive zone (cross the blue line) before the puck does. Both of the player's skates must be completely over the blue line.",
+                    details: ["Player's skates cannot cross blue line before puck","Results in a face-off outside the zone","Delayed offside: play continues if players exit zone","Protects against cherry-picking","One of hockey's most important rules"],
+                    dur: 200,
+                    setup: () => ({ players:[{x:350,y:200,team:'home'},{x:620,y:180,team:'home'},{x:550,y:300,team:'away'}], puck:{x:350,y:200} }),
+                    animate: (s,f) => {
+                        if(f<40) s.annotations=[{x:400,y:130,text:"Teammate waiting near opponent's zone"}];
+                        else if(f<100){ const t=(f-40)/60; s.players[1].x=620+t*80; s.annotations=[{x:620,y:130,text:"⚠️ Crosses blue line BEFORE puck!"}]; }
+                        else if(f<150){ const t=(f-100)/50; s.players[0].x=350+t*200; s.puck.x=350+t*200; s.players[1].x=700; }
+                        else { s.showOffside=true; s.annotations=[{x:400,y:100,text:"🚨 OFFSIDE! Puck entered zone after player"}]; }
+                        return s;
+                    }
+                },
+                penalty: {
+                    title: "Penalties", icon: "⏱️",
+                    desc: "When a player breaks the rules, they're sent to the penalty box for 2 minutes (minor) or 5 minutes (major). Their team must play shorthanded during this time.",
+                    details: ["Minor penalty: 2 minutes (tripping, hooking, slashing)","Major penalty: 5 minutes (fighting, boarding)","Double minor: 4 minutes (high-sticking with blood)","Penalty ends early if opponent scores (minor only)","Too many penalties = penalty shot possible"],
+                    dur: 250,
+                    setup: () => ({ players:[{x:400,y:220,team:'home'},{x:430,y:250,team:'away'}], puck:{x:420,y:250} }),
+                    animate: (s,f) => {
+                        if(f<60){ s.annotations=[{x:400,y:150,text:"Player commits a tripping penalty"}]; if(f>30){s.players[1].y=250+(f-30)*2; s.players[1].fallen=true;} }
+                        else if(f<120){ s.annotations=[{x:400,y:150,text:"🚨 Referee calls penalty!"}]; s.showWhistle=true; }
+                        else if(f<200){ const t=(f-120)/80; s.players[0].x=400-t*340; s.players[0].y=220-t*40; s.annotations=[{x:100,y:130,text:"Player goes to penalty box: 2 minutes"}]; }
+                        else { s.players[0].inBox=true; s.annotations=[{x:400,y:100,text:"Team now plays 4 vs 5 (shorthanded)"}]; }
+                        return s;
+                    }
+                },
+                powerplay: {
+                    title: "Power Play", icon: "💪",
+                    desc: "When the opposing team takes a penalty, your team gets a 'power play' - playing with more players (usually 5 vs 4). This is a great scoring opportunity!",
+                    details: ["Usually 5 attackers vs 4 defenders + goalie","Lasts for duration of penalty (2-5 minutes)","If you score, the penalty ends (minor only)","Teams have special 'power play units'","About 20% of power plays result in goals"],
+                    dur: 300,
+                    setup: () => ({ players:[{x:620,y:150,team:'home'},{x:620,y:350,team:'home'},{x:700,y:200,team:'home'},{x:700,y:300,team:'home'},{x:650,y:250,team:'home'},{x:750,y:180,team:'away'},{x:750,y:320,team:'away'},{x:720,y:220,team:'away'},{x:720,y:280,team:'away'}], puck:{x:620,y:150}, goalie:{x:780,y:250,team:'away'} }),
+                    animate: (s,f) => {
+                        if(f<80) s.annotations=[{x:500,y:100,text:"5 vs 4: Power play advantage!"}];
+                        else if(f<180){ const p=Math.floor((f-80)/25)%4; const t=[[620,350],[700,300],[700,200],[620,150]]; s.puck.x=t[p][0]; s.puck.y=t[p][1]; s.annotations=[{x:500,y:100,text:"Moving the puck to find an opening"}]; }
+                        else if(f<250){ const t=(f-180)/70; s.puck.x=650+t*130; s.puck.y=250; s.annotations=[{x:600,y:100,text:"🏒 SHOT!"}]; }
+                        else { s.showGoal=true; s.annotations=[{x:400,y:100,text:"🚨 GOAL! Power play ends, player released"}]; }
+                        return s;
+                    }
+                },
+                penaltykill: {
+                    title: "Penalty Kill", icon: "🛡️",
+                    desc: "When your team takes a penalty, you must 'kill' it by defending with fewer players. A successful penalty kill is a huge momentum boost!",
+                    details: ["Play defense with only 4 skaters","Form a 'box' or 'diamond' formation","Focus on blocking shots and clearing puck","Scoring shorthanded is extra impressive!","Top teams kill ~85% of penalties"],
+                    dur: 280,
+                    setup: () => ({ players:[{x:180,y:180,team:'home'},{x:180,y:320,team:'home'},{x:140,y:220,team:'home'},{x:140,y:280,team:'home'},{x:250,y:150,team:'away'},{x:250,y:350,team:'away'},{x:300,y:200,team:'away'},{x:300,y:300,team:'away'},{x:280,y:250,team:'away'}], puck:{x:280,y:250}, goalie:{x:70,y:250,team:'home'} }),
+                    animate: (s,f) => {
+                        if(f<60) s.annotations=[{x:170,y:100,text:"Box formation protects the goal"}];
+                        else if(f<140){ const t=(f-60)/80; s.puck.x=280+Math.sin(t*Math.PI*2)*30; s.puck.y=250+Math.cos(t*Math.PI*2)*80; s.annotations=[{x:350,y:100,text:"Opponents looking for opening"}]; }
+                        else if(f<200){ const t=(f-140)/60; s.puck.x=280-t*100; s.puck.y=250-t*30; if(f>170){s.showBlock=true; s.puck.x=180; s.puck.y=220; s.annotations=[{x:180,y:150,text:"🛡️ BLOCKED!"}];} }
+                        else { const t=(f-200)/80; s.puck.x=180+t*400; s.annotations=[{x:400,y:100,text:"✅ Puck cleared! Penalty killed!"}]; }
+                        return s;
+                    }
+                },
+                emptynet: {
+                    title: "Empty Net", icon: "🥅",
+                    desc: "When trailing late in a game, a team can 'pull' their goalie for an extra attacker. It's risky - the net is empty - but it's often the only chance to tie!",
+                    details: ["Usually happens in final 1-2 minutes when losing","Adds a 6th attacker for more offense","Very risky - easy goal if opponent gets puck","Empty net goals are common and exciting","Creates desperate, exciting hockey!"],
+                    dur: 300,
+                    setup: () => ({ players:[{x:600,y:150,team:'home'},{x:600,y:350,team:'home'},{x:650,y:200,team:'home'},{x:650,y:300,team:'home'},{x:700,y:250,team:'home'},{x:550,y:250,team:'home'},{x:740,y:200,team:'away'},{x:740,y:300,team:'away'}], puck:{x:600,y:150}, goalie:{x:70,y:250,team:'home',pulled:false}, goalieAway:{x:780,y:250,team:'away'} }),
+                    animate: (s,f) => {
+                        if(f<80){ s.goalie.pulled=true; s.annotations=[{x:100,y:180,text:"Goalie pulled! Net is EMPTY! 😱"}]; }
+                        else if(f<150){ s.players[5].x=550+(f-80)*1.5; s.annotations=[{x:550,y:100,text:"6 attackers vs 5! Extra player joins rush"}]; }
+                        else if(f<220){ s.annotations=[{x:700,y:100,text:"⚠️ TURNOVER! Opponent has the puck!"}]; const t=(f-150)/70; s.puck.x=700-t*500; s.players[6].x=740-t*500; }
+                        else { s.showEmptyNetGoal=true; s.puck.x=50; s.annotations=[{x:300,y:100,text:"🚨 EMPTY NET GOAL! That's the risk!"}]; }
+                        return s;
+                    }
+                },
+                faceoff: {
+                    title: "Face-Off", icon: "⭕",
+                    desc: "A face-off is how play begins or resumes. Two players battle for the puck when the referee drops it. Winning face-offs gives your team possession!",
+                    details: ["Happens at start of periods and after stoppages","Centers usually take face-offs","9 face-off dots on the rink","Winner can direct puck to teammates","Face-off wins are tracked as a key stat"],
+                    dur: 180,
+                    setup: () => ({ players:[{x:395,y:240,team:'home'},{x:405,y:260,team:'away'},{x:350,y:180,team:'home'},{x:350,y:320,team:'home'},{x:450,y:180,team:'away'},{x:450,y:320,team:'away'}], puck:{x:400,y:250,held:true} }),
+                    animate: (s,f) => {
+                        if(f<60) s.annotations=[{x:400,y:150,text:"Players line up. Referee holds puck."}];
+                        else if(f<90){ s.annotations=[{x:400,y:150,text:"Puck drops!"}]; s.puck.held=false; s.puck.y=250+(f-60); }
+                        else if(f<120){ s.players[0].x=398; s.players[1].x=402; s.annotations=[{x:400,y:150,text:"Centers battle for the puck!"}]; }
+                        else { s.puck.x=350; s.puck.y=180; s.annotations=[{x:400,y:100,text:"✅ Face-off won! Puck to teammate!"}]; }
+                        return s;
+                    }
+                },
+                linechange: {
+                    title: "Line Change", icon: "🔄",
+                    desc: "Hockey is exhausting! Players only play 30-45 second 'shifts' before substituting. Teams have multiple 'lines' of players who rotate throughout the game.",
+                    details: ["Players change 'on the fly' during play","Each shift is about 30-45 seconds","Teams have 4 forward lines and 3 defense pairs","Wrong timing = too many men penalty","Bench is along the side of the rink"],
+                    dur: 240,
+                    setup: () => ({ players:[{x:300,y:200,team:'home',label:'Line 1'},{x:350,y:250,team:'home',label:'Line 1'},{x:300,y:300,team:'home',label:'Line 1'},{x:50,y:420,team:'home',label:'Line 2'},{x:80,y:420,team:'home',label:'Line 2'},{x:110,y:420,team:'home',label:'Line 2'}], puck:{x:500,y:250}, bench:{x:30,y:380,w:120,h:100} }),
+                    animate: (s,f) => {
+                        if(f<60) s.annotations=[{x:320,y:130,text:"Line 1 is tired after their shift"}];
+                        else if(f<140){ const t=(f-60)/80;
+                            s.players[0].x=300-t*250; s.players[0].y=200+t*180;
+                            s.players[1].x=350-t*280; s.players[1].y=250+t*140;
+                            s.players[2].x=300-t*220; s.players[2].y=300+t*100;
+                            s.players[3].x=50+t*250; s.players[3].y=420-t*220;
+                            s.players[4].x=80+t*270; s.players[4].y=420-t*170;
+                            s.players[5].x=110+t*190; s.players[5].y=420-t*120;
+                            s.annotations=[{x:200,y:100,text:"🔄 Line change! Fresh legs coming on!"}];
+                        } else s.annotations=[{x:300,y:100,text:"✅ Line 2 now on the ice!"}];
+                        return s;
+                    }
+                },
+                zones: {
+                    title: "The 3 Zones", icon: "📍",
+                    desc: "The rink is divided into three zones by the two blue lines. Understanding zones is key to understanding offside and hockey strategy!",
+                    details: ["Defensive zone: Protect your goal","Neutral zone: Middle of the ice","Offensive zone: Attack opponent's goal","Blue lines separate the zones","Zones flip depending on direction"],
+                    dur: 200,
+                    setup: () => ({ players:[], puck:{x:400,y:250,hidden:true}, showZones:true }),
+                    animate: (s,f) => {
+                        if(f<70){ s.highlightZone='defensive'; s.annotations=[{x:130,y:100,text:"DEFENSIVE ZONE: Protect your goal!"}]; }
+                        else if(f<140){ s.highlightZone='neutral'; s.annotations=[{x:400,y:100,text:"NEUTRAL ZONE: Transition area"}]; }
+                        else { s.highlightZone='offensive'; s.annotations=[{x:670,y:100,text:"OFFENSIVE ZONE: Attack!"}]; }
+                        return s;
+                    }
+                },
+                goal: {
+                    title: "Scoring a Goal", icon: "🚨",
+                    desc: "A goal is scored when the puck completely crosses the goal line between the posts and under the crossbar. The red light goes on and the crowd goes wild!",
+                    details: ["Puck must FULLY cross the goal line","Can't be kicked in deliberately","Can't be batted in with high stick","Goals can be reviewed by video","Net knocked off = no goal"],
+                    dur: 200,
+                    setup: () => ({ players:[{x:550,y:250,team:'home'}], puck:{x:550,y:250}, goalie:{x:780,y:250,team:'away'} }),
+                    animate: (s,f) => {
+                        if(f<60) s.annotations=[{x:550,y:180,text:"Player winds up for a shot..."}];
+                        else if(f<120){ const t=(f-60)/60; s.puck.x=550+t*250; s.puck.y=250+Math.sin(t*Math.PI)*-40; s.annotations=[{x:650,y:150,text:"🏒 SHOOTS!"}]; }
+                        else if(f<150){ s.puck.x=790; s.puck.y=230; s.annotations=[{x:700,y:150,text:"Puck crosses the line!"}]; }
+                        else { s.showGoal=true; s.annotations=[{x:400,y:80,text:"🚨 GOAL! The red light is ON! 🎉"}]; }
+                        return s;
+                    }
+                },
+                assist: {
+                    title: "Assists", icon: "🤝",
+                    desc: "The last two players to touch the puck before a goal (other than the scorer) get 'assists'. Great playmakers rack up lots of assists!",
+                    details: ["Maximum 2 assists per goal","Primary assist: last pass before goal","Secondary assist: pass before that","Assists count as points (Goals + Assists)","Some players specialize in assists"],
+                    dur: 240,
+                    setup: () => ({ players:[{x:300,y:350,team:'home',label:'2nd Assist'},{x:500,y:200,team:'home',label:'1st Assist'},{x:650,y:280,team:'home',label:'Goal!'}], puck:{x:300,y:350}, goalie:{x:780,y:250,team:'away'} }),
+                    animate: (s,f) => {
+                        if(f<60) s.annotations=[{x:300,y:300,text:"Player 1 has puck (will get 2nd assist)"}];
+                        else if(f<120){ const t=(f-60)/60; s.puck.x=300+t*200; s.puck.y=350-t*150; s.annotations=[{x:400,y:180,text:"Pass to Player 2 (will get 1st assist)"}]; }
+                        else if(f<180){ const t=(f-120)/60; s.puck.x=500+t*150; s.puck.y=200+t*80; s.annotations=[{x:580,y:180,text:"Pass to Player 3 (will score!)"}]; }
+                        else if(f<220){ const t=(f-180)/40; s.puck.x=650+t*140; s.puck.y=280-t*30; }
+                        else { s.showGoal=true; s.annotations=[{x:400,y:80,text:"🚨 GOAL! 1 goal + 2 assists = 3 points"}]; }
+                        return s;
+                    }
+                },
+                crease: {
+                    title: "The Crease", icon: "🔵",
+                    desc: "The blue painted area in front of the goal is the 'crease' - the goalie's protected space. Players can't interfere with the goalie here!",
+                    details: ["Goalie has special protection in crease","Attackers can't camp in the crease","Goals can be disallowed for crease violations","Goalie can freeze puck for face-off","Crease is 6 feet wide"],
+                    dur: 200,
+                    setup: () => ({ players:[{x:600,y:250,team:'home'}], puck:{x:600,y:250}, goalie:{x:780,y:250,team:'away'}, highlightCrease:true }),
+                    animate: (s,f) => {
+                        if(f<80){ s.annotations=[{x:760,y:150,text:"The CREASE: Goalie's protected area"}]; s.creaseGlow=true; }
+                        else if(f<140){ const t=(f-80)/60; s.players[0].x=600+t*150; s.annotations=[{x:680,y:180,text:"⚠️ Attacker entering crease..."}]; }
+                        else { s.showCreaseViolation=true; s.annotations=[{x:600,y:100,text:"🚫 Can't interfere with goalie in crease!"}]; }
+                        return s;
+                    }
+                }
+            };
+
+            function mgDrawRink() {
+                const c = mgCtx, w = mgCanvas.width, h = mgCanvas.height;
+                c.fillStyle='#e8f4f8'; c.fillRect(0,0,w,h);
+                c.strokeStyle='rgba(200,220,230,0.3)';
+                for(let i=0;i<20;i++){c.beginPath();c.moveTo(Math.random()*w,Math.random()*h);c.lineTo(Math.random()*w,Math.random()*h);c.stroke();}
+                c.strokeStyle='#cc0000';c.lineWidth=4;c.beginPath();c.moveTo(w/2,30);c.lineTo(w/2,h-30);c.stroke();
+                c.strokeStyle='#0066cc';c.lineWidth=5;
+                c.beginPath();c.moveTo(230,30);c.lineTo(230,h-30);c.stroke();
+                c.beginPath();c.moveTo(570,30);c.lineTo(570,h-30);c.stroke();
+                c.strokeStyle='#cc0000';c.lineWidth=3;
+                c.beginPath();c.moveTo(70,30);c.lineTo(70,h-30);c.stroke();
+                c.beginPath();c.moveTo(730,30);c.lineTo(730,h-30);c.stroke();
+                c.strokeStyle='#cc0000';c.lineWidth=3;c.beginPath();c.arc(w/2,h/2,50,0,Math.PI*2);c.stroke();
+                c.fillStyle='#cc0000';c.beginPath();c.arc(w/2,h/2,6,0,Math.PI*2);c.fill();
+                [{x:140,y:140},{x:140,y:360},{x:660,y:140},{x:660,y:360}].forEach(s=>{
+                    c.strokeStyle='#cc0000';c.lineWidth=2;c.beginPath();c.arc(s.x,s.y,35,0,Math.PI*2);c.stroke();
+                    c.fillStyle='#cc0000';c.beginPath();c.arc(s.x,s.y,5,0,Math.PI*2);c.fill();
+                });
+                [{x:260,y:250},{x:540,y:250}].forEach(s=>{c.fillStyle='#cc0000';c.beginPath();c.arc(s.x,s.y,5,0,Math.PI*2);c.fill();});
+                c.fillStyle='rgba(100,150,255,0.3)';
+                c.beginPath();c.ellipse(70,h/2,35,45,0,-Math.PI/2,Math.PI/2);c.fill();
+                c.beginPath();c.ellipse(730,h/2,35,45,0,Math.PI/2,-Math.PI/2);c.fill();
+                c.fillStyle='#fff';c.fillRect(45,h/2-30,25,60);c.fillRect(730,h/2-30,25,60);
+                c.strokeStyle='#cc0000';c.lineWidth=3;c.strokeRect(45,h/2-30,25,60);c.strokeRect(730,h/2-30,25,60);
+                c.strokeStyle='#bbb';c.lineWidth=1;
+                for(let i=0;i<6;i++){c.beginPath();c.moveTo(45+i*5,h/2-30);c.lineTo(45+i*5,h/2+30);c.stroke();c.beginPath();c.moveTo(730+i*5,h/2-30);c.lineTo(730+i*5,h/2+30);c.stroke();}
+                c.font='40px Arial';c.textAlign='center';c.globalAlpha=0.15;c.fillStyle=TEAL;c.fillText('🦈',w/2,h/2+12);c.globalAlpha=1;
+            }
+
+            function mgDrawPlayer(x,y,team,opts={}) {
+                const c = mgCtx;
+                c.save();c.translate(x,y);
+                c.fillStyle='rgba(0,0,0,0.15)';c.beginPath();c.ellipse(2,18,14,5,0,0,Math.PI*2);c.fill();
+                if(opts.fallen) c.rotate(Math.PI/2);
+                if(opts.inBox) c.globalAlpha=0.4;
+                c.fillStyle=team==='home'?TEAL:'#111';c.beginPath();c.ellipse(0,0,12,16,0,0,Math.PI*2);c.fill();
+                c.fillStyle=team==='home'?ORANGE:'#666';c.fillRect(-9,-2,18,4);
+                c.fillStyle=team==='home'?TEAL_DARK:'#222';c.beginPath();c.arc(0,-10,8,0,Math.PI*2);c.fill();
+                if(opts.label){c.font='bold 10px sans-serif';c.textAlign='center';c.fillStyle='#fff';c.fillText(opts.label,0,30);}
+                c.restore();
+            }
+
+            function mgDrawGoalie(x,y,team,pulled) {
+                if(pulled) return;
+                const c = mgCtx;
+                c.save();c.translate(x,y);
+                c.fillStyle='rgba(0,0,0,0.15)';c.beginPath();c.ellipse(2,25,20,6,0,0,Math.PI*2);c.fill();
+                c.fillStyle='#f5f5f5';c.fillRect(-20,-5,15,35);c.fillRect(5,-5,15,35);
+                c.fillStyle=team==='home'?TEAL:'#111';c.beginPath();c.ellipse(0,0,18,22,0,0,Math.PI*2);c.fill();
+                c.fillStyle='#f0f0f0';c.beginPath();c.ellipse(0,-15,10,12,0,0,Math.PI*2);c.fill();
+                c.fillStyle='#333';c.fillRect(-5,-18,3,6);c.fillRect(2,-18,3,6);
+                c.restore();
+            }
+
+            function mgDrawPuck(x,y,hidden) {
+                if(hidden) return;
+                const c = mgCtx;
+                c.fillStyle='#111';c.beginPath();c.ellipse(x,y,10,7,0,0,Math.PI*2);c.fill();
+                c.fillStyle='#1a1a1a';c.beginPath();c.ellipse(x,y-2,10,7,0,0,Math.PI*2);c.fill();
+                c.strokeStyle='#00ff00';c.lineWidth=2;c.beginPath();c.ellipse(x,y-1,12,9,0,0,Math.PI*2);c.stroke();
+            }
+
+            function mgDrawAnnotations(anns) {
+                const c = mgCtx;
+                anns.forEach(a => {
+                    c.font='bold 13px sans-serif'; const tw=c.measureText(a.text).width;
+                    const bx=a.x-tw/2-10, by=a.y-25, bw=tw+20, bh=30;
+                    c.fillStyle='rgba(0,0,0,0.85)';c.strokeStyle=ORANGE;c.lineWidth=2;
+                    c.beginPath();c.roundRect(bx,by,bw,bh,6);c.fill();c.stroke();
+                    c.fillStyle=ORANGE;c.beginPath();c.moveTo(a.x-8,by+bh);c.lineTo(a.x,by+bh+8);c.lineTo(a.x+8,by+bh);c.closePath();c.fill();
+                    c.fillStyle='#fff';c.textAlign='center';c.fillText(a.text,a.x,by+20);
+                });
+            }
+
+            function mgDrawEffects(s) {
+                const c=mgCtx, w=mgCanvas.width, h=mgCanvas.height;
+                if(s.showIcing){c.fillStyle='rgba(0,100,255,0.3)';c.fillRect(570,0,230,h);c.font='bold 48px sans-serif';c.fillStyle='#0066cc';c.textAlign='center';c.fillText('ICING',680,h/2);}
+                if(s.showOffside){c.fillStyle='rgba(255,0,0,0.3)';c.fillRect(570,0,230,h);c.font='bold 42px sans-serif';c.fillStyle='#cc0000';c.textAlign='center';c.fillText('OFFSIDE',680,h/2);}
+                if(s.showGoal){c.fillStyle='rgba(255,0,0,0.2)';c.fillRect(0,0,w,h);c.fillStyle=`rgba(255,0,0,${0.5+Math.sin(Date.now()/100)*0.3})`;c.beginPath();c.arc(750,80,20,0,Math.PI*2);c.fill();c.font='bold 64px sans-serif';c.fillStyle='#ff0000';c.textAlign='center';c.strokeStyle='#fff';c.lineWidth=4;c.strokeText('GOAL!',w/2,h/2);c.fillText('GOAL!',w/2,h/2);}
+                if(s.showWhistle){c.font='bold 36px sans-serif';c.fillStyle='#333';c.textAlign='center';c.fillText('🚨 PENALTY!',w/2,h/2+50);}
+                if(s.showBlock){c.font='bold 32px sans-serif';c.fillStyle=TEAL;c.textAlign='center';c.fillText('BLOCKED!',180,h/2-50);}
+                if(s.creaseGlow){c.strokeStyle=`rgba(0,100,255,${0.5+Math.sin(Date.now()/200)*0.3})`;c.lineWidth=4;c.beginPath();c.ellipse(730,h/2,38,48,0,Math.PI/2,-Math.PI/2);c.stroke();}
+                if(s.showEmptyNetGoal){c.font='bold 48px sans-serif';c.fillStyle='#cc0000';c.textAlign='center';c.fillText('EMPTY NET!',w/2,h/2);}
+                if(s.highlightZone){
+                    c.globalAlpha=0.25;
+                    if(s.highlightZone==='defensive'){c.fillStyle='#ff6666';c.fillRect(0,0,230,h);}
+                    else if(s.highlightZone==='neutral'){c.fillStyle='#ffff66';c.fillRect(230,0,340,h);}
+                    else{c.fillStyle='#66ff66';c.fillRect(570,0,230,h);}
+                    c.globalAlpha=1;
+                    c.font='bold 18px sans-serif';c.textAlign='center';c.fillStyle='#333';
+                    c.fillText('DEFENSIVE',115,h-15);c.fillText('NEUTRAL',400,h-15);c.fillText('OFFENSIVE',685,h-15);
+                }
+                if(s.players?.some(p=>p.inBox)){c.fillStyle='rgba(100,100,100,0.5)';c.fillRect(30,150,50,80);c.strokeStyle='#666';c.lineWidth=2;c.strokeRect(30,150,50,80);c.font='bold 10px sans-serif';c.fillStyle='#333';c.textAlign='center';c.fillText('PENALTY',55,145);c.fillText('BOX',55,157);}
+                if(s.bench){c.fillStyle='rgba(80,80,80,0.6)';c.fillRect(s.bench.x,s.bench.y,s.bench.w,s.bench.h);c.strokeStyle='#555';c.lineWidth=2;c.strokeRect(s.bench.x,s.bench.y,s.bench.w,s.bench.h);c.font='bold 11px sans-serif';c.fillStyle='#fff';c.textAlign='center';c.fillText('BENCH',s.bench.x+s.bench.w/2,s.bench.y-5);}
+            }
+
+            function mgRender(s) {
+                const c=mgCtx, w=mgCanvas.width, h=mgCanvas.height;
+                c.clearRect(0,0,w,h);
+                mgDrawRink();
+                mgDrawEffects(s);
+                if(s.goalie) mgDrawGoalie(s.goalie.x,s.goalie.y,s.goalie.team,s.goalie.pulled);
+                if(s.goalieAway) mgDrawGoalie(s.goalieAway.x,s.goalieAway.y,s.goalieAway.team);
+                if(s.players) s.players.forEach(p=>mgDrawPlayer(p.x,p.y,p.team,{fallen:p.fallen,inBox:p.inBox,label:p.label}));
+                if(s.puck&&!s.puck.hidden) mgDrawPuck(s.puck.x,s.puck.y);
+                if(s.annotations) mgDrawAnnotations(s.annotations);
+                c.strokeStyle='#5C3317';c.lineWidth=8;c.beginPath();c.roundRect(0,0,w,h,50);c.stroke();
+            }
+
+            function mgAnimate() {
+                if(!document.getElementById('mgCanvas')) return; // Tab switched away
+                if(!mgPaused) {
+                    const topic = mgTopics[mgTopic];
+                    if(mgFrame===0) mgState = topic.setup();
+                    mgState = topic.animate(mgState, mgFrame);
+                    mgRender(mgState);
+                    mgFrame += mgSpeedVal;
+                    if(mgFrame >= topic.dur) mgFrame = topic.dur - 1;
+                }
+                mgAnimId = requestAnimationFrame(mgAnimate);
+            }
+
+            function mgStart(id) {
+                mgTopic = id; mgFrame = 0; mgPaused = false;
+                const t = mgTopics[id];
+                document.getElementById('mgTitle').innerHTML = t.icon + ' ' + t.title;
+                document.getElementById('mgDesc').textContent = t.desc;
+                document.getElementById('mgDetailsList').innerHTML = t.details.map(d=>'<li>'+d+'</li>').join('');
+                document.getElementById('mgStatusText').textContent = 'Playing: ' + t.title;
+                document.getElementById('mgPause').textContent = '⏸️ Pause';
+                document.querySelectorAll('.mg-topic').forEach(b=>b.classList.toggle('active',b.dataset.mg===id));
+            }
+
+            // Wire up events
+            document.querySelectorAll('.mg-topic').forEach(b => b.addEventListener('click', () => mgStart(b.dataset.mg)));
+            document.getElementById('mgReplay').addEventListener('click', () => { mgFrame=0; mgPaused=false; document.getElementById('mgPause').textContent='⏸️ Pause'; });
+            document.getElementById('mgPause').addEventListener('click', () => {
+                mgPaused=!mgPaused;
+                document.getElementById('mgPause').textContent = mgPaused ? '▶️ Play' : '⏸️ Pause';
+                document.getElementById('mgStatusText').textContent = mgPaused ? 'Paused' : 'Playing: '+mgTopics[mgTopic].title;
+            });
+            document.getElementById('mgSpeed').addEventListener('input', e => {
+                mgSpeedVal = parseFloat(e.target.value);
+                document.getElementById('mgSpeedVal').textContent = mgSpeedVal+'x';
+            });
+
+            // Start
+            mgStart('icing');
+            if(mgAnimId) cancelAnimationFrame(mgAnimId);
+            mgAnimate();
+        }
+
         async function loadSchedule() {
             browseSection.innerHTML = `
                 <div class="result-card">
