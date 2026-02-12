@@ -1850,13 +1850,8 @@
                             <text x="115" y="238" text-anchor="middle" fill="#c8e6c9" font-size="10" class="home-zone-sublabel">Learn the lingo</text>
                         </g>
 
-                        <!-- CENTER ICE - Stats -->
-                        <g class="home-zone" onclick="switchToTab('stats')" style="cursor:pointer">
-                            <circle cx="350" cy="220" r="62" fill="#4a2a7a" opacity="0.4"/>
-                            <text x="350" y="205" text-anchor="middle" fill="white" font-size="36" class="home-zone-icon">📊</text>
-                            <text x="350" y="238" text-anchor="middle" fill="white" font-size="14" font-weight="bold" class="home-zone-label">STATS</text>
-                            <text x="350" y="258" text-anchor="middle" fill="#d1c4e9" font-size="10" class="home-zone-sublabel">Decode the numbers</text>
-                        </g>
+                        <!-- CENTER ICE - Sharks Logo -->
+                        <text x="350" y="232" text-anchor="middle" font-size="56" opacity="0.7">🦈</text>
 
                         <!-- OFFENSIVE ZONE - right (Mini Games) -->
                         <g class="home-zone" onclick="switchToTab('minigames')" style="cursor:pointer">
@@ -1870,11 +1865,15 @@
                         <g class="home-zone" onclick="switchToTab('rink')" style="cursor:pointer">
                             <rect x="130" y="48" width="140" height="55" rx="10" ry="10" fill="#006d75" opacity="0.6"/>
                             <text x="200" y="72" text-anchor="middle" fill="white" font-size="22" class="home-zone-icon">🧊</text>
-                            <text x="200" y="94" text-anchor="middle" fill="white" font-size="12" font-weight="bold" class="home-zone-label">THE RINK</text>
+                            <text x="200" y="94" text-anchor="middle" fill="white" font-size="11" font-weight="bold" class="home-zone-label">LEARN THE RINK</text>
                         </g>
 
-                        <!-- BENCH AREA - top right (placeholder for symmetry) -->
-                        <rect x="430" y="48" width="140" height="55" rx="10" ry="10" fill="#006d75" opacity="0.15"/>
+                        <!-- BENCH AREA - top right (Stats) -->
+                        <g class="home-zone" onclick="switchToTab('stats')" style="cursor:pointer">
+                            <rect x="430" y="48" width="140" height="55" rx="10" ry="10" fill="#4a2a7a" opacity="0.6"/>
+                            <text x="500" y="72" text-anchor="middle" fill="white" font-size="22" class="home-zone-icon">📊</text>
+                            <text x="500" y="94" text-anchor="middle" fill="white" font-size="12" font-weight="bold" class="home-zone-label">STATS</text>
+                        </g>
 
                         <!-- Goal creases -->
                         <rect x="20" y="190" width="14" height="60" rx="4" fill="#cc3333" opacity="0.3"/>
@@ -1899,12 +1898,6 @@
                         </circle>
                     </svg>
 
-                    <div style="text-align:center;margin-top:20px;">
-                        <p style="color:#5a7a9a;font-size:0.85rem;margin-bottom:12px;">Or jump right in:</p>
-                        <input type="text" id="home-search" placeholder="Search any hockey term..."
-                               style="padding:10px 16px;border-radius:20px;border:2px solid #2a4a6a;background:#0d2137;color:#e8f4f8;font-size:0.95rem;width:280px;outline:none;"
-                               onkeypress="if(event.key==='Enter'){switchToTab('dictionary');searchInput.value=this.value;filterDictionary(this.value);}"/>
-                    </div>
                 </div>
             `;
         }
