@@ -1821,69 +1821,89 @@
             browseSection.innerHTML = `
                 <div class="home-rink-container">
                     <h2 style="text-align:center;color:#e8f4f8;margin-bottom:8px;font-size:1.5rem;">Welcome to Hockey for Dummies</h2>
-                    <p style="text-align:center;color:#7eb8da;margin-bottom:24px;font-size:1rem;">Click a zone on the rink to start learning!</p>
+                    <p style="text-align:center;color:#7eb8da;margin-bottom:24px;font-size:1rem;">A starting lineup on the ice — click any player to learn more!</p>
 
-                    <svg viewBox="0 0 700 450" class="home-rink-svg" xmlns="http://www.w3.org/2000/svg">
+                    <svg viewBox="0 0 700 420" class="home-rink-svg" xmlns="http://www.w3.org/2000/svg">
+                        <defs>
+                            <filter id="playerGlow">
+                                <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#00b4be" flood-opacity="0.6"/>
+                            </filter>
+                        </defs>
+
                         <!-- Rink outline -->
-                        <rect x="10" y="40" width="680" height="360" rx="100" ry="100"
+                        <rect x="10" y="10" width="680" height="400" rx="100" ry="100"
                               fill="#d4e9f7" stroke="#446688" stroke-width="3"/>
                         <!-- Center red line -->
-                        <line x1="350" y1="40" x2="350" y2="400" stroke="#cc3333" stroke-width="4" opacity="0.5"/>
+                        <line x1="350" y1="10" x2="350" y2="410" stroke="#cc3333" stroke-width="4" opacity="0.4"/>
                         <!-- Blue lines -->
-                        <line x1="220" y1="40" x2="220" y2="400" stroke="#2266aa" stroke-width="3" opacity="0.4"/>
-                        <line x1="480" y1="40" x2="480" y2="400" stroke="#2266aa" stroke-width="3" opacity="0.4"/>
+                        <line x1="220" y1="10" x2="220" y2="410" stroke="#2266aa" stroke-width="3" opacity="0.3"/>
+                        <line x1="480" y1="10" x2="480" y2="410" stroke="#2266aa" stroke-width="3" opacity="0.3"/>
                         <!-- Center circle -->
-                        <circle cx="350" cy="220" r="50" fill="none" stroke="#cc3333" stroke-width="2" opacity="0.4"/>
-
-                        <!-- SCOREBOARD / SHARKS - above rink -->
-                        <g class="home-zone" onclick="switchToTab('sharks')" style="cursor:pointer">
-                            <rect x="240" y="0" width="220" height="42" rx="8" ry="8" fill="#006d75" stroke="#00b4be" stroke-width="1.5" opacity="0.95"/>
-                            <text x="350" y="17" text-anchor="middle" fill="#ffd700" font-size="16" font-weight="bold" class="home-zone-icon">🦈</text>
-                            <text x="350" y="34" text-anchor="middle" fill="#e8f4f8" font-size="11" font-weight="bold" class="home-zone-label">MEET THE SHARKS</text>
-                        </g>
-
-                        <!-- DEFENSIVE ZONE - left (Dictionary) -->
-                        <g class="home-zone" onclick="switchToTab('dictionary')" style="cursor:pointer">
-                            <rect x="30" y="100" width="170" height="200" rx="50" ry="50" fill="#1a5c3a" opacity="0.35"/>
-                            <text x="115" y="185" text-anchor="middle" fill="white" font-size="36" class="home-zone-icon">📖</text>
-                            <text x="115" y="218" text-anchor="middle" fill="white" font-size="14" font-weight="bold" class="home-zone-label">DICTIONARY</text>
-                            <text x="115" y="238" text-anchor="middle" fill="#c8e6c9" font-size="10" class="home-zone-sublabel">Learn the lingo</text>
-                        </g>
-
-                        <!-- CENTER ICE - Sharks Logo -->
-                        <text x="350" y="232" text-anchor="middle" font-size="56" opacity="0.7">🦈</text>
-
-                        <!-- OFFENSIVE ZONE - right (Mini Games) -->
-                        <g class="home-zone" onclick="switchToTab('minigames')" style="cursor:pointer">
-                            <rect x="500" y="100" width="170" height="200" rx="50" ry="50" fill="#5c1a1a" opacity="0.35"/>
-                            <text x="585" y="185" text-anchor="middle" fill="white" font-size="36" class="home-zone-icon">🎮</text>
-                            <text x="585" y="218" text-anchor="middle" fill="white" font-size="14" font-weight="bold" class="home-zone-label">MINI GAMES</text>
-                            <text x="585" y="238" text-anchor="middle" fill="#ffcdd2" font-size="10" class="home-zone-sublabel">Learn by playing</text>
-                        </g>
-
-                        <!-- BENCH AREA - top left (Rink) -->
-                        <g class="home-zone" onclick="switchToTab('rink')" style="cursor:pointer">
-                            <rect x="130" y="48" width="140" height="55" rx="10" ry="10" fill="#006d75" opacity="0.6"/>
-                            <text x="200" y="72" text-anchor="middle" fill="white" font-size="22" class="home-zone-icon">🧊</text>
-                            <text x="200" y="94" text-anchor="middle" fill="white" font-size="11" font-weight="bold" class="home-zone-label">LEARN THE RINK</text>
-                        </g>
-
-                        <!-- BENCH AREA - top right (Stats) -->
-                        <g class="home-zone" onclick="switchToTab('stats')" style="cursor:pointer">
-                            <rect x="430" y="48" width="140" height="55" rx="10" ry="10" fill="#4a2a7a" opacity="0.6"/>
-                            <text x="500" y="72" text-anchor="middle" fill="white" font-size="22" class="home-zone-icon">📊</text>
-                            <text x="500" y="94" text-anchor="middle" fill="white" font-size="12" font-weight="bold" class="home-zone-label">STATS</text>
-                        </g>
-
+                        <circle cx="350" cy="210" r="50" fill="none" stroke="#cc3333" stroke-width="2" opacity="0.3"/>
+                        <!-- Faceoff dots -->
+                        <circle cx="160" cy="130" r="5" fill="#cc3333" opacity="0.3"/>
+                        <circle cx="160" cy="290" r="5" fill="#cc3333" opacity="0.3"/>
+                        <circle cx="540" cy="130" r="5" fill="#cc3333" opacity="0.3"/>
+                        <circle cx="540" cy="290" r="5" fill="#cc3333" opacity="0.3"/>
                         <!-- Goal creases -->
-                        <rect x="20" y="190" width="14" height="60" rx="4" fill="#cc3333" opacity="0.3"/>
-                        <rect x="666" y="190" width="14" height="60" rx="4" fill="#cc3333" opacity="0.3"/>
+                        <path d="M28,185 Q42,170 42,210 Q42,250 28,235" fill="rgba(100,160,255,0.2)" stroke="#4a90c2" stroke-width="1.5"/>
+                        <path d="M672,185 Q658,170 658,210 Q658,250 672,235" fill="rgba(100,160,255,0.2)" stroke="#4a90c2" stroke-width="1.5"/>
+                        <!-- Goal nets -->
+                        <rect x="10" y="192" width="16" height="36" rx="3" fill="none" stroke="#cc3333" stroke-width="2" opacity="0.5"/>
+                        <rect x="674" y="192" width="16" height="36" rx="3" fill="none" stroke="#cc3333" stroke-width="2" opacity="0.5"/>
 
-                        <!-- SCHEDULE - bottom of rink -->
-                        <g class="home-zone" onclick="switchToTab('schedule')" style="cursor:pointer">
-                            <rect x="240" y="402" width="220" height="38" rx="8" ry="8" fill="#1a3a5c" stroke="#4a90c2" stroke-width="1.5" opacity="0.95"/>
-                            <text x="350" y="426" text-anchor="middle" fill="#e8f4f8" font-size="12" font-weight="bold" class="home-zone-label">📅  SCHEDULE</text>
+                        <!-- ====== PLAYERS ====== -->
+
+                        <!-- GOALIE: Yaroslav Askarov #30 -->
+                        <g class="home-zone" onclick="switchToTab('sharks')" style="cursor:pointer">
+                            <circle cx="65" cy="210" r="26" fill="#006d75" stroke="#00b4be" stroke-width="2.5" filter="url(#playerGlow)"/>
+                            <text x="65" y="216" text-anchor="middle" fill="white" font-size="16" font-weight="bold" style="pointer-events:none;">30</text>
+                            <text x="65" y="250" text-anchor="middle" fill="#1a3a5c" font-size="10" font-weight="700" style="pointer-events:none;">ASKAROV</text>
+                            <text x="65" y="262" text-anchor="middle" fill="#446688" font-size="8" style="pointer-events:none;">Goalie</text>
                         </g>
+
+                        <!-- LEFT DEFENSE: Mario Ferraro #38 -->
+                        <g class="home-zone" onclick="switchToTab('sharks')" style="cursor:pointer">
+                            <circle cx="195" cy="290" r="24" fill="#006d75" stroke="#00b4be" stroke-width="2.5" filter="url(#playerGlow)"/>
+                            <text x="195" y="296" text-anchor="middle" fill="white" font-size="15" font-weight="bold" style="pointer-events:none;">38</text>
+                            <text x="195" y="328" text-anchor="middle" fill="#1a3a5c" font-size="10" font-weight="700" style="pointer-events:none;">FERRARO</text>
+                            <text x="195" y="340" text-anchor="middle" fill="#446688" font-size="8" style="pointer-events:none;">Defense</text>
+                        </g>
+
+                        <!-- RIGHT DEFENSE: Sam Dickinson #6 -->
+                        <g class="home-zone" onclick="switchToTab('sharks')" style="cursor:pointer">
+                            <circle cx="195" cy="130" r="24" fill="#006d75" stroke="#00b4be" stroke-width="2.5" filter="url(#playerGlow)"/>
+                            <text x="195" y="136" text-anchor="middle" fill="white" font-size="15" font-weight="bold" style="pointer-events:none;">6</text>
+                            <text x="195" y="168" text-anchor="middle" fill="#1a3a5c" font-size="10" font-weight="700" style="pointer-events:none;">DICKINSON</text>
+                            <text x="195" y="180" text-anchor="middle" fill="#446688" font-size="8" style="pointer-events:none;">Defense</text>
+                        </g>
+
+                        <!-- CENTER: Macklin Celebrini #71 -->
+                        <g class="home-zone" onclick="switchToTab('sharks')" style="cursor:pointer">
+                            <circle cx="370" cy="210" r="28" fill="#006d75" stroke="#ffd700" stroke-width="3" filter="url(#playerGlow)"/>
+                            <text x="370" y="216" text-anchor="middle" fill="white" font-size="17" font-weight="bold" style="pointer-events:none;">71</text>
+                            <text x="370" y="252" text-anchor="middle" fill="#1a3a5c" font-size="11" font-weight="700" style="pointer-events:none;">CELEBRINI</text>
+                            <text x="370" y="264" text-anchor="middle" fill="#446688" font-size="8" style="pointer-events:none;">Center</text>
+                        </g>
+
+                        <!-- LEFT WING: Kiefer Sherwood #44 -->
+                        <g class="home-zone" onclick="switchToTab('sharks')" style="cursor:pointer">
+                            <circle cx="510" cy="310" r="24" fill="#006d75" stroke="#00b4be" stroke-width="2.5" filter="url(#playerGlow)"/>
+                            <text x="510" y="316" text-anchor="middle" fill="white" font-size="15" font-weight="bold" style="pointer-events:none;">44</text>
+                            <text x="510" y="348" text-anchor="middle" fill="#1a3a5c" font-size="10" font-weight="700" style="pointer-events:none;">SHERWOOD</text>
+                            <text x="510" y="360" text-anchor="middle" fill="#446688" font-size="8" style="pointer-events:none;">Left Wing</text>
+                        </g>
+
+                        <!-- RIGHT WING: Will Smith #2 -->
+                        <g class="home-zone" onclick="switchToTab('sharks')" style="cursor:pointer">
+                            <circle cx="510" cy="110" r="24" fill="#006d75" stroke="#00b4be" stroke-width="2.5" filter="url(#playerGlow)"/>
+                            <text x="510" y="116" text-anchor="middle" fill="white" font-size="15" font-weight="bold" style="pointer-events:none;">2</text>
+                            <text x="510" y="148" text-anchor="middle" fill="#1a3a5c" font-size="10" font-weight="700" style="pointer-events:none;">SMITH</text>
+                            <text x="510" y="160" text-anchor="middle" fill="#446688" font-size="8" style="pointer-events:none;">Right Wing</text>
+                        </g>
+
+                        <!-- Small Sharks logo at center ice -->
+                        <text x="350" y="50" text-anchor="middle" font-size="28" opacity="0.25">🦈</text>
                     </svg>
 
                 </div>
