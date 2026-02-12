@@ -46,36 +46,9 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background:
-                radial-gradient(ellipse 120% 50% at 50% -10%, rgba(200, 230, 255, 0.08) 0%, transparent 60%),
-                radial-gradient(ellipse 80% 40% at 50% 110%, rgba(0, 109, 117, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 15% 50%, rgba(0, 180, 190, 0.06) 0%, transparent 35%),
-                radial-gradient(circle at 85% 50%, rgba(0, 180, 190, 0.06) 0%, transparent 35%);
+            background: radial-gradient(ellipse 120% 50% at 50% -10%, rgba(200, 230, 255, 0.06) 0%, transparent 60%);
             pointer-events: none;
             z-index: 0;
-        }
-
-        /* Red center line decoration */
-        body::after {
-            content: '';
-            position: fixed;
-            top: 50%;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg,
-                transparent 0%,
-                rgba(200, 16, 46, 0.2) 10%,
-                rgba(200, 16, 46, 0.5) 50%,
-                rgba(200, 16, 46, 0.2) 90%,
-                transparent 100%);
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        /* Puck cursor on hover for interactive elements */
-        .browse-btn:hover, .term-chip:hover, .quick-pick:hover {
-            cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 20 20'%3E%3Ccircle cx='10' cy='10' r='8' fill='%23111' stroke='%23333' stroke-width='2'/%3E%3C/svg%3E") 10 10, pointer;
         }
 
         .container {
@@ -92,33 +65,6 @@
             position: relative;
         }
 
-        /* Faceoff circle decoration behind header */
-        header::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 220px;
-            height: 220px;
-            border: 3px solid rgba(200, 16, 46, 0.15);
-            border-radius: 50%;
-            pointer-events: none;
-        }
-
-        /* Inner faceoff dot */
-        header::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 20px;
-            height: 20px;
-            background: rgba(200, 16, 46, 0.2);
-            border-radius: 50%;
-            pointer-events: none;
-        }
 
         /* Vintage scoreboard style header */
         .scoreboard-header {
@@ -127,39 +73,14 @@
             border-radius: 12px;
             padding: 20px 30px;
             display: inline-block;
-            box-shadow:
-                0 4px 20px rgba(0, 0, 0, 0.5),
-                inset 0 1px 0 rgba(255, 255, 255, 0.1),
-                0 0 40px rgba(0, 180, 190, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
             position: relative;
         }
 
-        /* Scoreboard rivets */
-        .scoreboard-header::before,
-        .scoreboard-header::after {
-            content: '';
-            position: absolute;
-            width: 8px;
-            height: 8px;
-            background: linear-gradient(135deg, #444 0%, #222 100%);
-            border-radius: 50%;
-            border: 1px solid #555;
-        }
-
-        .scoreboard-header::before {
-            top: 10px;
-            left: 10px;
-        }
-
-        .scoreboard-header::after {
-            top: 10px;
-            right: 10px;
-        }
 
         .logo {
-            font-size: 3.5rem;
-            margin-bottom: 10px;
-            filter: drop-shadow(0 0 20px rgba(0, 180, 190, 0.5));
+            font-size: 3rem;
+            margin-bottom: 8px;
         }
 
         h1 {
@@ -229,111 +150,185 @@
             font-size: 1.2rem;
         }
 
-        /* Main layout with sidebar */
+        /* Main layout */
         .main-layout {
-            display: flex;
-            gap: 20px;
+            display: block;
             margin-bottom: 25px;
         }
 
         .browse-sidebar {
             display: flex;
-            flex-direction: column;
-            gap: 8px;
-            min-width: 170px;
+            flex-direction: row;
+            justify-content: center;
+            gap: 4px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
         }
 
         .browse-btn {
             display: flex;
             align-items: center;
-            gap: 10px;
-            padding: 14px 18px;
+            gap: 6px;
+            padding: 10px 14px;
             border: 2px solid rgba(0, 109, 117, 0.4);
             background: rgba(0, 36, 40, 0.6);
             color: #4db8c7;
             border-radius: 10px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            text-align: left;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Blue line accent on left */
-        .browse-btn::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 0;
-            bottom: 0;
-            width: 3px;
-            background: #0066cc;
-            transform: scaleY(0);
-            transition: transform 0.3s ease;
+            transition: all 0.2s ease;
+            text-align: center;
         }
 
         .browse-btn:hover {
             background: rgba(0, 109, 117, 0.3);
             border-color: rgba(0, 180, 190, 0.6);
-            transform: translateX(5px);
-        }
-
-        .browse-btn:hover::before {
-            transform: scaleY(1);
         }
 
         .browse-btn.active {
             background: linear-gradient(135deg, #006d75 0%, #004d52 100%);
             color: #fff;
             border-color: #00b4be;
-            box-shadow: 0 4px 20px rgba(0, 109, 117, 0.4);
-        }
-
-        .browse-btn.active::before {
-            transform: scaleY(1);
-            background: #00b4be;
-        }
-
-        .browse-btn.sharks {
-            border-color: rgba(0, 109, 117, 0.5);
-        }
-
-        .browse-btn.sharks:hover,
-        .browse-btn.sharks.active {
-            background: linear-gradient(135deg, #006d75 0%, #004d52 100%);
-            border-color: #00b4be;
+            box-shadow: 0 2px 12px rgba(0, 109, 117, 0.4);
         }
 
         .browse-icon {
-            font-size: 1.3rem;
+            font-size: 1.1rem;
         }
 
         .browse-label {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 500;
         }
 
         .search-side {
-            flex: 1;
+            width: 100%;
         }
 
-        /* Responsive: stack on mobile */
+        /* Home rink styles */
+        .home-rink-container {
+            max-width: 700px;
+            margin: 0 auto 20px;
+        }
+
+        .home-rink-container svg {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 4px 20px rgba(0, 109, 117, 0.2));
+        }
+
+        .home-zone {
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .home-zone:hover {
+            filter: brightness(1.4);
+        }
+
+        .home-zone-label {
+            fill: #fff;
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-weight: 700;
+            pointer-events: none;
+        }
+
+        .home-zone-icon {
+            pointer-events: none;
+        }
+
+        .home-zone-sublabel {
+            fill: rgba(255,255,255,0.7);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            font-size: 8px;
+            pointer-events: none;
+        }
+
+        /* Collapsible dictionary styles */
+        .dict-category-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 15px;
+            background: rgba(0, 109, 117, 0.15);
+            border: 1px solid rgba(0, 109, 117, 0.3);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 6px;
+            user-select: none;
+        }
+
+        .dict-category-header:hover {
+            background: rgba(0, 109, 117, 0.25);
+            border-color: rgba(0, 180, 190, 0.5);
+        }
+
+        .dict-category-icon { font-size: 1.3rem; }
+        .dict-category-title { font-size: 0.95rem; font-weight: 600; color: #fff; flex: 1; }
+        .dict-category-count { font-size: 0.8rem; color: #5a7a9a; }
+        .chevron { color: #5a7a9a; font-size: 0.75rem; transition: transform 0.2s; }
+
+        .dict-terms-list {
+            padding: 4px 0 12px 15px;
+        }
+
+        .dict-term-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #7eb8da;
+            font-size: 0.9rem;
+        }
+
+        .dict-term-item:hover {
+            background: rgba(0, 109, 117, 0.2);
+            color: #fff;
+        }
+
+        .dict-term-name { font-weight: 600; }
+
+        .beginner-toggle {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .beginner-toggle button {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 2px solid rgba(0, 109, 117, 0.4);
+            background: rgba(0, 36, 40, 0.6);
+            color: #4db8c7;
+            font-family: inherit;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .beginner-toggle button.active {
+            background: linear-gradient(135deg, #006d75, #004d52);
+            color: #fff;
+            border-color: #00b4be;
+        }
+
+        /* Responsive */
         @media (max-width: 700px) {
-            .main-layout {
-                flex-direction: column;
-            }
             .browse-sidebar {
-                flex-direction: row;
-                flex-wrap: wrap;
-                min-width: unset;
+                gap: 3px;
             }
             .browse-btn {
+                padding: 8px 10px;
                 flex: 1;
-                min-width: 140px;
+                min-width: 0;
                 justify-content: center;
             }
-            .browse-btn:hover {
-                transform: none;
+            .browse-label {
+                font-size: 0.7rem;
             }
         }
 
@@ -1611,56 +1606,6 @@
 </head>
 <body>
     <!-- Ice Rink Background SVG -->
-    <div class="rink-bg">
-        <svg viewBox="0 0 1000 600" preserveAspectRatio="xMidYMid slice">
-            <!-- Ice surface -->
-            <rect x="0" y="0" width="1000" height="600" fill="rgba(200,230,255,0.02)"/>
-
-            <!-- Blue lines -->
-            <line x1="333" y1="0" x2="333" y2="600" stroke="#0066cc" stroke-width="8" opacity="0.3"/>
-            <line x1="667" y1="0" x2="667" y2="600" stroke="#0066cc" stroke-width="8" opacity="0.3"/>
-
-            <!-- Center red line -->
-            <line x1="500" y1="0" x2="500" y2="600" stroke="#c8102e" stroke-width="10" opacity="0.25"/>
-
-            <!-- Center ice circle -->
-            <circle cx="500" cy="300" r="60" fill="none" stroke="#0066cc" stroke-width="4" opacity="0.2"/>
-            <circle cx="500" cy="300" r="8" fill="#0066cc" opacity="0.3"/>
-
-            <!-- Left zone faceoff circles -->
-            <circle cx="180" cy="150" r="50" fill="none" stroke="#c8102e" stroke-width="3" opacity="0.15"/>
-            <circle cx="180" cy="150" r="6" fill="#c8102e" opacity="0.2"/>
-            <circle cx="180" cy="450" r="50" fill="none" stroke="#c8102e" stroke-width="3" opacity="0.15"/>
-            <circle cx="180" cy="450" r="6" fill="#c8102e" opacity="0.2"/>
-
-            <!-- Right zone faceoff circles -->
-            <circle cx="820" cy="150" r="50" fill="none" stroke="#c8102e" stroke-width="3" opacity="0.15"/>
-            <circle cx="820" cy="150" r="6" fill="#c8102e" opacity="0.2"/>
-            <circle cx="820" cy="450" r="50" fill="none" stroke="#c8102e" stroke-width="3" opacity="0.15"/>
-            <circle cx="820" cy="450" r="6" fill="#c8102e" opacity="0.2"/>
-
-            <!-- Neutral zone dots -->
-            <circle cx="400" cy="150" r="5" fill="#c8102e" opacity="0.2"/>
-            <circle cx="400" cy="450" r="5" fill="#c8102e" opacity="0.2"/>
-            <circle cx="600" cy="150" r="5" fill="#c8102e" opacity="0.2"/>
-            <circle cx="600" cy="450" r="5" fill="#c8102e" opacity="0.2"/>
-
-            <!-- Goal creases -->
-            <path d="M 50 270 Q 80 300 50 330" fill="rgba(0,150,255,0.1)" stroke="#0066cc" stroke-width="2" opacity="0.2"/>
-            <path d="M 950 270 Q 920 300 950 330" fill="rgba(0,150,255,0.1)" stroke="#0066cc" stroke-width="2" opacity="0.2"/>
-
-            <!-- Goal lines -->
-            <line x1="50" y1="0" x2="50" y2="600" stroke="#c8102e" stroke-width="4" opacity="0.15"/>
-            <line x1="950" y1="0" x2="950" y2="600" stroke="#c8102e" stroke-width="4" opacity="0.15"/>
-
-            <!-- Corner curves (rink boards shape) -->
-            <path d="M 0 80 Q 0 0 80 0" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="3"/>
-            <path d="M 920 0 Q 1000 0 1000 80" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="3"/>
-            <path d="M 1000 520 Q 1000 600 920 600" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="3"/>
-            <path d="M 80 600 Q 0 600 0 520" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="3"/>
-        </svg>
-    </div>
-
     <div class="container">
         <header>
             <div class="scoreboard-header">
@@ -1671,37 +1616,41 @@
         </header>
 
         <div class="main-layout">
-            <!-- Left sidebar with browse buttons -->
+            <!-- Horizontal tab bar -->
             <div class="browse-sidebar">
-                <button class="browse-btn home active" data-tab="dictionary">
-                    <span class="browse-icon">🎴</span>
-                    <span class="browse-label">Hockey Flash Cards</span>
+                <button class="browse-btn active" data-tab="home">
+                    <span class="browse-icon">🏠</span>
+                    <span class="browse-label">Home</span>
                 </button>
-                <button class="browse-btn sharks" data-tab="sharks">
+                <button class="browse-btn" data-tab="dictionary">
+                    <span class="browse-icon">📖</span>
+                    <span class="browse-label">Dictionary</span>
+                </button>
+                <button class="browse-btn" data-tab="sharks">
                     <span class="browse-icon">🦈</span>
-                    <span class="browse-label">Meet the Sharks</span>
+                    <span class="browse-label">Sharks</span>
                 </button>
                 <button class="browse-btn" data-tab="rink">
                     <span class="browse-icon">🧊</span>
-                    <span class="browse-label">The Rink</span>
+                    <span class="browse-label">Rink</span>
                 </button>
                 <button class="browse-btn" data-tab="stats">
                     <span class="browse-icon">📊</span>
-                    <span class="browse-label">Stats Explained</span>
+                    <span class="browse-label">Stats</span>
                 </button>
                 <button class="browse-btn" data-tab="minigames">
                     <span class="browse-icon">🎮</span>
-                    <span class="browse-label">Mini Games</span>
+                    <span class="browse-label">Games</span>
                 </button>
-                <button class="browse-btn sharks" data-tab="schedule">
+                <button class="browse-btn" data-tab="schedule">
                     <span class="browse-icon">📅</span>
-                    <span class="browse-label">Sharks Schedule</span>
+                    <span class="browse-label">Schedule</span>
                 </button>
             </div>
 
             <!-- Right side with main content -->
             <div class="search-side">
-                <div class="search-container">
+                <div class="search-container" style="display:none;">
                     <div id="search-section">
                         <div class="search-box">
                             <input type="text" id="search-input" placeholder="Search hockey terms... (power play, icing, offside)">
@@ -1714,7 +1663,7 @@
                     </div>
                 </div>
 
-                <div id="browse-section" style="display:none;">
+                <div id="browse-section">
                     <!-- For Sharks, Stats, Dictionary - populated by JS -->
                 </div>
             </div>
@@ -1738,7 +1687,7 @@
         const searchSection = document.getElementById('search-section');
         const browseSection = document.getElementById('browse-section');
 
-        let currentTab = 'dictionary';
+        let currentTab = 'home';
         let selectedSport = 'all'; // Always show all sports
 
         const dictionaryQuickPicks = ['Power Play', 'Icing', 'Offside', 'Hat Trick', 'Breakaway', 'Slap Shot', 'Penalty Box', 'Blue Line'];
@@ -1762,8 +1711,8 @@
             'general': '🏒'
         };
 
-        // Initialize - load dictionary terms on startup
-        loadDictionaryTerms();
+        // Initialize - show ice rink homepage on startup
+        showHome();
 
         const browseBtns = document.querySelectorAll('.browse-btn');
 
@@ -1813,12 +1762,16 @@
 
             const searchContainer = document.querySelector('.search-container');
             const isSearchTab = (currentTab === 'dictionary' || currentTab === 'players');
+            const isHome = (currentTab === 'home');
 
             searchContainer.style.display = isSearchTab ? 'block' : 'none';
             browseSection.style.display = isSearchTab ? 'none' : 'block';
 
-            if (currentTab === 'dictionary') {
+            if (currentTab === 'home') {
+                showHome();
+            } else if (currentTab === 'dictionary') {
                 searchSection.style.display = 'block';
+                searchContainer.style.display = 'block';
                 updatePlaceholder();
                 loadDictionaryTerms(); // Load all terms below search
             } else if (currentTab === 'players') {
@@ -1860,62 +1813,206 @@
             search();
         }
 
+        // ==================== HOME RINK ====================
+        function showHome() {
+            const searchContainer = document.querySelector('.search-container');
+            searchContainer.style.display = 'none';
+            browseSection.style.display = 'block';
+
+            browseSection.innerHTML = `
+                <div class="home-rink-container">
+                    <h2 style="text-align:center;color:#e8f4f8;margin-bottom:8px;font-size:1.5rem;">Welcome to Hockey for Dummies</h2>
+                    <p style="text-align:center;color:#7eb8da;margin-bottom:24px;font-size:1rem;">Click a zone on the rink to start learning!</p>
+
+                    <svg viewBox="0 0 700 440" class="home-rink-svg" xmlns="http://www.w3.org/2000/svg">
+                        <!-- Rink outline -->
+                        <rect x="10" y="40" width="680" height="360" rx="100" ry="100"
+                              fill="#d4e9f7" stroke="#446688" stroke-width="3"/>
+                        <!-- Center red line -->
+                        <line x1="350" y1="40" x2="350" y2="400" stroke="#cc3333" stroke-width="4" opacity="0.5"/>
+                        <!-- Blue lines -->
+                        <line x1="220" y1="40" x2="220" y2="400" stroke="#2266aa" stroke-width="3" opacity="0.4"/>
+                        <line x1="480" y1="40" x2="480" y2="400" stroke="#2266aa" stroke-width="3" opacity="0.4"/>
+                        <!-- Center circle -->
+                        <circle cx="350" cy="220" r="50" fill="none" stroke="#cc3333" stroke-width="2" opacity="0.4"/>
+
+                        <!-- SCOREBOARD / SCHEDULE - above rink -->
+                        <g class="home-zone" onclick="switchToTab('schedule')" style="cursor:pointer">
+                            <rect x="240" y="0" width="220" height="42" rx="8" ry="8" fill="#1a3a5c" stroke="#4a90c2" stroke-width="1.5" opacity="0.95"/>
+                            <text x="350" y="17" text-anchor="middle" fill="#ffd700" font-size="16" font-weight="bold" class="home-zone-icon">📅</text>
+                            <text x="350" y="34" text-anchor="middle" fill="#e8f4f8" font-size="11" font-weight="bold" class="home-zone-label">SHARKS SCHEDULE</text>
+                        </g>
+
+                        <!-- DEFENSIVE ZONE - left (Dictionary) -->
+                        <g class="home-zone" onclick="switchToTab('dictionary')" style="cursor:pointer">
+                            <rect x="30" y="100" width="170" height="200" rx="50" ry="50" fill="#1a5c3a" opacity="0.35"/>
+                            <text x="115" y="185" text-anchor="middle" fill="white" font-size="36" class="home-zone-icon">📖</text>
+                            <text x="115" y="218" text-anchor="middle" fill="white" font-size="14" font-weight="bold" class="home-zone-label">DICTIONARY</text>
+                            <text x="115" y="238" text-anchor="middle" fill="#c8e6c9" font-size="10" class="home-zone-sublabel">Learn the lingo</text>
+                        </g>
+
+                        <!-- CENTER ICE - Stats -->
+                        <g class="home-zone" onclick="switchToTab('stats')" style="cursor:pointer">
+                            <circle cx="350" cy="220" r="62" fill="#4a2a7a" opacity="0.4"/>
+                            <text x="350" y="205" text-anchor="middle" fill="white" font-size="36" class="home-zone-icon">📊</text>
+                            <text x="350" y="238" text-anchor="middle" fill="white" font-size="14" font-weight="bold" class="home-zone-label">STATS</text>
+                            <text x="350" y="258" text-anchor="middle" fill="#d1c4e9" font-size="10" class="home-zone-sublabel">Decode the numbers</text>
+                        </g>
+
+                        <!-- OFFENSIVE ZONE - right (Mini Games) -->
+                        <g class="home-zone" onclick="switchToTab('minigames')" style="cursor:pointer">
+                            <rect x="500" y="100" width="170" height="200" rx="50" ry="50" fill="#5c1a1a" opacity="0.35"/>
+                            <text x="585" y="185" text-anchor="middle" fill="white" font-size="36" class="home-zone-icon">🎮</text>
+                            <text x="585" y="218" text-anchor="middle" fill="white" font-size="14" font-weight="bold" class="home-zone-label">MINI GAMES</text>
+                            <text x="585" y="238" text-anchor="middle" fill="#ffcdd2" font-size="10" class="home-zone-sublabel">Learn by playing</text>
+                        </g>
+
+                        <!-- BENCH AREA - top (Sharks) -->
+                        <g class="home-zone" onclick="switchToTab('sharks')" style="cursor:pointer">
+                            <rect x="130" y="48" width="140" height="55" rx="10" ry="10" fill="#006d75" opacity="0.6"/>
+                            <text x="200" y="72" text-anchor="middle" fill="white" font-size="22" class="home-zone-icon">🦈</text>
+                            <text x="200" y="94" text-anchor="middle" fill="white" font-size="12" font-weight="bold" class="home-zone-label">SHARKS</text>
+                        </g>
+
+                        <!-- BENCH AREA - top right (Rink) -->
+                        <g class="home-zone" onclick="switchToTab('rink')" style="cursor:pointer">
+                            <rect x="430" y="48" width="140" height="55" rx="10" ry="10" fill="#006d75" opacity="0.6"/>
+                            <text x="500" y="72" text-anchor="middle" fill="white" font-size="22" class="home-zone-icon">🧊</text>
+                            <text x="500" y="94" text-anchor="middle" fill="white" font-size="12" font-weight="bold" class="home-zone-label">THE RINK</text>
+                        </g>
+
+                        <!-- Goal creases -->
+                        <rect x="20" y="190" width="14" height="60" rx="4" fill="#cc3333" opacity="0.3"/>
+                        <rect x="666" y="190" width="14" height="60" rx="4" fill="#cc3333" opacity="0.3"/>
+                    </svg>
+
+                    <div style="text-align:center;margin-top:20px;">
+                        <p style="color:#5a7a9a;font-size:0.85rem;margin-bottom:12px;">Or jump right in:</p>
+                        <input type="text" id="home-search" placeholder="Search any hockey term..."
+                               style="padding:10px 16px;border-radius:20px;border:2px solid #2a4a6a;background:#0d2137;color:#e8f4f8;font-size:0.95rem;width:280px;outline:none;"
+                               onkeypress="if(event.key==='Enter'){switchToTab('dictionary');searchInput.value=this.value;filterDictionary(this.value);}"/>
+                    </div>
+                </div>
+            `;
+        }
+
+        function switchToTab(tabName) {
+            currentTab = tabName;
+
+            // Update active button state
+            const browseBtns = document.querySelectorAll('.browse-btn');
+            browseBtns.forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.dataset.tab === tabName) btn.classList.add('active');
+            });
+
+            handleTabChange();
+
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
         // ==================== DICTIONARY TERMS ====================
+        const beginnerTerms = ['period', 'goal', 'assist', 'penalty', 'power play', 'icing', 'offside', 'goalie', 'defenseman', 'center', 'winger', 'puck', 'faceoff', 'overtime', 'hat trick', 'check', 'slap shot', 'breakaway', 'blue line', 'penalty kill'];
+        let beginnerMode = false;
+        let dictionaryData = null;
+
         async function loadDictionaryTerms() {
             quickPicksContainer.innerHTML = '<div style="text-align:center;padding:20px;color:#7eb8da;">Loading terms...</div>';
 
             try {
-                const response = await fetch('/api/dictionary');
-                const data = await response.json();
+                if (!dictionaryData) {
+                    const response = await fetch('/api/dictionary');
+                    dictionaryData = await response.json();
+                }
 
-                const categoryOrder = ['game_structure', 'gameplay', 'rules', 'penalties', 'special_teams', 'positions', 'shots', 'skills', 'physical', 'rink', 'goalie', 'achievements', 'slang'];
-
-                let html = '<div class="dictionary-browse">';
-
-                // Ordered categories first
-                categoryOrder.forEach(category => {
-                    if (data.categories[category]) {
-                        html += `
-                            <div class="category-section" data-category="${category}">
-                                <div class="category-header">
-                                    <span class="category-icon">${categoryIcons[category] || '🏒'}</span>
-                                    <span class="category-title">${formatCategory(category)}</span>
-                                    <span style="color:#5a7a9a;font-size:0.85rem;">(${data.categories[category].length})</span>
-                                </div>
-                                <div class="terms-grid">
-                                    ${data.categories[category].map(t =>
-                                        `<span class="term-chip" onclick="loadTermDetail('${t.term.toLowerCase().replace(/ /g, '_')}', this)">${t.term}</span>`
-                                    ).join('')}
-                                </div>
-                            </div>
-                        `;
-                    }
-                });
-
-                // Any remaining categories
-                Object.keys(data.categories).forEach(category => {
-                    if (!categoryOrder.includes(category)) {
-                        html += `
-                            <div class="category-section" data-category="${category}">
-                                <div class="category-header">
-                                    <span class="category-icon">${categoryIcons[category] || '🏒'}</span>
-                                    <span class="category-title">${formatCategory(category)}</span>
-                                </div>
-                                <div class="terms-grid">
-                                    ${data.categories[category].map(t =>
-                                        `<span class="term-chip" onclick="loadTermDetail('${t.term.toLowerCase().replace(/ /g, '_')}', this)">${t.term}</span>`
-                                    ).join('')}
-                                </div>
-                            </div>
-                        `;
-                    }
-                });
-
-                html += '</div>';
-                quickPicksContainer.innerHTML = html;
+                renderDictionary(dictionaryData);
             } catch (error) {
                 console.error('Failed to load dictionary terms', error);
                 quickPicksContainer.innerHTML = '<div style="color:#ff6b6b;">Failed to load terms</div>';
+            }
+        }
+
+        function renderDictionary(data) {
+            const categoryOrder = ['game_structure', 'gameplay', 'rules', 'penalties', 'special_teams', 'positions', 'shots', 'skills', 'physical', 'rink', 'goalie', 'achievements', 'slang'];
+
+            let html = `
+                <div class="beginner-toggle">
+                    <label style="display:flex;align-items:center;gap:8px;cursor:pointer;color:#7eb8da;font-size:0.9rem;">
+                        <input type="checkbox" id="beginner-check" ${beginnerMode ? 'checked' : ''} onchange="toggleBeginnerMode(this.checked)" style="accent-color:#006d75;width:16px;height:16px;cursor:pointer;"/>
+                        🌟 Start with Basics (${beginnerTerms.length} essential terms)
+                    </label>
+                </div>
+                <div class="dictionary-browse">`;
+
+            let isFirst = true;
+
+            function buildCategory(category, terms) {
+                if (!terms || terms.length === 0) return '';
+
+                let filteredTerms = terms;
+                if (beginnerMode) {
+                    filteredTerms = terms.filter(t => beginnerTerms.includes(t.term.toLowerCase()));
+                    if (filteredTerms.length === 0) return '';
+                }
+
+                const expanded = isFirst;
+                isFirst = false;
+
+                return `
+                    <div class="category-section" data-category="${category}">
+                        <div class="dict-category-header ${expanded ? 'expanded' : ''}" onclick="toggleCategory(this)">
+                            <span>
+                                <span class="category-icon">${categoryIcons[category] || '🏒'}</span>
+                                <span class="category-title">${formatCategory(category)}</span>
+                                <span style="color:#5a7a9a;font-size:0.85rem;">(${filteredTerms.length})</span>
+                            </span>
+                            <span class="chevron">${expanded ? '▼' : '▶'}</span>
+                        </div>
+                        <div class="dict-terms-list" style="display:${expanded ? 'block' : 'none'};">
+                            ${filteredTerms.map(t =>
+                                `<div class="dict-term-item" onclick="loadTermDetail('${t.term.toLowerCase().replace(/ /g, '_')}', this)">
+                                    <span style="font-weight:600;color:#e8f4f8;">${t.term}</span>
+                                    ${t.short_def ? `<span style="color:#5a7a9a;font-size:0.85rem;margin-left:8px;">— ${t.short_def}</span>` : ''}
+                                </div>`
+                            ).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Ordered categories first
+            categoryOrder.forEach(category => {
+                if (data.categories[category]) {
+                    html += buildCategory(category, data.categories[category]);
+                }
+            });
+
+            // Any remaining categories
+            Object.keys(data.categories).forEach(category => {
+                if (!categoryOrder.includes(category)) {
+                    html += buildCategory(category, data.categories[category]);
+                }
+            });
+
+            html += '</div>';
+            quickPicksContainer.innerHTML = html;
+        }
+
+        function toggleCategory(header) {
+            const termsList = header.nextElementSibling;
+            const chevron = header.querySelector('.chevron');
+            const isOpen = termsList.style.display !== 'none';
+
+            termsList.style.display = isOpen ? 'none' : 'block';
+            chevron.textContent = isOpen ? '▶' : '▼';
+            header.classList.toggle('expanded', !isOpen);
+        }
+
+        function toggleBeginnerMode(checked) {
+            beginnerMode = checked;
+            if (dictionaryData) {
+                renderDictionary(dictionaryData);
             }
         }
 
@@ -1950,19 +2047,7 @@
         }
 
         function filterDictionaryTerms(query) {
-            query = query.toLowerCase();
-            const termChips = document.querySelectorAll('.term-chip');
-            const categorySections = document.querySelectorAll('.category-section');
-
-            termChips.forEach(chip => {
-                const matches = chip.textContent.toLowerCase().includes(query);
-                chip.style.display = matches ? '' : 'none';
-            });
-
-            categorySections.forEach(section => {
-                const visibleChips = section.querySelectorAll('.term-chip:not([style*="display: none"])');
-                section.style.display = visibleChips.length > 0 ? '' : 'none';
-            });
+            filterDictionary(query);
         }
 
         // ==================== SHARKS ROSTER ====================
@@ -2602,17 +2687,30 @@
 
         function filterDictionary(query) {
             query = query.toLowerCase();
-            const termChips = document.querySelectorAll('.term-chip');
+            const termItems = document.querySelectorAll('.dict-term-item');
             const categorySections = document.querySelectorAll('.category-section');
 
-            termChips.forEach(chip => {
-                const matches = chip.textContent.toLowerCase().includes(query);
-                chip.style.display = matches ? '' : 'none';
+            termItems.forEach(item => {
+                const matches = item.textContent.toLowerCase().includes(query);
+                item.style.display = matches ? '' : 'none';
             });
 
             categorySections.forEach(section => {
-                const visibleChips = section.querySelectorAll('.term-chip:not([style*="display: none"])');
-                section.style.display = visibleChips.length > 0 ? '' : 'none';
+                const termsList = section.querySelector('.dict-terms-list');
+                const header = section.querySelector('.dict-category-header');
+                const visibleItems = section.querySelectorAll('.dict-term-item:not([style*="display: none"])');
+                const hasVisible = visibleItems.length > 0;
+
+                section.style.display = hasVisible ? '' : 'none';
+                // Auto-expand categories with matches when filtering
+                if (hasVisible && query.length > 0 && termsList) {
+                    termsList.style.display = 'block';
+                    if (header) {
+                        header.classList.add('expanded');
+                        const chevron = header.querySelector('.chevron');
+                        if (chevron) chevron.textContent = '▼';
+                    }
+                }
             });
         }
 
