@@ -216,21 +216,6 @@ SHARKS_ROSTER = {
         "nfl_comp": {"player": "Drake Maye", "why": "Top-5 pick expected to be a franchise building block"},
         "mlb_comp": {"player": "Paul Skenes", "why": "Top draft pick making an immediate impact"}
     },
-    "mikael granlund": {
-        "number": 64,
-        "position": "Center/Wing",
-        "age": 32,
-        "from": "Oulu, Finland",
-        "draft": "#9 Overall, 2010",
-        "role": "Veteran Leader",
-        "role_description": "Experienced Finnish forward who provides leadership and playoff experience. Mentors the young players while still producing offensively.",
-        "play_style": "Crafty playmaker with excellent hands. Smart positional player, good on the power play. Responsible defensively.",
-        "fun_fact": "Famous for scoring a lacrosse-style goal in international competition. Has played in two Olympics for Finland.",
-        "soccer_comp": {"player": "Luka Modric", "why": "Veteran playmaker who leads by example"},
-        "nba_comp": {"player": "Chris Paul", "why": "Veteran floor general mentoring young talent"},
-        "nfl_comp": {"player": "Aaron Rodgers", "why": "Experienced QB leading a young team"},
-        "mlb_comp": {"player": "Justin Verlander", "why": "Veteran presence guiding a rebuilding roster"}
-    },
     "tyler toffoli": {
         "number": 73,
         "position": "Right Wing",
@@ -245,21 +230,6 @@ SHARKS_ROSTER = {
         "nba_comp": {"player": "Klay Thompson", "why": "Championship-winning scorer who can still fill it up"},
         "nfl_comp": {"player": "Davante Adams", "why": "Veteran receiver with championship experience"},
         "mlb_comp": {"player": "Teoscar Hernandez", "why": "Veteran bat who provides pop in the lineup"}
-    },
-    "fabian zetterlund": {
-        "number": 20,
-        "position": "Right Wing",
-        "age": 25,
-        "from": "Stockholm, Sweden",
-        "draft": "#63 Overall, 2018",
-        "role": "Middle-Six Scorer",
-        "role_description": "Solid two-way winger who can chip in offensively while playing a responsible game. Brings energy every shift.",
-        "play_style": "Good shot, plays physical for his size, responsible in his own zone. Can play up and down the lineup.",
-        "fun_fact": "Originally drafted by New Jersey, acquired by Sharks in 2022. Fellow Swede with Eklund.",
-        "soccer_comp": {"player": "Jarrod Bowen", "why": "Hard-working winger who contributes on both ends"},
-        "nba_comp": {"player": "Donte DiVincenzo", "why": "Energy player who does a bit of everything"},
-        "nfl_comp": {"player": "Jaylen Waddle", "why": "Dynamic player who makes plays when given opportunities"},
-        "mlb_comp": {"player": "Bryan Reynolds", "why": "Solid all-around player, does everything well"}
     },
     "logan couture": {
         "number": 39,
@@ -291,66 +261,6 @@ SHARKS_ROSTER = {
         "nfl_comp": {"player": "Sauce Gardner", "why": "Lockdown defender who takes on the best"},
         "mlb_comp": {"player": "Matt Chapman", "why": "Elite defender at a premium position"}
     },
-    "cody ceci": {
-        "number": 4,
-        "position": "Defenseman",
-        "age": 30,
-        "from": "Ottawa, ON",
-        "draft": "#15 Overall, 2012",
-        "role": "Top-4 Defenseman",
-        "role_description": "Veteran defenseman who provides stability on the blue line. Plays a steady, reliable game.",
-        "play_style": "Right-shot defenseman, good size, moves the puck efficiently. Reliable if not spectacular.",
-        "fun_fact": "Has played for 5 NHL teams. Son of former OHL coach.",
-        "soccer_comp": {"player": "Gary Cahill", "why": "Experienced, steady defender"},
-        "nba_comp": {"player": "Al Horford", "why": "Veteran presence, does his job consistently"},
-        "nfl_comp": {"player": "James Bradberry", "why": "Reliable veteran corner"},
-        "mlb_comp": {"player": "Paul DeJong", "why": "Veteran middle infielder providing depth"}
-    },
-    "jake walman": {
-        "number": 96,
-        "position": "Defenseman",
-        "age": 28,
-        "from": "Toronto, ON",
-        "draft": "#82 Overall, 2014",
-        "role": "Offensive Defenseman",
-        "role_description": "Puck-moving defenseman who adds offense from the blue line. Can quarterback a power play.",
-        "play_style": "Good skater with offensive instincts. Has a good shot from the point. Still developing his defensive consistency.",
-        "fun_fact": "Broke out with Detroit before being traded to San Jose.",
-        "soccer_comp": {"player": "Trent Alexander-Arnold", "why": "Attack-minded defender who creates offense"},
-        "nba_comp": {"player": "Draymond Green", "why": "Defender who can run the offense"},
-        "nfl_comp": {"player": "Micah Parsons", "why": "Dynamic defender with playmaking ability"},
-        "mlb_comp": {"player": "Gunnar Henderson", "why": "Defender with offensive pop"}
-    },
-    "mackenzie blackwood": {
-        "number": 29,
-        "position": "Goaltender",
-        "age": 27,
-        "from": "Thunder Bay, ON",
-        "draft": "#42 Overall, 2015",
-        "role": "Starting Goaltender",
-        "role_description": "The Sharks' number one netminder. A talented goalie who can steal games when he's on his game.",
-        "play_style": "Athletic, good size (6'4\"), tracks the puck well. Can be streaky but capable of elite performances.",
-        "fun_fact": "Acquired from New Jersey. Named after former NHL goalie Kirk McLean (his parents were fans).",
-        "soccer_comp": {"player": "David Raya", "why": "Athletic goalkeeper who can make spectacular saves"},
-        "nba_comp": {"player": "Brook Lopez", "why": "Solid presence protecting the paint"},
-        "nfl_comp": {"player": "Geno Smith", "why": "Veteran who's found a home and playing well"},
-        "mlb_comp": {"player": "Sonny Gray", "why": "Talented arm who can dominate when locked in"}
-    },
-    "vitek vanecek": {
-        "number": 41,
-        "position": "Goaltender",
-        "age": 28,
-        "from": "Havlickuv Brod, Czech Republic",
-        "draft": "#39 Overall, 2014",
-        "role": "Backup Goaltender",
-        "role_description": "Experienced backup who provides rest for Blackwood and can win games when called upon.",
-        "play_style": "Positionally sound, good athleticism. Has starting experience in the league.",
-        "fun_fact": "Has played for Washington and New Jersey before San Jose. Czech international.",
-        "soccer_comp": {"player": "Aaron Ramsdale", "why": "Quality backup pushing for playing time"},
-        "nba_comp": {"player": "Daniel Theis", "why": "Reliable backup center who can start if needed"},
-        "nfl_comp": {"player": "Cooper Rush", "why": "Quality backup who's proven he can win games"},
-        "mlb_comp": {"player": "Ross Stripling", "why": "Swing pitcher who can start or relieve"}
-    },
     "timothy liljegren": {
         "number": 37,
         "position": "Defenseman",
@@ -380,36 +290,6 @@ SHARKS_ROSTER = {
         "nba_comp": {"player": "Alex Caruso", "why": "Hustle player who does the little things"},
         "nfl_comp": {"player": "Rex Burkhead", "why": "Versatile player who does whatever's needed"},
         "mlb_comp": {"player": "Nick Ahmed", "why": "Glue guy who plays solid defense"}
-    },
-    "luke kunin": {
-        "number": 11,
-        "position": "Right Wing",
-        "age": 27,
-        "from": "Chesterfield, MO",
-        "draft": "#15 Overall, 2016",
-        "role": "Bottom-Six Forward",
-        "role_description": "Physical forward who brings energy and can chip in offense. Good penalty killer.",
-        "play_style": "Plays with an edge, willing to go to the hard areas. Can score but primarily a grinder.",
-        "fun_fact": "American-born, played at University of Wisconsin. Former first-round pick.",
-        "soccer_comp": {"player": "Adam Lallana", "why": "Works hard, brings energy, occasional goals"},
-        "nba_comp": {"player": "P.J. Tucker", "why": "Hustle player who does the dirty work"},
-        "nfl_comp": {"player": "Taysom Hill", "why": "Versatile player who brings energy"},
-        "mlb_comp": {"player": "Kiké Hernandez", "why": "Utility player who fills in where needed"}
-    },
-    "carl grundstrom": {
-        "number": 91,
-        "position": "Left Wing",
-        "age": 27,
-        "from": "Stockholm, Sweden",
-        "draft": "#57 Overall, 2016",
-        "role": "Bottom-Six Forward",
-        "role_description": "Physical forward who brings sandpaper to the lineup. Plays a heavy game.",
-        "play_style": "Physical, hits everything that moves. Forechecks hard. Limited offensive upside but valuable role player.",
-        "fun_fact": "Originally drafted by Toronto, won a Calder Cup (AHL championship) with Ontario Reign.",
-        "soccer_comp": {"player": "James Milner", "why": "Does the dirty work, never complains"},
-        "nba_comp": {"player": "Patrick Beverley", "why": "Pest who opponents hate to play against"},
-        "nfl_comp": {"player": "Cordarrelle Patterson", "why": "Does multiple jobs, special teams ace"},
-        "mlb_comp": {"player": "Tommy Edman", "why": "Role player who does whatever's asked"}
     },
     "barclay goodrow": {
         "number": 23,
@@ -441,66 +321,6 @@ SHARKS_ROSTER = {
         "nfl_comp": {"player": "Zach Wilson", "why": "Former high pick finding his role"},
         "mlb_comp": {"player": "Tommy Edman", "why": "Versatile veteran who fills any role needed"}
     },
-    "nico sturm": {
-        "number": 7,
-        "position": "Center",
-        "age": 29,
-        "from": "Augsburg, Germany",
-        "draft": "Undrafted",
-        "role": "Fourth-Line Center",
-        "role_description": "Physical German center who brings energy and grit. Excellent penalty killer and faceoff specialist.",
-        "play_style": "Physical presence, wins battles along the boards, strong on faceoffs. Plays a heavy, grinding style.",
-        "fun_fact": "One of only a few German players in the NHL. Played college hockey at Clarkson University.",
-        "soccer_comp": {"player": "Joshua Kimmich", "why": "German workhorse who does the dirty work"},
-        "nba_comp": {"player": "Marcus Smart", "why": "Defensive-minded player who brings toughness"},
-        "nfl_comp": {"player": "Zach Line", "why": "Fullback type - does the grunt work"},
-        "mlb_comp": {"player": "Max Stassi", "why": "Defense-first player who contributes intangibles"}
-    },
-    "klim kostin": {
-        "number": 21,
-        "position": "Right Wing",
-        "age": 25,
-        "from": "Penza, Russia",
-        "draft": "#31 Overall, 2017",
-        "role": "Power Forward",
-        "role_description": "Big-bodied Russian winger with skill. Uses his size to protect the puck and create offense.",
-        "play_style": "Physical player with soft hands. Protects the puck well, crashes the net, has a good shot.",
-        "fun_fact": "Former first-round pick by St. Louis. Played in the KHL before coming to North America.",
-        "soccer_comp": {"player": "Romelu Lukaku", "why": "Big, physical forward who uses his body"},
-        "nba_comp": {"player": "Zion Williamson", "why": "Power player who overwhelms with physicality"},
-        "nfl_comp": {"player": "Derrick Henry", "why": "Power runner who punishes defenders"},
-        "mlb_comp": {"player": "Yordan Alvarez", "why": "Big bat who drives in runs"}
-    },
-    "marc-edouard vlasic": {
-        "number": 44,
-        "position": "Defenseman",
-        "age": 37,
-        "from": "Montreal, QC",
-        "draft": "#35 Overall, 2005",
-        "role": "Veteran Defenseman",
-        "role_description": "Long-time Sharks defenseman and franchise icon. While no longer the shutdown force he once was, brings experience and leadership.",
-        "play_style": "In his prime was one of the best shutdown defensemen in the NHL. Smart positioning, excellent stick work.",
-        "fun_fact": "Three-time Olympic gold medalist for Canada. One of the longest-tenured Sharks ever.",
-        "soccer_comp": {"player": "Thiago Silva", "why": "Veteran defender who's been a cornerstone for years"},
-        "nba_comp": {"player": "Al Horford", "why": "Veteran big man still contributing"},
-        "nfl_comp": {"player": "Andrew Whitworth", "why": "Veteran tackle winding down a great career"},
-        "mlb_comp": {"player": "Yadier Molina", "why": "Franchise legend in the twilight years"}
-    },
-    "henry thrun": {
-        "number": 3,
-        "position": "Defenseman",
-        "age": 24,
-        "from": "Southborough, MA",
-        "draft": "#101 Overall, 2019",
-        "role": "Young Defenseman",
-        "role_description": "Left-shot defenseman developing his NHL game. Mobile skater who moves the puck well.",
-        "play_style": "Good skating defenseman, moves the puck efficiently. Still learning to defend at the NHL level.",
-        "fun_fact": "Played at Harvard University before turning pro. Massachusetts native.",
-        "soccer_comp": {"player": "Marc Cucurella", "why": "Left-footed defender with good mobility"},
-        "nba_comp": {"player": "Ayo Dosunmu", "why": "Young player carving out his role"},
-        "nfl_comp": {"player": "Aidan Hutchinson", "why": "Young defender learning at the pro level"},
-        "mlb_comp": {"player": "Brendan Rodgers", "why": "Young infielder developing his game"}
-    },
     "shakir mukhamadullin": {
         "number": 54,
         "position": "Defenseman",
@@ -530,21 +350,6 @@ SHARKS_ROSTER = {
         "nba_comp": {"player": "Victor Wembanyama", "why": "Generational prospect at his position"},
         "nfl_comp": {"player": "Bryce Young", "why": "Top prospect expected to be a franchise player"},
         "mlb_comp": {"player": "Jackson Holliday", "why": "Elite prospect with superstar upside"}
-    },
-    "jan rutta": {
-        "number": 18,
-        "position": "Defenseman",
-        "age": 34,
-        "from": "Pisek, Czech Republic",
-        "draft": "Undrafted",
-        "role": "Depth Defenseman",
-        "role_description": "Veteran Czech defenseman who provides stability and experience. Physical, stay-at-home defender.",
-        "play_style": "Physical, shot-blocking defenseman. Plays a simple, effective game. Good penalty killer.",
-        "fun_fact": "Two-time Stanley Cup champion with Tampa Bay. Late bloomer who didn't reach NHL until age 27.",
-        "soccer_comp": {"player": "Petr Cech", "why": "Czech veteran who's won championships"},
-        "nba_comp": {"player": "Jeff Green", "why": "Veteran journeyman who knows how to win"},
-        "nfl_comp": {"player": "Mike Hilton", "why": "Physical defender with championship pedigree"},
-        "mlb_comp": {"player": "Chris Taylor", "why": "Veteran role player with playoff experience"}
     },
     "jeff skinner": {
         "number": 53,
@@ -576,6 +381,21 @@ SHARKS_ROSTER = {
         "nfl_comp": {"player": "Vontaze Burfict", "why": "Intimidating physical presence"},
         "mlb_comp": {"player": "AJ Pierzynski", "why": "Tough veteran who opponents hate to face"}
     },
+    "kiefer sherwood": {
+        "number": 44,
+        "position": "Left Wing",
+        "age": 30,
+        "from": "Columbus, OH",
+        "draft": "Undrafted",
+        "role": "Physical Scorer",
+        "role_description": "An undrafted grinder who became one of the NHL's most feared physical forwards. Sherwood set an NHL single-season record with 462 hits in 2024-25 while also scoring 19 goals. Acquired from Vancouver in January 2026 to add toughness and scoring to the Sharks' top six.",
+        "play_style": "Relentless forechecking, bone-crushing hits, and a surprisingly dangerous shot. Plays fast, physical, and disciplined — leads the league in hits without racking up penalty minutes. Hard to play against mentally and physically.",
+        "fun_fact": "Half-Japanese heritage — his mother Yuko is Japanese. Grew up idolizing Hall of Famer Paul Kariya. His brother Kole has also played in the NHL. Went undrafted and worked his way through 5 NHL teams to become a top-line winger.",
+        "soccer_comp": {"player": "Jamie Vardy", "why": "Ultimate underdog — played semi-pro and worked his way up to Premier League champion. Same energy as an undrafted player setting NHL hit records."},
+        "nba_comp": {"player": "PJ Tucker", "why": "Undrafted, went overseas, came back and became an invaluable tough, physical culture-setter"},
+        "nfl_comp": {"player": "James Harrison", "why": "Undrafted and undersized, became one of the most feared hitters in the league through sheer work ethic"},
+        "mlb_comp": {"player": "Ben Zobrist", "why": "Late-round pick who carved out a long career through grit and adaptability, eventually becoming a key contributor"}
+    },
     "dmitry orlov": {
         "number": 9,
         "position": "Defenseman",
@@ -605,21 +425,6 @@ SHARKS_ROSTER = {
         "nba_comp": {"player": "Draymond Green", "why": "Playmaking defender who runs the offense"},
         "nfl_comp": {"player": "Quenton Nelson", "why": "Elite at creating opportunities"},
         "mlb_comp": {"player": "Xander Bogaerts", "why": "Shortstop with an offensive edge"}
-    },
-    "nick leddy": {
-        "number": 4,
-        "position": "Defenseman",
-        "age": 33,
-        "from": "Eden Prairie, MN",
-        "draft": "#16 Overall, 2009",
-        "role": "Veteran Defenseman",
-        "role_description": "Experienced skating defenseman. Stanley Cup champion who brings poise and mobility.",
-        "play_style": "Elite skater, good puck mover. Uses speed to break up plays and start rushes.",
-        "fun_fact": "Won the Stanley Cup with Chicago in 2013 and 2015. American Olympian.",
-        "soccer_comp": {"player": "Jordi Alba", "why": "Speedy defender known for getting forward"},
-        "nba_comp": {"player": "Nic Claxton", "why": "Athletic defender who covers ground"},
-        "nfl_comp": {"player": "Taron Johnson", "why": "Quick, athletic defender"},
-        "mlb_comp": {"player": "Jose Iglesias", "why": "Veteran with great range in the field"}
     },
     "alex nedeljkovic": {
         "number": 33,
@@ -725,6 +530,36 @@ SHARKS_ROSTER = {
         "nba_comp": {"player": "Cooper Flagg", "why": "Generational prospect everyone is excited about"},
         "nfl_comp": {"player": "Arch Manning", "why": "Elite prospect with unlimited ceiling"},
         "mlb_comp": {"player": "Travis Bazzana", "why": "Top prospect with elite tools"}
+    },
+    "collin graf": {
+        "number": 51,
+        "position": "Right Wing",
+        "age": 22,
+        "from": "Briarcliff Manor, NY",
+        "draft": "Undrafted",
+        "role": "Energy Forward",
+        "role_description": "Undrafted college free agent from Boston University who earned a roster spot through hard work and physicality. Brings energy and competitiveness every shift.",
+        "play_style": "Physical, hard-nosed winger who plays bigger than his size. Forechecks hard, finishes checks, and can chip in offensively.",
+        "fun_fact": "Signed as an undrafted free agent out of BU. Made the opening night roster as a rookie through sheer effort in training camp.",
+        "soccer_comp": {"player": "Alexis Mac Allister", "why": "Unheralded talent who earned his spot through relentless work"},
+        "nba_comp": {"player": "Alex Caruso", "why": "Undrafted hustle player who became a fan favorite through energy and effort"},
+        "nfl_comp": {"player": "Amon-Ra St. Brown", "why": "Overlooked prospect who plays with a chip on his shoulder"},
+        "mlb_comp": {"player": "Steven Kwan", "why": "Under-the-radar talent who makes the most of every opportunity"}
+    },
+    "pavol regenda": {
+        "number": 84,
+        "position": "Left Wing",
+        "age": 24,
+        "from": "Kosice, Slovakia",
+        "draft": "#204 Overall, 2020",
+        "role": "Skilled Depth Forward",
+        "role_description": "Slovak winger with good speed and skill. Late-round pick developing into a reliable NHL contributor with offensive upside.",
+        "play_style": "Quick skater with good hands and a nose for the net. Uses his speed to create turnovers and generate scoring chances.",
+        "fun_fact": "Represented Slovakia at the World Championships. Taken in the 7th round — one of the last picks in his draft class to make the NHL.",
+        "soccer_comp": {"player": "Hakan Calhanoglu", "why": "Skilled playmaker from a smaller hockey nation"},
+        "nba_comp": {"player": "Dillon Brooks", "why": "Late pick who carved out a real role through competitiveness"},
+        "nfl_comp": {"player": "Brock Purdy", "why": "Last pick in the draft who proved everyone wrong"},
+        "mlb_comp": {"player": "Bryan Reynolds", "why": "Under-the-radar talent who developed into a consistent contributor"}
     }
 }
 

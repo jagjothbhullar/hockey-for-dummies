@@ -4950,15 +4950,6 @@
     "team": "SJS"
   },
   {
-    "id": 8484994,
-    "name": "Igor Chernyshov",
-    "first_name": "Igor",
-    "last_name": "Chernyshov",
-    "position": "L",
-    "number": 92,
-    "team": "SJS"
-  },
-  {
     "id": 8480848,
     "name": "Ty Dellandrea",
     "first_name": "Ty",
@@ -5112,30 +5103,12 @@
     "team": "SJS"
   },
   {
-    "id": 8482861,
-    "name": "Vincent Iorio",
-    "first_name": "Vincent",
-    "last_name": "Iorio",
-    "position": "D",
-    "number": 22,
-    "team": "SJS"
-  },
-  {
     "id": 8475906,
     "name": "John Klingberg",
     "first_name": "John",
     "last_name": "Klingberg",
     "position": "D",
     "number": 3,
-    "team": "SJS"
-  },
-  {
-    "id": 8475181,
-    "name": "Nick Leddy",
-    "first_name": "Nick",
-    "last_name": "Leddy",
-    "position": "D",
-    "number": 4,
     "team": "SJS"
   },
   {
@@ -6522,7 +6495,7 @@
     "last_name": "Sherwood",
     "position": "L",
     "number": 44,
-    "team": "VAN"
+    "team": "SJS"
   },
   {
     "id": 8484798,
