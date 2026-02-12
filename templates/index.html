@@ -1711,6 +1711,48 @@
             'general': '🏒'
         };
 
+        // Line data for the homepage rink
+        const sharkLines = [
+            {
+                label: 'Line 1',
+                lw: {num: 2, name: 'SMITH', full: 'will smith', pos: 'Left Wing'},
+                c:  {num: 71, name: 'CELEBRINI', full: 'macklin celebrini', pos: 'Center', star: true},
+                rw: {num: 44, name: 'SHERWOOD', full: 'kiefer sherwood', pos: 'Right Wing'},
+                ld: {num: 38, name: 'FERRARO', full: 'mario ferraro', pos: 'Defense'},
+                rd: {num: 37, name: 'LILJEGREN', full: 'timothy liljegren', pos: 'Defense'},
+                g:  {num: 30, name: 'ASKAROV', full: 'yaroslav askarov', pos: 'Goalie'}
+            },
+            {
+                label: 'Line 2',
+                lw: {num: 72, name: 'EKLUND', full: 'william eklund', pos: 'Left Wing'},
+                c:  {num: 77, name: 'MISA', full: 'michael misa', pos: 'Center'},
+                rw: {num: 73, name: 'TOFFOLI', full: 'tyler toffoli', pos: 'Right Wing'},
+                ld: {num: 9, name: 'ORLOV', full: 'dmitry orlov', pos: 'Defense'},
+                rd: {num: 3, name: 'KLINGBERG', full: 'john klingberg', pos: 'Defense'},
+                g:  {num: 30, name: 'ASKAROV', full: 'yaroslav askarov', pos: 'Goalie'}
+            },
+            {
+                label: 'Line 3',
+                lw: {num: 96, name: 'KURASHEV', full: 'philipp kurashev', pos: 'Left Wing'},
+                c:  {num: 21, name: 'WENNBERG', full: 'alexander wennberg', pos: 'Center'},
+                rw: {num: 51, name: 'GRAF', full: 'collin graf', pos: 'Right Wing'},
+                ld: {num: 85, name: 'MUKHAMADULLIN', full: 'shakir mukhamadullin', pos: 'Defense'},
+                rd: {num: 5, name: 'DESHARNAIS', full: 'vincent desharnais', pos: 'Defense'},
+                g:  {num: 30, name: 'ASKAROV', full: 'yaroslav askarov', pos: 'Goalie'}
+            },
+            {
+                label: 'Line 4',
+                lw: {num: 23, name: 'GOODROW', full: 'barclay goodrow', pos: 'Left Wing'},
+                c:  {num: 63, name: 'OSTAPCHUK', full: 'zack ostapchuk', pos: 'Center'},
+                rw: {num: 81, name: 'GAUDETTE', full: 'adam gaudette', pos: 'Right Wing'},
+                ld: {num: 85, name: 'MUKHAMADULLIN', full: 'shakir mukhamadullin', pos: 'Defense'},
+                rd: {num: 5, name: 'DESHARNAIS', full: 'vincent desharnais', pos: 'Defense'},
+                g:  {num: 33, name: 'NEDELJKOVIC', full: 'alex nedeljkovic', pos: 'Goalie'}
+            }
+        ];
+
+        let currentLine = 0;
+
         // Initialize - show ice rink homepage on startup
         showHome();
 
@@ -1814,46 +1856,6 @@
         }
 
         // ==================== HOME RINK ====================
-        const sharkLines = [
-            {
-                label: 'Line 1',
-                lw: {num: 2, name: 'SMITH', full: 'will smith', pos: 'Left Wing'},
-                c:  {num: 71, name: 'CELEBRINI', full: 'macklin celebrini', pos: 'Center', star: true},
-                rw: {num: 44, name: 'SHERWOOD', full: 'kiefer sherwood', pos: 'Right Wing'},
-                ld: {num: 38, name: 'FERRARO', full: 'mario ferraro', pos: 'Defense'},
-                rd: {num: 37, name: 'LILJEGREN', full: 'timothy liljegren', pos: 'Defense'},
-                g:  {num: 30, name: 'ASKAROV', full: 'yaroslav askarov', pos: 'Goalie'}
-            },
-            {
-                label: 'Line 2',
-                lw: {num: 72, name: 'EKLUND', full: 'william eklund', pos: 'Left Wing'},
-                c:  {num: 77, name: 'MISA', full: 'michael misa', pos: 'Center'},
-                rw: {num: 73, name: 'TOFFOLI', full: 'tyler toffoli', pos: 'Right Wing'},
-                ld: {num: 9, name: 'ORLOV', full: 'dmitry orlov', pos: 'Defense'},
-                rd: {num: 3, name: 'KLINGBERG', full: 'john klingberg', pos: 'Defense'},
-                g:  {num: 30, name: 'ASKAROV', full: 'yaroslav askarov', pos: 'Goalie'}
-            },
-            {
-                label: 'Line 3',
-                lw: {num: 96, name: 'KURASHEV', full: 'philipp kurashev', pos: 'Left Wing'},
-                c:  {num: 21, name: 'WENNBERG', full: 'alexander wennberg', pos: 'Center'},
-                rw: {num: 51, name: 'GRAF', full: 'collin graf', pos: 'Right Wing'},
-                ld: {num: 85, name: 'MUKHAMADULLIN', full: 'shakir mukhamadullin', pos: 'Defense'},
-                rd: {num: 5, name: 'DESHARNAIS', full: 'vincent desharnais', pos: 'Defense'},
-                g:  {num: 30, name: 'ASKAROV', full: 'yaroslav askarov', pos: 'Goalie'}
-            },
-            {
-                label: 'Line 4',
-                lw: {num: 23, name: 'GOODROW', full: 'barclay goodrow', pos: 'Left Wing'},
-                c:  {num: 63, name: 'OSTAPCHUK', full: 'zack ostapchuk', pos: 'Center'},
-                rw: {num: 81, name: 'GAUDETTE', full: 'adam gaudette', pos: 'Right Wing'},
-                ld: {num: 85, name: 'MUKHAMADULLIN', full: 'shakir mukhamadullin', pos: 'Defense'},
-                rd: {num: 5, name: 'DESHARNAIS', full: 'vincent desharnais', pos: 'Defense'},
-                g:  {num: 33, name: 'NEDELJKOVIC', full: 'alex nedeljkovic', pos: 'Goalie'}
-            }
-        ];
-
-        let currentLine = 0;
 
         function renderPlayerSVG(p, cx, cy, r) {
             const stroke = p.star ? '#EA7200' : '#00b4be';
