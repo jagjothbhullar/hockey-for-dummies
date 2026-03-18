@@ -560,6 +560,36 @@ SHARKS_ROSTER = {
         "nba_comp": {"player": "Dillon Brooks", "why": "Late pick who carved out a real role through competitiveness"},
         "nfl_comp": {"player": "Brock Purdy", "why": "Last pick in the draft who proved everyone wrong"},
         "mlb_comp": {"player": "Bryan Reynolds", "why": "Under-the-radar talent who developed into a consistent contributor"}
+    },
+    "nick leddy": {
+        "number": 4,
+        "position": "Defense",
+        "age": 34,
+        "from": "Eden Prairie, Minnesota",
+        "draft": "#16 Overall, 2009",
+        "role": "Veteran Puck-Mover",
+        "role_description": "Experienced defenseman who provides steady minutes and smooth puck movement. A Stanley Cup champion who brings leadership and composure to a young blue line.",
+        "play_style": "Smooth-skating defenseman with excellent passing. Moves the puck out of the zone cleanly and can quarterback a power play. Not physical, but positionally sound.",
+        "fun_fact": "Won the Stanley Cup with the Chicago Blackhawks in 2013 and 2015. Has played over 900 NHL games across five teams.",
+        "soccer_comp": {"player": "Thiago Silva", "why": "Veteran defender who reads the game at an elite level and rarely makes mistakes"},
+        "nba_comp": {"player": "Kyle Lowry", "why": "Experienced veteran who steadies a young roster with his IQ"},
+        "nfl_comp": {"player": "Andrew Whitworth", "why": "Veteran offensive lineman who mentors the young guys while still contributing"},
+        "mlb_comp": {"player": "Evan Longoria", "why": "Veteran presence who brings stability and experience to a rebuilding team"}
+    },
+    "laurent brossoit": {
+        "number": 39,
+        "position": "Goalie",
+        "age": 31,
+        "from": "Port Alberni, British Columbia",
+        "draft": "#164 Overall, 2011",
+        "role": "Backup Goaltender",
+        "role_description": "Experienced backup who provides quality starts when called upon. Gives the coaching staff confidence to rest the starter without sacrificing competitiveness.",
+        "play_style": "Technically sound goaltender who plays a calm, controlled style. Good with his positioning and doesn't give up many soft goals. Strong in reading shooters.",
+        "fun_fact": "Won the Stanley Cup as a backup with the Vegas Golden Knights in 2023. Known as one of the most reliable backups in the league.",
+        "soccer_comp": {"player": "Kepa Arrizabalaga", "why": "Quality backup keeper who can step in and perform when the starter needs rest"},
+        "nba_comp": {"player": "Naz Reid", "why": "Reliable backup who can hold it down and even steal a few games"},
+        "nfl_comp": {"player": "Chase Daniel", "why": "Career backup who teams trust to keep things together"},
+        "mlb_comp": {"player": "Adam Wainwright", "why": "Veteran presence behind the plate who steadies the whole operation"}
     }
 }
 

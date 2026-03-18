@@ -435,7 +435,7 @@
 
         input[type="text"] {
             flex: 1;
-            min-width: 200px;
+            min-width: 0;
             padding: 15px 20px;
             font-size: 1.1rem;
             border: 2px solid rgba(0, 109, 117, 0.5);
@@ -1595,6 +1595,9 @@
         }
 
         @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
             .sport-selector {
                 gap: 8px;
             }
@@ -1604,6 +1607,52 @@
             }
             .tabs {
                 flex-direction: column;
+            }
+            .scoreboard-header {
+                padding: 15px 18px;
+            }
+            .search-container {
+                padding: 15px;
+            }
+            input[type="text"] {
+                min-width: 0;
+                padding: 12px 14px;
+                font-size: 1rem;
+            }
+            .search-btn {
+                padding: 12px 20px;
+                font-size: 0.9rem;
+                width: 100%;
+            }
+            .result-card {
+                padding: 18px;
+            }
+            .roster-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 10px;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+                gap: 10px;
+            }
+            .flashcard {
+                padding: 20px;
+                border-radius: 14px;
+            }
+            .flashcard h2 {
+                font-size: 1.2rem;
+            }
+            .definition-box {
+                padding: 15px 18px;
+            }
+            .shark-detail {
+                padding: 18px;
+            }
+            .shark-detail-header {
+                gap: 12px;
+            }
+            .shark-info h2 {
+                font-size: 1.3rem;
             }
         }
     </style>
@@ -1644,6 +1693,10 @@
                 <button class="browse-btn" data-tab="minigames">
                     <span class="browse-icon">🎮</span>
                     <span class="browse-label">Games</span>
+                </button>
+                <button class="browse-btn" data-tab="cap">
+                    <span class="browse-icon">💰</span>
+                    <span class="browse-label">Cap</span>
                 </button>
                 <button class="browse-btn" data-tab="schedule">
                     <span class="browse-icon">📅</span>
@@ -1715,43 +1768,43 @@
             'general': '🏒'
         };
 
-        // Line data for the homepage rink
+        // Line data for the homepage rink (updated 2026-03-18 via DailyFaceoff)
         const sharkLines = [
             {
                 label: 'Line 1',
-                lw: {num: 2, name: 'SMITH', full: 'will smith', pos: 'Left Wing'},
+                lw: {num: 51, name: 'GRAF', full: 'collin graf', pos: 'Left Wing'},
                 c:  {num: 71, name: 'CELEBRINI', full: 'macklin celebrini', pos: 'Center', star: true},
-                rw: {num: 44, name: 'SHERWOOD', full: 'kiefer sherwood', pos: 'Right Wing'},
-                ld: {num: 38, name: 'FERRARO', full: 'mario ferraro', pos: 'Defense'},
-                rd: {num: 37, name: 'LILJEGREN', full: 'timothy liljegren', pos: 'Defense'},
-                g:  {num: 30, name: 'ASKAROV', full: 'yaroslav askarov', pos: 'Goalie'}
+                rw: {num: 2, name: 'SMITH', full: 'will smith', pos: 'Right Wing'},
+                ld: {num: 9, name: 'ORLOV', full: 'dmitry orlov', pos: 'Defense'},
+                rd: {num: 3, name: 'KLINGBERG', full: 'john klingberg', pos: 'Defense'},
+                g:  {num: 33, name: 'NEDELJKOVIC', full: 'alex nedeljkovic', pos: 'Goalie'}
             },
             {
                 label: 'Line 2',
                 lw: {num: 72, name: 'EKLUND', full: 'william eklund', pos: 'Left Wing'},
                 c:  {num: 77, name: 'MISA', full: 'michael misa', pos: 'Center'},
                 rw: {num: 73, name: 'TOFFOLI', full: 'tyler toffoli', pos: 'Right Wing'},
-                ld: {num: 9, name: 'ORLOV', full: 'dmitry orlov', pos: 'Defense'},
-                rd: {num: 3, name: 'KLINGBERG', full: 'john klingberg', pos: 'Defense'},
-                g:  {num: 30, name: 'ASKAROV', full: 'yaroslav askarov', pos: 'Goalie'}
+                ld: {num: 38, name: 'FERRARO', full: 'mario ferraro', pos: 'Defense'},
+                rd: {num: 5, name: 'DESHARNAIS', full: 'vincent desharnais', pos: 'Defense'},
+                g:  {num: 33, name: 'NEDELJKOVIC', full: 'alex nedeljkovic', pos: 'Goalie'}
             },
             {
                 label: 'Line 3',
-                lw: {num: 96, name: 'KURASHEV', full: 'philipp kurashev', pos: 'Left Wing'},
+                lw: {num: 84, name: 'REGENDA', full: 'pavol regenda', pos: 'Left Wing'},
                 c:  {num: 21, name: 'WENNBERG', full: 'alexander wennberg', pos: 'Center'},
-                rw: {num: 51, name: 'GRAF', full: 'collin graf', pos: 'Right Wing'},
-                ld: {num: 85, name: 'MUKHAMADULLIN', full: 'shakir mukhamadullin', pos: 'Defense'},
-                rd: {num: 5, name: 'DESHARNAIS', full: 'vincent desharnais', pos: 'Defense'},
-                g:  {num: 30, name: 'ASKAROV', full: 'yaroslav askarov', pos: 'Goalie'}
+                rw: {num: 44, name: 'SHERWOOD', full: 'kiefer sherwood', pos: 'Right Wing'},
+                ld: {num: 6, name: 'DICKINSON', full: 'sam dickinson', pos: 'Defense'},
+                rd: {num: 4, name: 'LEDDY', full: 'nick leddy', pos: 'Defense'},
+                g:  {num: 33, name: 'NEDELJKOVIC', full: 'alex nedeljkovic', pos: 'Goalie'}
             },
             {
                 label: 'Line 4',
                 lw: {num: 23, name: 'GOODROW', full: 'barclay goodrow', pos: 'Left Wing'},
                 c:  {num: 63, name: 'OSTAPCHUK', full: 'zack ostapchuk', pos: 'Center'},
                 rw: {num: 81, name: 'GAUDETTE', full: 'adam gaudette', pos: 'Right Wing'},
-                ld: {num: 85, name: 'MUKHAMADULLIN', full: 'shakir mukhamadullin', pos: 'Defense'},
-                rd: {num: 5, name: 'DESHARNAIS', full: 'vincent desharnais', pos: 'Defense'},
-                g:  {num: 33, name: 'NEDELJKOVIC', full: 'alex nedeljkovic', pos: 'Goalie'}
+                ld: {num: 6, name: 'DICKINSON', full: 'sam dickinson', pos: 'Defense'},
+                rd: {num: 4, name: 'LEDDY', full: 'nick leddy', pos: 'Defense'},
+                g:  {num: 39, name: 'BROSSOIT', full: 'laurent brossoit', pos: 'Goalie'}
             }
         ];
 
@@ -1834,6 +1887,8 @@
                 loadMiniGames();
             } else if (currentTab === 'schedule') {
                 loadSchedule();
+            } else if (currentTab === 'cap') {
+                loadSalaryCap();
             }
         }
 
@@ -2190,8 +2245,8 @@
                     if (data.position === 'Goalie') {
                         statsHtml = `
                             <div style="background:rgba(0,109,117,0.2);border-radius:12px;padding:15px;margin-bottom:15px;">
-                                <h4 style="color:#00d4ff;font-size:0.8rem;margin-bottom:10px;">📊 2024-25 SEASON</h4>
-                                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;">
+                                <h4 style="color:#00d4ff;font-size:0.8rem;margin-bottom:10px;">📊 2025-26 SEASON</h4>
+                                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:10px;text-align:center;">
                                     <div><div style="font-size:1.3rem;color:#00d4ff;font-weight:bold;">${s.games}</div><div style="font-size:0.7rem;color:#7eb8da;">GP</div></div>
                                     <div><div style="font-size:1.3rem;color:#00d4ff;font-weight:bold;">${s.wins}-${s.losses}</div><div style="font-size:0.7rem;color:#7eb8da;">W-L</div></div>
                                     <div><div style="font-size:1.3rem;color:#00d4ff;font-weight:bold;">${s.gaa}</div><div style="font-size:0.7rem;color:#7eb8da;">GAA</div></div>
@@ -2203,8 +2258,8 @@
                     } else {
                         statsHtml = `
                             <div style="background:rgba(0,109,117,0.2);border-radius:12px;padding:15px;margin-bottom:15px;">
-                                <h4 style="color:#00d4ff;font-size:0.8rem;margin-bottom:10px;">📊 2024-25 SEASON</h4>
-                                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;text-align:center;">
+                                <h4 style="color:#00d4ff;font-size:0.8rem;margin-bottom:10px;">📊 2025-26 SEASON</h4>
+                                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:10px;text-align:center;">
                                     <div><div style="font-size:1.3rem;color:#00d4ff;font-weight:bold;">${s.games}</div><div style="font-size:0.7rem;color:#7eb8da;">GP</div></div>
                                     <div><div style="font-size:1.3rem;color:#00d4ff;font-weight:bold;">${s.goals}</div><div style="font-size:0.7rem;color:#7eb8da;">G</div></div>
                                     <div><div style="font-size:1.3rem;color:#00d4ff;font-weight:bold;">${s.assists}</div><div style="font-size:0.7rem;color:#7eb8da;">A</div></div>
@@ -2286,7 +2341,7 @@
                         edgeHtml = `
                             <div style="background:linear-gradient(135deg,rgba(255,107,107,0.15),rgba(255,107,107,0.05));border:1px solid rgba(255,107,107,0.3);border-radius:12px;padding:15px;margin-bottom:15px;">
                                 <h4 style="color:#ff6b6b;font-size:0.8rem;margin-bottom:12px;">⚡ NHL EDGE TRACKING</h4>
-                                <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;">
+                                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:10px;">
                                     ${edgeStats.join('')}
                                 </div>
                                 ${e.zone_time ? `
@@ -3038,11 +3093,15 @@
                 }
             };
 
+            // Pre-generate fixed ice scratch positions so they don't flicker
+            const mgIceScratches = [];
+            for(let i=0;i<20;i++) mgIceScratches.push({x1:Math.random()*800,y1:Math.random()*500,x2:Math.random()*800,y2:Math.random()*500});
+
             function mgDrawRink() {
                 const c = mgCtx, w = mgCanvas.width, h = mgCanvas.height;
                 c.fillStyle='#e8f4f8'; c.fillRect(0,0,w,h);
                 c.strokeStyle='rgba(200,220,230,0.3)';
-                for(let i=0;i<20;i++){c.beginPath();c.moveTo(Math.random()*w,Math.random()*h);c.lineTo(Math.random()*w,Math.random()*h);c.stroke();}
+                mgIceScratches.forEach(s=>{c.beginPath();c.moveTo(s.x1,s.y1);c.lineTo(s.x2,s.y2);c.stroke();});
                 c.strokeStyle='#cc0000';c.lineWidth=4;c.beginPath();c.moveTo(w/2,30);c.lineTo(w/2,h-30);c.stroke();
                 c.strokeStyle='#0066cc';c.lineWidth=5;
                 c.beginPath();c.moveTo(230,30);c.lineTo(230,h-30);c.stroke();
@@ -3188,6 +3247,334 @@
             mgStart('icing');
             if(mgAnimId) cancelAnimationFrame(mgAnimId);
             mgAnimate();
+        }
+
+        // ==================== SALARY CAP TAB ====================
+        function loadSalaryCap() {
+            // All contract data from PuckPedia/CapWages, March 2026
+            const CAP_CEILING = 95_500_000;      // 2025-26
+            const CAP_PROJECTED = 104_000_000;   // 2026-27
+
+            const roster = [
+                // Forwards
+                {name:'Macklin Celebrini',pos:'C',age:20,cap:975000,end:2027,type:'ELC',ext:{aav:null,note:'Extension eligible July 1 — projected ~$12.5M'}},
+                {name:'Will Smith',pos:'C',age:21,cap:950000,end:2027,type:'ELC',ext:{aav:null,note:'Extension eligible — projected ~$5M'}},
+                {name:'Michael Misa',pos:'C',age:19,cap:975000,end:2028,type:'ELC'},
+                {name:'Alexander Wennberg',pos:'C',age:32,cap:5000000,end:2026,type:'UFA',ext:{aav:6000000,end:2029,note:'Signed $6M×3'}},
+                {name:'Adam Gaudette',pos:'C',age:30,cap:2000000,end:2027,type:'UFA'},
+                {name:'William Eklund',pos:'LW',age:23,cap:925000,end:2026,type:'RFA',ext:{aav:5600000,end:2029,note:'Signed $5.6M×3'}},
+                {name:'Barclay Goodrow',pos:'LW',age:34,cap:3641667,end:2027,type:'UFA',clause:'M-NTC'},
+                {name:'Tyler Toffoli',pos:'LW',age:34,cap:6000000,end:2028,type:'UFA',clause:'NMC'},
+                {name:'Philipp Kurashev',pos:'LW',age:27,cap:1200000,end:2026,type:'RFA'},
+                {name:'Kiefer Sherwood',pos:'RW',age:30,cap:1500000,end:2026,type:'UFA',ext:{aav:5750000,end:2031,note:'Signed $5.75M×5'}},
+                {name:'Ty Dellandrea',pos:'RW',age:26,cap:1300000,end:2026,type:'RFA'},
+                {name:'Ryan Reaves',pos:'RW',age:39,cap:1350000,end:2026,type:'UFA'},
+                {name:'Collin Graf',pos:'RW',age:24,cap:942000,end:2026,type:'RFA'},
+                {name:'Pavol Regenda',pos:'LW',age:24,cap:942000,end:2026,type:'RFA'},
+                // Defensemen
+                {name:'Sam Dickinson',pos:'D',age:20,cap:975000,end:2028,type:'ELC'},
+                {name:'Dmitry Orlov',pos:'D',age:35,cap:6500000,end:2027,type:'UFA',clause:'NTC'},
+                {name:'Mario Ferraro',pos:'D',age:27,cap:3250000,end:2026,type:'UFA',ext:{aav:null,note:'Priority re-sign — wants to stay'}},
+                {name:'John Klingberg',pos:'D',age:34,cap:4000000,end:2026,type:'UFA'},
+                {name:'Vincent Desharnais',pos:'D',age:30,cap:2000000,end:2026,type:'UFA'},
+                {name:'Nick Leddy',pos:'D',age:35,cap:4000000,end:2026,type:'UFA'},
+                {name:'Shakir Mukhamadullin',pos:'D',age:25,cap:1000000,end:2026,type:'RFA'},
+                // Goalies
+                {name:'Yaroslav Askarov',pos:'G',age:24,cap:2000000,end:2027,type:'RFA',ext:{aav:null,note:'Extension eligible — projected ~$5.5M'}},
+                {name:'Alex Nedeljkovic',pos:'G',age:31,cap:2500000,end:2026,type:'UFA',ext:{aav:3000000,end:2028,note:'Signed $3M×2'}},
+            ];
+
+            const deadCap = [
+                {name:'Logan Couture',reason:'Retired (IR)',cap:8000000,end:2027},
+                {name:'Erik Karlsson',reason:'Retained (PIT trade)',cap:1500000,end:2027},
+                {name:'Marc-Edouard Vlasic',reason:'Buyout',cap:1166667,end:2027},
+                {name:'Martin Jones',reason:'Buyout',cap:1666667,end:2027},
+                {name:'Tomas Hertl',reason:'Retained (VGK trade)',cap:1390000,end:2029},
+            ];
+
+            const prospects = [
+                {name:'Quentin Musty',pos:'LW',age:20,note:'2023 1st (#26) — Dominating AHL. NHL-ready.'},
+                {name:'Igor Chernyshov',pos:'LW',age:20,note:'2023 3rd — Dynamic winger, had NHL points.'},
+                {name:'Kasper Halttunen',pos:'RW',age:20,note:'2023 1st (#18) — Big power forward.'},
+                {name:'Luca Cagnoni',pos:'D',age:21,note:'2023 6th — Offensive D, AHL leader.'},
+                {name:'Filip Bystedt',pos:'C',age:22,note:'2022 1st (#27) — Middle-six upside.'},
+            ];
+
+            const fmt = (n) => n >= 1000000 ? '$' + (n/1000000).toFixed(1).replace('.0','') + 'M' : '$' + (n/1000).toFixed(0) + 'K';
+
+            const totalRosterCap = roster.reduce((s,p) => s + p.cap, 0);
+            const totalDeadCap = deadCap.reduce((s,p) => s + p.cap, 0);
+            const totalCommitted = totalRosterCap + totalDeadCap;
+            const capSpace = CAP_CEILING - totalCommitted;
+            const rosterPct = (totalRosterCap / CAP_CEILING * 100).toFixed(1);
+            const deadPct = (totalDeadCap / CAP_CEILING * 100).toFixed(1);
+            const spacePct = (capSpace / CAP_CEILING * 100).toFixed(1);
+
+            // 2026-27 projection
+            const returning2627 = roster.filter(p => p.end > 2026);
+            const extensions = roster.filter(p => p.ext && p.ext.aav);
+            const pendingFA = roster.filter(p => p.end === 2026);
+            const pendingUFA = pendingFA.filter(p => p.type === 'UFA');
+            const pendingRFA = pendingFA.filter(p => p.type === 'RFA');
+
+            const returningCap2627 = returning2627.reduce((s,p) => s + p.cap, 0);
+            const extensionsCap2627 = extensions.reduce((s,p) => s + p.ext.aav, 0);
+            // Dead cap mostly expires 2027 except Hertl
+            const deadCap2627 = deadCap.filter(d => d.end >= 2027).reduce((s,d) => s + d.cap, 0);
+            const committed2627 = returningCap2627 + extensionsCap2627 + deadCap2627;
+            const space2627 = CAP_PROJECTED - committed2627;
+
+            // Build roster table rows
+            const posOrder = ['C','LW','RW','D','G'];
+            const posLabels = {C:'Centers',LW:'Left Wings',RW:'Right Wings',D:'Defensemen',G:'Goalies'};
+            const typeColors = {ELC:'#00ff87',UFA:'#ff6b6b',RFA:'#ffd700',Extended:'#00d4ff'};
+
+            let rosterRows = '';
+            posOrder.forEach(pos => {
+                const players = roster.filter(p => p.pos === pos);
+                if (!players.length) return;
+                rosterRows += `<tr><td colspan="5" style="padding:12px 8px 6px;font-weight:700;color:#ea7200;font-size:0.8rem;text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid rgba(234,114,0,0.3);">${posLabels[pos]}</td></tr>`;
+                players.forEach(p => {
+                    const isExpiring = p.end === 2026;
+                    const extBadge = p.ext && p.ext.aav ? `<span style="background:rgba(0,212,255,0.2);color:#00d4ff;padding:1px 6px;border-radius:4px;font-size:0.65rem;margin-left:4px;">EXT</span>` : '';
+                    const clauseBadge = p.clause ? `<span style="background:rgba(255,107,107,0.2);color:#ff6b6b;padding:1px 6px;border-radius:4px;font-size:0.65rem;margin-left:4px;">${p.clause}</span>` : '';
+                    rosterRows += `
+                        <tr style="border-bottom:1px solid rgba(255,255,255,0.05);${isExpiring ? 'opacity:0.7;' : ''}">
+                            <td style="padding:8px;color:#fff;font-weight:500;">${p.name}${extBadge}${clauseBadge}</td>
+                            <td style="padding:8px;color:#7eb8da;text-align:center;">${p.pos}</td>
+                            <td style="padding:8px;color:#00d4ff;text-align:right;font-weight:600;">${fmt(p.cap)}</td>
+                            <td style="padding:8px;text-align:center;"><span style="color:${typeColors[p.type]};font-size:0.75rem;font-weight:600;">${p.type}</span></td>
+                            <td style="padding:8px;color:#7eb8da;text-align:center;font-size:0.85rem;">${p.end === 2026 ? '<span style="color:#ff6b6b;">Expiring</span>' : p.end}</td>
+                        </tr>`;
+                });
+            });
+
+            // Dead cap rows
+            let deadRows = deadCap.map(d => `
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                    <td style="padding:8px;color:#ff6b6b;">${d.name}</td>
+                    <td style="padding:8px;color:#7eb8da;font-size:0.8rem;">${d.reason}</td>
+                    <td style="padding:8px;color:#ff6b6b;text-align:right;font-weight:600;">${fmt(d.cap)}</td>
+                    <td style="padding:8px;color:#7eb8da;text-align:center;font-size:0.85rem;">${d.end}</td>
+                </tr>`).join('');
+
+            // Pending FA cards
+            const faCards = (list, label) => list.length === 0 ? '' : list.map(p => {
+                const extNote = p.ext ? `<div style="color:#00d4ff;font-size:0.75rem;margin-top:4px;">${p.ext.aav ? '✅ ' + fmt(p.ext.aav) + '/yr' : '⏳ ' + (p.ext.note||'')}</div>` : '';
+                return `<div style="background:rgba(0,36,40,0.6);border:1px solid rgba(0,109,117,0.3);border-radius:10px;padding:12px;min-width:140px;flex:1;">
+                    <div style="font-weight:600;color:#fff;font-size:0.9rem;">${p.name}</div>
+                    <div style="color:#7eb8da;font-size:0.75rem;">${p.pos} | ${fmt(p.cap)}</div>
+                    ${extNote}
+                </div>`;
+            }).join('');
+
+            // 2026-27 projected roster
+            const next = [...returning2627.map(p => ({name:p.name,pos:p.pos,cap:p.cap,source:'Returning'})),
+                          ...extensions.map(p => ({name:p.name,pos:p.pos,cap:p.ext.aav,source:'Extension'}))];
+            next.sort((a,b) => b.cap - a.cap);
+
+            let nextRows = '';
+            next.forEach(p => {
+                const srcColor = p.source === 'Extension' ? '#00d4ff' : '#00ff87';
+                nextRows += `
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                        <td style="padding:6px 8px;color:#fff;">${p.name}</td>
+                        <td style="padding:6px 8px;color:#7eb8da;text-align:center;">${p.pos}</td>
+                        <td style="padding:6px 8px;color:#00d4ff;text-align:right;font-weight:600;">${fmt(p.cap)}</td>
+                        <td style="padding:6px 8px;text-align:center;"><span style="color:${srcColor};font-size:0.7rem;font-weight:600;">${p.source}</span></td>
+                    </tr>`;
+            });
+
+            browseSection.innerHTML = `
+                <div class="result-card" style="padding:25px;">
+                    <h2 style="color:#006d75;margin-bottom:5px;">💰 Salary Cap Explained</h2>
+                    <p style="color:#7eb8da;margin-bottom:20px;">How the NHL salary cap works — and where the Sharks stand right now</p>
+
+                    <!-- Cap 101 -->
+                    <div style="background:rgba(0,109,117,0.15);border-left:4px solid #ea7200;border-radius:0 12px 12px 0;padding:18px;margin-bottom:25px;">
+                        <h3 style="color:#ea7200;font-size:0.85rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;">What is the Salary Cap?</h3>
+                        <p style="color:#c0d6e8;line-height:1.7;font-size:0.95rem;">
+                            Every NHL team must spend between <strong style="color:#00d4ff;">$76.9M</strong> (floor) and <strong style="color:#00d4ff;">$95.5M</strong> (ceiling) on player salaries.
+                            This creates competitive balance — unlike baseball, you can't just outspend everyone. Teams must make tough choices about which players to keep,
+                            trade, or let walk in free agency. The cap goes up each year as NHL revenue grows.
+                        </p>
+                        <div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:12px;">
+                            <div style="background:rgba(0,0,0,0.3);padding:8px 14px;border-radius:8px;">
+                                <div style="color:#7eb8da;font-size:0.65rem;text-transform:uppercase;">This Season</div>
+                                <div style="color:#00d4ff;font-weight:700;font-size:1.1rem;">$95.5M</div>
+                            </div>
+                            <div style="background:rgba(0,0,0,0.3);padding:8px 14px;border-radius:8px;">
+                                <div style="color:#7eb8da;font-size:0.65rem;text-transform:uppercase;">Next Season (Proj.)</div>
+                                <div style="color:#00ff87;font-weight:700;font-size:1.1rem;">$104M</div>
+                            </div>
+                            <div style="background:rgba(0,0,0,0.3);padding:8px 14px;border-radius:8px;">
+                                <div style="color:#7eb8da;font-size:0.65rem;text-transform:uppercase;">Contract Types</div>
+                                <div style="display:flex;gap:6px;margin-top:4px;">
+                                    <span style="color:${typeColors.ELC};font-size:0.7rem;font-weight:600;">ELC</span>
+                                    <span style="color:${typeColors.RFA};font-size:0.7rem;font-weight:600;">RFA</span>
+                                    <span style="color:${typeColors.UFA};font-size:0.7rem;font-weight:600;">UFA</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(234,114,0,0.2);">
+                            <p style="color:#7eb8da;font-size:0.8rem;line-height:1.6;">
+                                <strong style="color:#00ff87;">ELC</strong> = Entry-Level Contract (rookie deal, max 3 years, ~$975K) &nbsp;
+                                <strong style="color:#ffd700;">RFA</strong> = Restricted Free Agent (team has right to match offers) &nbsp;
+                                <strong style="color:#ff6b6b;">UFA</strong> = Unrestricted Free Agent (can sign anywhere)
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Cap Meter -->
+                    <div style="margin-bottom:30px;">
+                        <h3 style="color:#fff;font-size:1rem;margin-bottom:12px;">2025-26 Cap Usage</h3>
+                        <div style="background:rgba(0,0,0,0.4);border-radius:12px;padding:16px;">
+                            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                                <span style="color:#7eb8da;font-size:0.8rem;">Committed: <strong style="color:#fff;">${fmt(totalCommitted)}</strong></span>
+                                <span style="color:#7eb8da;font-size:0.8rem;">Ceiling: <strong style="color:#fff;">${fmt(CAP_CEILING)}</strong></span>
+                            </div>
+                            <div style="height:28px;background:rgba(255,255,255,0.1);border-radius:14px;overflow:hidden;display:flex;">
+                                <div style="width:${rosterPct}%;background:linear-gradient(90deg,#006d75,#008a92);display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;color:#fff;min-width:40px;" title="Roster">Roster</div>
+                                <div style="width:${deadPct}%;background:linear-gradient(90deg,#8b0000,#cc3333);display:flex;align-items:center;justify-content:center;font-size:0.65rem;font-weight:700;color:#fff;min-width:30px;" title="Dead Cap">Dead</div>
+                            </div>
+                            <div style="display:flex;justify-content:space-between;margin-top:8px;flex-wrap:wrap;gap:8px;">
+                                <span style="color:#008a92;font-size:0.8rem;">🏒 Roster: ${fmt(totalRosterCap)} (${rosterPct}%)</span>
+                                <span style="color:#cc3333;font-size:0.8rem;">💀 Dead: ${fmt(totalDeadCap)} (${deadPct}%)</span>
+                                <span style="color:#00ff87;font-size:0.8rem;">💚 Space: ${fmt(capSpace)} (${spacePct}%)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Current Roster Contracts -->
+                    <div style="margin-bottom:30px;">
+                        <h3 style="color:#fff;font-size:1rem;margin-bottom:12px;">Current Roster Contracts</h3>
+                        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+                            <table style="width:100%;border-collapse:collapse;font-size:0.85rem;min-width:480px;">
+                                <thead>
+                                    <tr style="border-bottom:2px solid rgba(0,109,117,0.5);">
+                                        <th style="text-align:left;padding:8px;color:#ea7200;font-size:0.75rem;text-transform:uppercase;">Player</th>
+                                        <th style="text-align:center;padding:8px;color:#ea7200;font-size:0.75rem;text-transform:uppercase;">Pos</th>
+                                        <th style="text-align:right;padding:8px;color:#ea7200;font-size:0.75rem;text-transform:uppercase;">Cap Hit</th>
+                                        <th style="text-align:center;padding:8px;color:#ea7200;font-size:0.75rem;text-transform:uppercase;">Type</th>
+                                        <th style="text-align:center;padding:8px;color:#ea7200;font-size:0.75rem;text-transform:uppercase;">Expires</th>
+                                    </tr>
+                                </thead>
+                                <tbody>${rosterRows}
+                                    <tr style="border-top:2px solid rgba(0,109,117,0.5);">
+                                        <td style="padding:10px 8px;color:#fff;font-weight:700;" colspan="2">TOTAL ROSTER</td>
+                                        <td style="padding:10px 8px;color:#00d4ff;text-align:right;font-weight:700;">${fmt(totalRosterCap)}</td>
+                                        <td colspan="2" style="padding:10px 8px;color:#7eb8da;text-align:center;font-size:0.85rem;">${roster.length} players</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Dead Cap -->
+                    <div style="margin-bottom:30px;">
+                        <h3 style="color:#fff;font-size:1rem;margin-bottom:4px;">💀 Dead Cap</h3>
+                        <p style="color:#7eb8da;font-size:0.8rem;margin-bottom:12px;">Money owed to players no longer on the team — from buyouts, trades with retained salary, and retired players still under contract.</p>
+                        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+                            <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+                                <thead>
+                                    <tr style="border-bottom:2px solid rgba(255,107,107,0.4);">
+                                        <th style="text-align:left;padding:8px;color:#ff6b6b;font-size:0.75rem;">Player</th>
+                                        <th style="text-align:left;padding:8px;color:#ff6b6b;font-size:0.75rem;">Reason</th>
+                                        <th style="text-align:right;padding:8px;color:#ff6b6b;font-size:0.75rem;">Cap Hit</th>
+                                        <th style="text-align:center;padding:8px;color:#ff6b6b;font-size:0.75rem;">Expires</th>
+                                    </tr>
+                                </thead>
+                                <tbody>${deadRows}
+                                    <tr style="border-top:2px solid rgba(255,107,107,0.4);">
+                                        <td style="padding:10px 8px;color:#ff6b6b;font-weight:700;" colspan="2">TOTAL DEAD CAP</td>
+                                        <td style="padding:10px 8px;color:#ff6b6b;text-align:right;font-weight:700;">${fmt(totalDeadCap)}</td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Pending Free Agents -->
+                    <div style="margin-bottom:30px;">
+                        <h3 style="color:#fff;font-size:1rem;margin-bottom:4px;">🔓 Pending Free Agents (Summer 2026)</h3>
+                        <p style="color:#7eb8da;font-size:0.8rem;margin-bottom:12px;">These players' contracts expire this season. The team must re-sign, extend, or lose them.</p>
+
+                        <div style="margin-bottom:15px;">
+                            <h4 style="color:#ff6b6b;font-size:0.8rem;margin-bottom:8px;">Unrestricted (UFA) — Can sign anywhere</h4>
+                            <div style="display:flex;flex-wrap:wrap;gap:8px;">${faCards(pendingUFA, 'UFA')}</div>
+                        </div>
+                        <div>
+                            <h4 style="color:#ffd700;font-size:0.8rem;margin-bottom:8px;">Restricted (RFA) — Team has matching rights</h4>
+                            <div style="display:flex;flex-wrap:wrap;gap:8px;">${faCards(pendingRFA, 'RFA')}</div>
+                        </div>
+                    </div>
+
+                    <!-- 2026-27 Projection -->
+                    <div style="margin-bottom:30px;">
+                        <h3 style="color:#fff;font-size:1rem;margin-bottom:4px;">🔮 2026-27 Projection</h3>
+                        <p style="color:#7eb8da;font-size:0.8rem;margin-bottom:12px;">Who's definitely on the books next season (before any new signings).</p>
+
+                        <div style="background:rgba(0,0,0,0.4);border-radius:12px;padding:16px;margin-bottom:15px;">
+                            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                                <span style="color:#7eb8da;font-size:0.8rem;">Committed: <strong style="color:#fff;">${fmt(committed2627)}</strong></span>
+                                <span style="color:#7eb8da;font-size:0.8rem;">Projected Ceiling: <strong style="color:#fff;">${fmt(CAP_PROJECTED)}</strong></span>
+                            </div>
+                            <div style="height:28px;background:rgba(255,255,255,0.1);border-radius:14px;overflow:hidden;display:flex;">
+                                <div style="width:${(returningCap2627/CAP_PROJECTED*100).toFixed(1)}%;background:linear-gradient(90deg,#006d75,#008a92);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:#fff;">Returning</div>
+                                <div style="width:${(extensionsCap2627/CAP_PROJECTED*100).toFixed(1)}%;background:linear-gradient(90deg,#0066cc,#0088ff);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:#fff;">Extensions</div>
+                                <div style="width:${(deadCap2627/CAP_PROJECTED*100).toFixed(1)}%;background:linear-gradient(90deg,#8b0000,#cc3333);display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:#fff;">Dead</div>
+                            </div>
+                            <div style="display:flex;flex-wrap:wrap;gap:12px;margin-top:10px;">
+                                <span style="color:#008a92;font-size:0.75rem;">🏒 Returning: ${fmt(returningCap2627)}</span>
+                                <span style="color:#0088ff;font-size:0.75rem;">📝 Extensions: ${fmt(extensionsCap2627)}</span>
+                                <span style="color:#cc3333;font-size:0.75rem;">💀 Dead: ${fmt(deadCap2627)}</span>
+                                <span style="color:#00ff87;font-size:0.75rem;font-weight:700;">💰 Projected Space: ${fmt(space2627)}</span>
+                            </div>
+                        </div>
+
+                        <div style="overflow-x:auto;-webkit-overflow-scrolling:touch;">
+                            <table style="width:100%;border-collapse:collapse;font-size:0.85rem;">
+                                <thead>
+                                    <tr style="border-bottom:2px solid rgba(0,109,117,0.5);">
+                                        <th style="text-align:left;padding:6px 8px;color:#ea7200;font-size:0.75rem;">Player</th>
+                                        <th style="text-align:center;padding:6px 8px;color:#ea7200;font-size:0.75rem;">Pos</th>
+                                        <th style="text-align:right;padding:6px 8px;color:#ea7200;font-size:0.75rem;">Cap Hit</th>
+                                        <th style="text-align:center;padding:6px 8px;color:#ea7200;font-size:0.75rem;">Source</th>
+                                    </tr>
+                                </thead>
+                                <tbody>${nextRows}</tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Pipeline -->
+                    <div style="margin-bottom:20px;">
+                        <h3 style="color:#fff;font-size:1rem;margin-bottom:4px;">🌊 Prospect Pipeline</h3>
+                        <p style="color:#7eb8da;font-size:0.8rem;margin-bottom:12px;">Top prospects knocking on the door — could fill roster spots on cheap ELCs next season.</p>
+                        <div style="display:flex;flex-wrap:wrap;gap:8px;">
+                            ${prospects.map(p => `
+                                <div style="background:rgba(0,109,117,0.15);border:1px solid rgba(0,109,117,0.3);border-radius:10px;padding:12px;flex:1;min-width:160px;">
+                                    <div style="font-weight:600;color:#fff;font-size:0.9rem;">${p.name}</div>
+                                    <div style="color:#00d4ff;font-size:0.75rem;">${p.pos} | Age ${p.age}</div>
+                                    <div style="color:#7eb8da;font-size:0.75rem;margin-top:4px;">${p.note}</div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <!-- Key Takeaway -->
+                    <div style="background:linear-gradient(135deg,rgba(234,114,0,0.15),rgba(234,114,0,0.05));border:1px solid rgba(234,114,0,0.3);border-radius:12px;padding:18px;">
+                        <h4 style="color:#ea7200;margin-bottom:8px;">🦈 The Big Picture</h4>
+                        <p style="color:#c0d6e8;line-height:1.7;font-size:0.9rem;">
+                            The Sharks are in a <strong style="color:#00ff87;">dream position</strong> for a rebuilding team. With ~<strong style="color:#00d4ff;">${fmt(space2627)}</strong> in projected cap space next season,
+                            a core of young stars on cheap ELCs (Celebrini, Smith, Misa, Dickinson), and the #1-ranked prospect pipeline in the NHL,
+                            San Jose has the flexibility to lock up their young core AND add talent in free agency.
+                            The biggest upcoming decision: <strong style="color:#ffd700;">Macklin Celebrini's extension</strong> — likely a $12M+ mega-deal that will anchor the franchise for the next decade.
+                        </p>
+                    </div>
+                </div>
+            `;
         }
 
         async function loadSchedule() {

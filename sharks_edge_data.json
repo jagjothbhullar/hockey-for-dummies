@@ -1,5 +1,5 @@
 {
-  "last_updated": "2026-01-12 22:00",
+  "last_updated": "2026-03-18 16:11",
   "players": {
     "8484801": {
       "name": "Macklin Celebrini",
@@ -29,11 +29,19 @@
         "defensive": 37.6
       },
       "shooting": {
-        "shots": 148,
+        "shots": 229,
         "shots_percentile": 98.2,
-        "goals": 24,
+        "goals": 35,
         "goals_percentile": 98.6,
-        "shooting_pct": 16.2
+        "shooting_pct": 15.3
+      },
+      "season_stats": {
+        "games": 66,
+        "goals": 35,
+        "assists": 60,
+        "points": 95,
+        "plus_minus": 6,
+        "pim": 0
       }
     },
     "8484994": {
@@ -64,11 +72,19 @@
         "defensive": 37.4
       },
       "shooting": {
-        "shots": 22,
+        "shots": 27,
         "shots_percentile": 27.0,
         "goals": 3,
         "goals_percentile": 33.5,
-        "shooting_pct": 13.6
+        "shooting_pct": 11.1
+      },
+      "season_stats": {
+        "games": 16,
+        "goals": 3,
+        "assists": 8,
+        "points": 11,
+        "plus_minus": 2,
+        "pim": 0
       }
     },
     "8480848": {
@@ -104,6 +120,14 @@
         "goals": 2,
         "goals_percentile": 26.1,
         "shooting_pct": 4.5
+      },
+      "season_stats": {
+        "games": 42,
+        "goals": 2,
+        "assists": 9,
+        "points": 11,
+        "plus_minus": -15,
+        "pim": 0
       }
     },
     "8482667": {
@@ -134,11 +158,19 @@
         "defensive": 36.4
       },
       "shooting": {
-        "shots": 109,
+        "shots": 151,
         "shots_percentile": 91.1,
-        "goals": 11,
+        "goals": 12,
         "goals_percentile": 77.6,
-        "shooting_pct": 10.1
+        "shooting_pct": 7.9
+      },
+      "season_stats": {
+        "games": 62,
+        "goals": 12,
+        "assists": 29,
+        "points": 41,
+        "plus_minus": -27,
+        "pim": 0
       }
     },
     "8478874": {
@@ -169,11 +201,19 @@
         "defensive": 39.2
       },
       "shooting": {
-        "shots": 58,
+        "shots": 80,
         "shots_percentile": 59.2,
-        "goals": 10,
+        "goals": 14,
         "goals_percentile": 73.2,
-        "shooting_pct": 17.2
+        "shooting_pct": 17.5
+      },
+      "season_stats": {
+        "games": 53,
+        "goals": 14,
+        "assists": 8,
+        "points": 22,
+        "plus_minus": -8,
+        "pim": 0
       }
     },
     "8476624": {
@@ -204,11 +244,19 @@
         "defensive": 45.2
       },
       "shooting": {
-        "shots": 39,
+        "shots": 55,
         "shots_percentile": 42.8,
-        "goals": 3,
+        "goals": 5,
         "goals_percentile": 33.5,
-        "shooting_pct": 7.7
+        "shooting_pct": 9.1
+      },
+      "season_stats": {
+        "games": 66,
+        "goals": 5,
+        "assists": 6,
+        "points": 11,
+        "plus_minus": -15,
+        "pim": 0
       }
     },
     "8484911": {
@@ -239,11 +287,19 @@
         "defensive": 46.1
       },
       "shooting": {
-        "shots": 48,
+        "shots": 93,
         "shots_percentile": 50.6,
-        "goals": 12,
+        "goals": 19,
         "goals_percentile": 81.4,
-        "shooting_pct": 25.0
+        "shooting_pct": 20.4
+      },
+      "season_stats": {
+        "games": 65,
+        "goals": 19,
+        "assists": 21,
+        "points": 40,
+        "plus_minus": 4,
+        "pim": 0
       }
     },
     "8480798": {
@@ -274,11 +330,19 @@
         "defensive": 41.3
       },
       "shooting": {
-        "shots": 49,
+        "shots": 61,
         "shots_percentile": 51.3,
-        "goals": 6,
+        "goals": 7,
         "goals_percentile": 51.3,
-        "shooting_pct": 12.2
+        "shooting_pct": 11.5
+      },
+      "season_stats": {
+        "games": 41,
+        "goals": 7,
+        "assists": 13,
+        "points": 20,
+        "plus_minus": 0,
+        "pim": 0
       }
     },
     "8485402": {
@@ -309,11 +373,19 @@
         "defensive": 58.0
       },
       "shooting": {
-        "shots": 13,
+        "shots": 39,
         "shots_percentile": 20.0,
-        "goals": 1,
+        "goals": 7,
         "goals_percentile": 15.7,
-        "shooting_pct": 7.7
+        "shooting_pct": 17.9
+      },
+      "season_stats": {
+        "games": 29,
+        "goals": 7,
+        "assists": 9,
+        "points": 16,
+        "plus_minus": 1,
+        "pim": 0
       }
     },
     "8482859": {
@@ -344,11 +416,19 @@
         "defensive": 41.0
       },
       "shooting": {
-        "shots": 19,
+        "shots": 30,
         "shots_percentile": 24.1,
-        "goals": 2,
+        "goals": 3,
         "goals_percentile": 26.1,
-        "shooting_pct": 10.5
+        "shooting_pct": 10.0
+      },
+      "season_stats": {
+        "games": 43,
+        "goals": 3,
+        "assists": 2,
+        "points": 5,
+        "plus_minus": -9,
+        "pim": 0
       }
     },
     "8471817": {
@@ -379,11 +459,19 @@
         "defensive": 40.2
       },
       "shooting": {
-        "shots": 21,
+        "shots": 25,
         "shots_percentile": 26.3,
         "goals": 3,
         "goals_percentile": 33.5,
-        "shooting_pct": 14.3
+        "shooting_pct": 12.0
+      },
+      "season_stats": {
+        "games": 49,
+        "goals": 3,
+        "assists": 0,
+        "points": 3,
+        "plus_minus": -12,
+        "pim": 0
       }
     },
     "8483630": {
@@ -414,46 +502,36 @@
         "defensive": 39.3
       },
       "shooting": {
-        "shots": 22,
+        "shots": 40,
         "shots_percentile": 27.0,
-        "goals": 6,
+        "goals": 9,
         "goals_percentile": 51.3,
-        "shooting_pct": 27.3
+        "shooting_pct": 22.5
+      },
+      "season_stats": {
+        "games": 20,
+        "goals": 9,
+        "assists": 1,
+        "points": 10,
+        "plus_minus": 3,
+        "pim": 0
       }
     },
-    "8475784": {
-      "name": "Jeff Skinner",
+    "8480748": {
+      "name": "Kiefer Sherwood",
       "position": "L",
-      "shot_speed": {
-        "value": 86.3,
-        "percentile": 64.8,
-        "league_avg": 82.9
-      },
-      "skating_speed": {
-        "value": 22.0,
-        "percentile": 43.8,
-        "league_avg": 22.0
-      },
-      "speed_bursts": {
-        "value": 17,
-        "percentile": 27.4,
-        "league_avg": 45.8
-      },
-      "distance_skated": {
-        "value": 62.8
-      },
-      "zone_time": {
-        "offensive": 41.8,
-        "offensive_percentile": 45.1,
-        "neutral": 18.0,
-        "defensive": 40.2
-      },
       "shooting": {
-        "shots": 56,
-        "shots_percentile": 57.8,
-        "goals": 6,
-        "goals_percentile": 51.3,
-        "shooting_pct": 10.7
+        "shots": 139,
+        "goals": 21,
+        "shooting_pct": 15.1
+      },
+      "season_stats": {
+        "games": 56,
+        "goals": 21,
+        "assists": 8,
+        "points": 29,
+        "plus_minus": -13,
+        "pim": 0
       }
     },
     "8484227": {
@@ -484,11 +562,19 @@
         "defensive": 38.4
       },
       "shooting": {
-        "shots": 80,
+        "shots": 126,
         "shots_percentile": 76.4,
-        "goals": 12,
+        "goals": 19,
         "goals_percentile": 81.4,
-        "shooting_pct": 15.0
+        "shooting_pct": 15.1
+      },
+      "season_stats": {
+        "games": 53,
+        "goals": 19,
+        "assists": 26,
+        "points": 45,
+        "plus_minus": 0,
+        "pim": 0
       }
     },
     "8475726": {
@@ -519,11 +605,19 @@
         "defensive": 37.1
       },
       "shooting": {
-        "shots": 108,
+        "shots": 150,
         "shots_percentile": 90.9,
-        "goals": 13,
+        "goals": 18,
         "goals_percentile": 84.3,
         "shooting_pct": 12.0
+      },
+      "season_stats": {
+        "games": 66,
+        "goals": 18,
+        "assists": 26,
+        "points": 44,
+        "plus_minus": -9,
+        "pim": 0
       }
     },
     "8477505": {
@@ -554,11 +648,19 @@
         "defensive": 39.5
       },
       "shooting": {
-        "shots": 55,
+        "shots": 78,
         "shots_percentile": 56.5,
-        "goals": 10,
+        "goals": 13,
         "goals_percentile": 73.2,
-        "shooting_pct": 18.2
+        "shooting_pct": 16.7
+      },
+      "season_stats": {
+        "games": 65,
+        "goals": 13,
+        "assists": 31,
+        "points": 44,
+        "plus_minus": -19,
+        "pim": 0
       }
     },
     "8479576": {
@@ -589,11 +691,19 @@
         "defensive": 46.6
       },
       "shooting": {
-        "shots": 12,
+        "shots": 23,
         "shots_percentile": 22.8,
-        "goals": 0,
+        "goals": 1,
         "goals_percentile": 0.0,
-        "shooting_pct": 0.0
+        "shooting_pct": 4.3
+      },
+      "season_stats": {
+        "games": 39,
+        "goals": 1,
+        "assists": 4,
+        "points": 5,
+        "plus_minus": 4,
+        "pim": 0
       }
     },
     "8484806": {
@@ -624,11 +734,19 @@
         "defensive": 40.6
       },
       "shooting": {
-        "shots": 31,
+        "shots": 57,
         "shots_percentile": 46.0,
         "goals": 1,
         "goals_percentile": 33.0,
-        "shooting_pct": 3.2
+        "shooting_pct": 1.8
+      },
+      "season_stats": {
+        "games": 56,
+        "goals": 1,
+        "assists": 11,
+        "points": 12,
+        "plus_minus": -3,
+        "pim": 0
       }
     },
     "8479983": {
@@ -659,46 +777,19 @@
         "defensive": 46.3
       },
       "shooting": {
-        "shots": 51,
+        "shots": 78,
         "shots_percentile": 70.5,
-        "goals": 3,
+        "goals": 6,
         "goals_percentile": 65.6,
-        "shooting_pct": 5.9
-      }
-    },
-    "8482861": {
-      "name": "Vincent Iorio",
-      "position": "D",
-      "shot_speed": {
-        "value": 87.8,
-        "percentile": 35.9,
-        "league_avg": 88.8
+        "shooting_pct": 7.7
       },
-      "skating_speed": {
-        "value": 20.0,
-        "percentile": 6.3,
-        "league_avg": 21.5
-      },
-      "speed_bursts": {
-        "value": 1,
-        "percentile": 5.6,
-        "league_avg": 19.8
-      },
-      "distance_skated": {
-        "value": 46.4
-      },
-      "zone_time": {
-        "offensive": 41.4,
-        "offensive_percentile": 47.1,
-        "neutral": 17.2,
-        "defensive": 41.4
-      },
-      "shooting": {
-        "shots": 8,
-        "shots_percentile": 15.8,
-        "goals": 0,
-        "goals_percentile": 0.0,
-        "shooting_pct": 0.0
+      "season_stats": {
+        "games": 66,
+        "goals": 6,
+        "assists": 13,
+        "points": 19,
+        "plus_minus": 2,
+        "pim": 0
       }
     },
     "8475906": {
@@ -729,11 +820,19 @@
         "defensive": 37.2
       },
       "shooting": {
-        "shots": 49,
+        "shots": 78,
         "shots_percentile": 68.4,
-        "goals": 9,
+        "goals": 10,
         "goals_percentile": 96.1,
-        "shooting_pct": 18.4
+        "shooting_pct": 12.8
+      },
+      "season_stats": {
+        "games": 52,
+        "goals": 10,
+        "assists": 14,
+        "points": 24,
+        "plus_minus": -15,
+        "pim": 0
       }
     },
     "8475181": {
@@ -764,46 +863,19 @@
         "defensive": 42.2
       },
       "shooting": {
-        "shots": 6,
+        "shots": 9,
         "shots_percentile": 14.0,
         "goals": 0,
         "goals_percentile": 0.0,
         "shooting_pct": 0.0
-      }
-    },
-    "8480043": {
-      "name": "Timothy Liljegren",
-      "position": "D",
-      "shot_speed": {
-        "value": 90.3,
-        "percentile": 54.6,
-        "league_avg": 88.8
       },
-      "skating_speed": {
-        "value": 21.9,
-        "percentile": 64.9,
-        "league_avg": 21.5
-      },
-      "speed_bursts": {
-        "value": 35,
-        "percentile": 85.6,
-        "league_avg": 19.8
-      },
-      "distance_skated": {
-        "value": 91.3
-      },
-      "zone_time": {
-        "offensive": 38.1,
-        "offensive_percentile": 5.8,
-        "neutral": 17.7,
-        "defensive": 44.2
-      },
-      "shooting": {
-        "shots": 20,
-        "shots_percentile": 33.7,
+      "season_stats": {
+        "games": 20,
         "goals": 0,
-        "goals_percentile": 0.0,
-        "shooting_pct": 0.0
+        "assists": 4,
+        "points": 4,
+        "plus_minus": -9,
+        "pim": 0
       }
     },
     "8482166": {
@@ -834,11 +906,19 @@
         "defensive": 42.8
       },
       "shooting": {
-        "shots": 18,
+        "shots": 33,
         "shots_percentile": 31.2,
-        "goals": 2,
+        "goals": 4,
         "goals_percentile": 51.9,
-        "shooting_pct": 11.1
+        "shooting_pct": 12.1
+      },
+      "season_stats": {
+        "games": 35,
+        "goals": 4,
+        "assists": 6,
+        "points": 10,
+        "plus_minus": 0,
+        "pim": 0
       }
     },
     "8475200": {
@@ -869,11 +949,58 @@
         "defensive": 38.7
       },
       "shooting": {
-        "shots": 46,
+        "shots": 65,
         "shots_percentile": 63.9,
-        "goals": 1,
+        "goals": 2,
         "goals_percentile": 33.0,
-        "shooting_pct": 2.2
+        "shooting_pct": 3.1
+      },
+      "season_stats": {
+        "games": 66,
+        "goals": 2,
+        "assists": 26,
+        "points": 28,
+        "plus_minus": -17,
+        "pim": 0
+      }
+    },
+    "8482137": {
+      "name": "Yaroslav Askarov",
+      "position": "G",
+      "goalie_stats": {
+        "games": 40,
+        "wins": 19,
+        "losses": 17,
+        "ot_losses": 3,
+        "gaa": 3.564895,
+        "save_pct": 0.886463,
+        "shutouts": 0
+      }
+    },
+    "8476316": {
+      "name": "Laurent Brossoit",
+      "position": "G",
+      "goalie_stats": {
+        "games": 1,
+        "wins": 0,
+        "losses": 1,
+        "ot_losses": 0,
+        "gaa": 6.086221,
+        "save_pct": 0.782609,
+        "shutouts": 0
+      }
+    },
+    "8477968": {
+      "name": "Alex Nedeljkovic",
+      "position": "G",
+      "goalie_stats": {
+        "games": 30,
+        "wins": 13,
+        "losses": 10,
+        "ot_losses": 3,
+        "gaa": 2.851917,
+        "save_pct": 0.90146,
+        "shutouts": 0
       }
     }
   }
